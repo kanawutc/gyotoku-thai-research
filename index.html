@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thai Restaurants in Gyotoku, Ichikawa | Market Research 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #faf7f2; color: #333; }
+
+        .hero {
+            background: linear-gradient(135deg, #d4a373 0%, #e07b39 50%, #b5651d 100%);
+            color: white; padding: 60px 20px; text-align: center;
+        }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; }
+        .hero .subtitle { font-size: 0.95rem; margin-top: 8px; opacity: 0.75; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        .section { padding: 50px 0; }
+        .section h2 { font-size: 1.8rem; color: #b5651d; margin-bottom: 30px; text-align: center; }
+
+        /* Overview */
+        .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .stat-card {
+            background: white; border-radius: 12px; padding: 25px; text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .stat-card .number { font-size: 2.5rem; font-weight: bold; color: #e07b39; }
+        .stat-card .label { color: #777; margin-top: 5px; }
+
+        /* Restaurant Cards */
+        .restaurant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .restaurant-card {
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08); transition: transform 0.2s;
+        }
+        .restaurant-card:hover { transform: translateY(-4px); }
+        .card-header {
+            background: linear-gradient(135deg, #e07b39, #d4a373);
+            color: white; padding: 20px;
+        }
+        .card-header h3 { font-size: 1.3rem; }
+        .card-header .rating { margin-top: 8px; font-size: 0.95rem; }
+        .card-header .stars { color: #ffe066; }
+        .card-body { padding: 20px; }
+        .card-body .info-row { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; }
+        .card-body .icon { width: 20px; text-align: center; flex-shrink: 0; }
+        .card-body .info-text { font-size: 0.9rem; line-height: 1.5; }
+        .badge {
+            display: inline-block; padding: 3px 10px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: 600; margin: 2px;
+        }
+        .badge-open { background: #d4edda; color: #155724; }
+        .badge-closed { background: #f8d7da; color: #721c24; }
+        .badge-unconfirmed { background: #fff3cd; color: #856404; }
+        .badge-price { background: #e8f4fd; color: #0c5460; }
+
+        .menu-tags { margin-top: 12px; }
+        .menu-tag {
+            display: inline-block; background: #fef3e8; color: #b5651d;
+            padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; margin: 3px;
+        }
+
+        /* Area Info */
+        .area-info {
+            background: white; border-radius: 12px; padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .area-info h3 { color: #b5651d; margin-bottom: 15px; }
+        .area-info ul { list-style: none; padding: 0; }
+        .area-info li { padding: 8px 0; border-bottom: 1px solid #f0ebe3; }
+        .area-info li:last-child { border-bottom: none; }
+
+        /* Map placeholder */
+        .map-section {
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-top: 30px;
+        }
+        .map-section iframe { width: 100%; height: 400px; border: none; }
+
+        /* Summary table */
+        .summary-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .summary-table th { background: #e07b39; color: white; padding: 14px 16px; text-align: left; font-size: 0.9rem; }
+        .summary-table td { padding: 12px 16px; border-bottom: 1px solid #f0ebe3; font-size: 0.9rem; }
+        .summary-table tr:hover { background: #fef8f2; }
+
+        /* Footer */
+        footer {
+            background: #333; color: #aaa; padding: 30px 20px; text-align: center;
+            font-size: 0.85rem; margin-top: 40px;
+        }
+        footer a { color: #e07b39; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            .restaurant-grid { grid-template-columns: 1fr; }
+            .summary-table { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>Thai Restaurants in Gyotoku, Ichikawa</h1>
+    <p>Market Research Report 2026</p>
+    <div class="subtitle">Prepared by PimQuin Oracle for Boom | April 2026</div>
+</div>
+
+<div class="container">
+
+    <!-- Overview Stats -->
+    <div class="section">
+        <h2>Overview</h2>
+        <div class="overview-grid">
+            <div class="stat-card">
+                <div class="number">8</div>
+                <div class="label">Thai Restaurants Found</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">5</div>
+                <div class="label">Near Gyotoku Station</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">~1,500</div>
+                <div class="label">Avg. Budget (JPY)</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">3.7</div>
+                <div class="label">Avg. Rating / 5</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Restaurant Cards -->
+    <div class="section">
+        <h2>Thai Restaurants</h2>
+        <div class="restaurant-grid">
+
+            <!-- 1. Thai Restaurant Kuageota -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <h3>Thai Restaurant Kuageota</h3>
+                    <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.0/5 (5 reviews)</div>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="icon">&#128205;</span><span class="info-text">2-9-1 Gyotoku Ekimae, Ichikawa 272-0121</span></div>
+                    <div class="info-row"><span class="icon">&#128222;</span><span class="info-text">+81 47-325-9177</span></div>
+                    <div class="info-row"><span class="icon">&#128176;</span><span class="info-text"><span class="badge badge-price">~550 JPY lunch</span></span></div>
+                    <div class="info-row"><span class="icon">&#9989;</span><span class="info-text"><span class="badge badge-open">Open</span> Near Gyotoku Station</span></div>
+                    <div class="menu-tags">
+                        <span class="menu-tag">Lunch Set 550 JPY</span>
+                        <span class="menu-tag">Thai Curry</span>
+                        <span class="menu-tag">Pad Thai</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Siam Kui Jean -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <h3>Siam Kui Jean</h3>
+                    <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.0/5 (2 reviews)</div>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="icon">&#128205;</span><span class="info-text">3-7-15 Gyotoku Ekimae, Ichikawa 272-0133</span></div>
+                    <div class="info-row"><span class="icon">&#128222;</span><span class="info-text">+81 47-718-6138</span></div>
+                    <div class="info-row"><span class="icon">&#9989;</span><span class="info-text"><span class="badge badge-open">Open</span> Walking distance from Gyotoku Stn.</span></div>
+                    <div class="menu-tags">
+                        <span class="menu-tag">Thai Cuisine</span>
+                        <span class="menu-tag">Authentic Thai</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Phuan Thai -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <h3>Phuan Thai</h3>
+                    <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.0/5 (4 reviews)</div>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="icon">&#128205;</span><span class="info-text">3-2-2 Minamigyotoku, Ito Bldg B Floor, Ichikawa 272-0138</span></div>
+                    <div class="info-row"><span class="icon">&#128222;</span><span class="info-text">+81 47-359-2188</span></div>
+                    <div class="info-row"><span class="icon">&#9989;</span><span class="info-text"><span class="badge badge-open">Open</span> Minami-Gyotoku area</span></div>
+                    <div class="menu-tags">
+                        <span class="menu-tag">Lunch Menu</span>
+                        <span class="menu-tag">Variety Set</span>
+                        <span class="menu-tag">Thai Authentic</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. BAAN KHUN PHOO -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <h3>BAAN KHUN PHOO (&#12496;&#12540;&#12531; &#12463;&#12531; &#12509;&#12540;)</h3>
+                    <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.0/5 (TripAdvisor) | 3.35/5 (Tabelog)</div>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="icon">&#128205;</span><span class="info-text">2-9-1 Gyotoku Ekimae, Downtown Soho 1F, Ichikawa 272-0133</span></div>
+                    <div class="info-row"><span class="icon">&#128222;</span><span class="info-text">+81 47-325-9177</span></div>
+                    <div class="info-row"><span class="icon">&#128336;</span><span class="info-text">11:00-24:00 (LO 23:30) | Closed: Thursday</span></div>
+                    <div class="info-row"><span class="icon">&#128176;</span><span class="info-text"><span class="badge badge-price">2,000-2,999 JPY</span></span></div>
+                    <div class="info-row"><span class="icon">&#9888;</span><span class="info-text"><span class="badge badge-unconfirmed">Status Unconfirmed</span> Cash Only | 35 seats</span></div>
+                    <div class="menu-tags">
+                        <span class="menu-tag">Pad Thai</span>
+                        <span class="menu-tag">Gapao Rice</span>
+                        <span class="menu-tag">Green Curry</span>
+                        <span class="menu-tag">Khao Man Gai</span>
+                        <span class="menu-tag">Massaman Curry</span>
+                        <span class="menu-tag">Papaya Salad</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Udon (Thai) -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <h3>Udon (&#12454;&#12540;&#12489;&#12531;)</h3>
+                    <div class="rating"><span class="stars">&#9733;&#9733;&#9733;</span> 3.06/5 (5 reviews)</div>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="icon">&#128205;</span><span class="info-text">2-6-4 Minatoshinden, Ichikawa 272-0132</span></div>
+                    <div class="info-row"><span class="icon">&#128336;</span><span class="info-text">11:00-15:00, 17:00-00:00</span></div>
+                    <div class="info-row"><span class="icon">&#128176;</span><span class="info-text"><span class="badge badge-price">1,000-1,999 JPY</span></span></div>
+                    <div class="info-row"><span class="icon">&#128186;</span><span class="info-text"><span class="badge badge-open">Open</span> 13 seats | 10 min walk from Gyotoku Stn.</span></div>
+                    <div class="menu-tags">
+                        <span class="menu-tag">Green Curry Lunch 1,078 JPY</span>
+                        <span class="menu-tag">Vermicelli Soup</span>
+                        <span class="menu-tag">Gapao</span>
+                        <span class="menu-tag">Khao Man Gai</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Little Bangkok -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <h3>Little Bangkok</h3>
+                    <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9734;</span> 3.7/5 (8 reviews)</div>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="icon">&#128205;</span><span class="info-text">1-6-14 Gyotoku Ekimae, Ichikawa 272-0133</span></div>
+                    <div class="info-row"><span class="icon">&#128222;</span><span class="info-text">+81 47-395-1901</span></div>
+                    <div class="info-row"><span class="icon">&#10060;</span><span class="info-text"><span class="badge badge-closed">Permanently Closed</span></span></div>
+                    <div class="info-row"><span class="icon">&#128203;</span><span class="info-text">Was 5 min walk from Gyotoku Station (Tozai Line). Most reviewed Thai spot in the area before closure.</span></div>
+                </div>
+            </div>
+
+            <!-- 7. Dining Bar Duseni Mura 722 -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <h3>Dining Bar Duseni Mura 722</h3>
+                    <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.0/5 (1 review)</div>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="icon">&#128205;</span><span class="info-text">1-2-7 Ichikawa 2F, Ichikawa 272-0034</span></div>
+                    <div class="info-row"><span class="icon">&#128222;</span><span class="info-text">+81 47-369-6522</span></div>
+                    <div class="info-row"><span class="icon">&#9989;</span><span class="info-text"><span class="badge badge-open">Open</span> Ichikawa area (not Gyotoku)</span></div>
+                    <div class="menu-tags">
+                        <span class="menu-tag">Thai Dining Bar</span>
+                        <span class="menu-tag">Cocktails</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. SAI PHON2 -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <h3>SAI PHON2</h3>
+                    <div class="rating"><span class="stars">&#9733;&#9733;&#9733;</span> Tabelog Listed</div>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="icon">&#128205;</span><span class="info-text">Minami-Gyotoku area, Ichikawa</span></div>
+                    <div class="info-row"><span class="icon">&#9989;</span><span class="info-text"><span class="badge badge-open">Open</span> Near Minami-Gyotoku Station</span></div>
+                    <div class="menu-tags">
+                        <span class="menu-tag">Thai Cuisine</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Summary Table -->
+    <div class="section">
+        <h2>Comparison Table</h2>
+        <div style="overflow-x: auto;">
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th>Restaurant</th>
+                    <th>Location</th>
+                    <th>Rating</th>
+                    <th>Budget (JPY)</th>
+                    <th>Status</th>
+                    <th>Specialty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Kuageota</strong></td>
+                    <td>Gyotoku Ekimae</td>
+                    <td>4.0/5</td>
+                    <td>~550 (lunch)</td>
+                    <td><span class="badge badge-open">Open</span></td>
+                    <td>Affordable lunch sets</td>
+                </tr>
+                <tr>
+                    <td><strong>Siam Kui Jean</strong></td>
+                    <td>Gyotoku Ekimae</td>
+                    <td>4.0/5</td>
+                    <td>-</td>
+                    <td><span class="badge badge-open">Open</span></td>
+                    <td>Authentic Thai</td>
+                </tr>
+                <tr>
+                    <td><strong>Phuan Thai</strong></td>
+                    <td>Minami-Gyotoku</td>
+                    <td>4.0/5</td>
+                    <td>-</td>
+                    <td><span class="badge badge-open">Open</span></td>
+                    <td>Variety lunch menu</td>
+                </tr>
+                <tr>
+                    <td><strong>BAAN KHUN PHOO</strong></td>
+                    <td>Gyotoku Ekimae</td>
+                    <td>3.35-4.0/5</td>
+                    <td>2,000-2,999</td>
+                    <td><span class="badge badge-unconfirmed">Unconfirmed</span></td>
+                    <td>Dining bar, late night</td>
+                </tr>
+                <tr>
+                    <td><strong>Udon</strong></td>
+                    <td>Minatoshinden</td>
+                    <td>3.06/5</td>
+                    <td>1,000-1,999</td>
+                    <td><span class="badge badge-open">Open</span></td>
+                    <td>Green curry lunch</td>
+                </tr>
+                <tr>
+                    <td><strong>Little Bangkok</strong></td>
+                    <td>Gyotoku Ekimae</td>
+                    <td>3.7/5</td>
+                    <td>-</td>
+                    <td><span class="badge badge-closed">Closed</span></td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><strong>Duseni Mura 722</strong></td>
+                    <td>Ichikawa</td>
+                    <td>4.0/5</td>
+                    <td>-</td>
+                    <td><span class="badge badge-open">Open</span></td>
+                    <td>Thai dining bar</td>
+                </tr>
+                <tr>
+                    <td><strong>SAI PHON2</strong></td>
+                    <td>Minami-Gyotoku</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><span class="badge badge-open">Open</span></td>
+                    <td>Thai cuisine</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <!-- Area Guide -->
+    <div class="section">
+        <h2>Gyotoku Area Guide</h2>
+        <div class="area-info">
+            <h3>Getting There</h3>
+            <ul>
+                <li><strong>Train:</strong> Tozai Line from Otemachi/Nihonbashi Station to Gyotoku Station (~30-40 min)</li>
+                <li><strong>Walking:</strong> Most restaurants are within 5-10 min walk from Gyotoku Station</li>
+            </ul>
+            <h3 style="margin-top: 20px;">Nearby Attractions</h3>
+            <ul>
+                <li><strong>Historic Canals:</strong> Edo-period waterways with traditional merchant houses</li>
+                <li><strong>Gyotoku Bird Observatory:</strong> Nature spot for birdwatching</li>
+                <li><strong>Traditional Streets:</strong> Narrow alleyways, wooden architecture, great for photography</li>
+                <li><strong>Gyotoku Culture Hall I&I:</strong> Cultural events and exhibitions</li>
+            </ul>
+            <h3 style="margin-top: 20px;">Key Insights</h3>
+            <ul>
+                <li>Gyotoku has a notable Thai community, resulting in several authentic Thai restaurants</li>
+                <li>Most Thai restaurants cluster around Gyotoku Station (Ekimae area)</li>
+                <li>Lunch sets are very affordable (550-1,100 JPY range)</li>
+                <li>Some restaurants have closed recently &mdash; always check current status before visiting</li>
+                <li>Cash-only is common; bring JPY</li>
+            </ul>
+        </div>
+
+        <!-- Map -->
+        <div class="map-section">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6480.5!2d139.9!3d35.67!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601886e3c0000001%3A0x4000000000000000!2sGyotoku%20Station!5e0!3m2!1sen!4v1!5m2!1sen!4v1" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>Market Research prepared by <strong>PimQuin Oracle</strong> | April 2026</p>
+    <p style="margin-top: 8px;">Sources: <a href="https://www.tripadvisor.com/Restaurants-g1021146-c39-Ichikawa_Chiba_Prefecture_Kanto.html">TripAdvisor</a> | <a href="https://tabelog.com/en/chiba/A1202/A120202/">Tabelog</a> | Google Maps</p>
+    <p style="margin-top: 8px; font-size: 0.75rem; opacity: 0.6;">Data collected April 2026. Restaurant status may change. Please verify before visiting.</p>
+</footer>
+
+</body>
+</html>
