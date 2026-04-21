@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 20 Most Reviewed Restaurants near Gyotoku Station</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #0d0d0d; color: #e8e0d8; line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+
+/* Nav */
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(13,13,13,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; padding: 14px 0; }
+.nav-inner { max-width: 940px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { font-size: 15px; font-weight: 600; color: #d4a574; letter-spacing: 1px; }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { font-size: 13px; font-weight: 500; color: #666; letter-spacing: 0.3px; transition: color 0.2s; }
+.nav-links a:hover { color: #d4a574; }
+
+/* Hero */
+.hero { max-width: 940px; margin: 0 auto; padding: 80px 24px 60px; text-align: center; }
+.hero-label { font-size: 11px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #d4a574; margin-bottom: 20px; }
+.hero h1 { font-size: 40px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; color: #f5e6d3; }
+.hero-sub { font-size: 15px; color: #777; font-weight: 300; max-width: 520px; margin: 0 auto 40px; }
+.hero-stats { display: flex; justify-content: center; gap: 48px; padding-top: 36px; border-top: 1px solid #222; }
+.hero-stat-num { font-size: 36px; font-weight: 700; display: block; background: linear-gradient(135deg, #d4a574, #f5e6d3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-stat-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #666; font-weight: 500; }
+
+/* Insights */
+.insights { max-width: 940px; margin: 0 auto; padding: 0 24px 64px; }
+.section-title { font-size: 22px; font-weight: 700; margin-bottom: 28px; text-align: center; color: #f5e6d3; }
+.insights-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.insight-card { padding: 24px; border: 1px solid #222; border-radius: 8px; background: #111; transition: border-color 0.3s; }
+.insight-card:hover { border-color: #d4a574; }
+.insight-icon { font-size: 20px; margin-bottom: 10px; }
+.insight-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #d4a574; }
+.insight-text { font-size: 13px; color: #888; line-height: 1.55; }
+
+/* Restaurant List */
+.list { max-width: 940px; margin: 0 auto; padding: 0 24px 80px; }
+.list-sub { font-size: 13px; color: #555; margin-bottom: 40px; text-align: center; }
+
+.entry { display: grid; grid-template-columns: 60px 1fr auto; gap: 20px; align-items: start; padding: 28px 20px; margin-bottom: 8px; border: 1px solid #1a1a1a; border-radius: 8px; background: #111; transition: border-color 0.3s, background 0.3s; }
+.entry:hover { border-color: #333; background: #151515; }
+
+.entry-rank { font-size: 28px; font-weight: 700; color: #333; text-align: center; padding-top: 2px; }
+.entry.top3 .entry-rank { background: linear-gradient(135deg, #d4a574, #f5e6d3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 32px; }
+
+.entry-info h3 { font-size: 17px; font-weight: 600; margin-bottom: 2px; color: #f5e6d3; }
+.entry-jp { font-size: 13px; color: #666; margin-bottom: 10px; }
+.entry-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.tag { font-size: 11px; padding: 4px 11px; border: 1px solid #2a2a2a; border-radius: 20px; color: #888; font-weight: 500; background: transparent; }
+.tag.award { border-color: #d4a574; color: #d4a574; background: rgba(212,165,116,0.08); }
+.tag.cash { border-color: #555; color: #999; }
+.entry-distance { font-size: 12px; color: #555; }
+
+.entry-score { text-align: right; min-width: 100px; }
+.score-num { font-size: 26px; font-weight: 700; color: #888; }
+.entry.top3 .score-num { background: linear-gradient(135deg, #d4a574, #f5e6d3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.score-stars { font-size: 13px; color: #d4a574; letter-spacing: 1px; }
+.score-reviews { font-size: 11px; color: #555; margin-top: 2px; }
+.maps-link { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 500; color: #666; border: 1px solid #2a2a2a; padding: 4px 12px; border-radius: 20px; transition: all 0.2s; }
+.maps-link:hover { color: #d4a574; border-color: #d4a574; }
+
+/* Footer */
+.footer { border-top: 1px solid #1a1a1a; padding: 44px 24px; text-align: center; }
+.footer-design { font-size: 14px; color: #555; margin-bottom: 6px; font-weight: 500; }
+.footer-credit { font-size: 12px; color: #333; }
+
+/* Responsive */
+@media (max-width: 700px) {
+  .hero h1 { font-size: 26px; }
+  .hero-stats { flex-direction: column; gap: 20px; }
+  .insights-grid { grid-template-columns: 1fr; }
+  .entry { grid-template-columns: 44px 1fr; gap: 12px; padding: 20px 16px; }
+  .entry-score { grid-column: 2; text-align: left; }
+  .score-num { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">GYOTOKU DINING</div>
+    <div class="nav-links">
+      <a href="index.html">Overview</a>
+      <a href="ranking.html">Rankings</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-label">Gyotoku Station Area</div>
+  <h1>Top 20 Most Reviewed Restaurants</h1>
+  <p class="hero-sub">The definitive guide to the highest-reviewed dining destinations within walking distance of Gyotoku Station, Ichikawa City.</p>
+  <div class="hero-stats">
+    <div><span class="hero-stat-num">20</span><span class="hero-stat-label">Restaurants</span></div>
+    <div><span class="hero-stat-num">3,037+</span><span class="hero-stat-label">Total Reviews</span></div>
+    <div><span class="hero-stat-num">3.84</span><span class="hero-stat-label">Highest Rating</span></div>
+    <div><span class="hero-stat-num">2</span><span class="hero-stat-label">Tabelog 100</span></div>
+  </div>
+</header>
+
+<section class="insights">
+  <h2 class="section-title">Key Insights</h2>
+  <div class="insights-grid">
+    <div class="insight-card">
+      <div class="insight-icon">&#127836;</div>
+      <div class="insight-title">Ramen is King</div>
+      <div class="insight-text">Komuro dominates with 1,422 reviews — 3x more than #2. Winner of Ramen EAST 100 three consecutive years (2023-2025).</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon">&#129385;</div>
+      <div class="insight-title">Meat Lover's Paradise</div>
+      <div class="insight-text">4 of the top 10 restaurants specialize in steak or meat. Gyotoku takes its beef seriously.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon">&#128293;</div>
+      <div class="insight-title">BBQ Culture</div>
+      <div class="insight-text">3 yakiniku restaurants in the top 11. Grilled meat runs deep in the local dining culture.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon">&#127942;</div>
+      <div class="insight-title">Two Tabelog 100 Winners</div>
+      <div class="insight-text">Komuro + Steak Ishii — exceptionally rare for a single station to produce two national-level award winners.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon">&#128694;</div>
+      <div class="insight-title">Walkable District</div>
+      <div class="insight-text">16 of 20 restaurants are within 350m of the station. The entire dining scene is accessible on foot.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon">&#128181;</div>
+      <div class="insight-title">Cash Culture</div>
+      <div class="insight-text">The top 2 most-reviewed restaurants are cash-only. Bring yen when visiting Gyotoku.</div>
+    </div>
+  </div>
+</section>
+
+<section class="list">
+  <h2 class="section-title">The Rankings</h2>
+  <p class="list-sub">Ordered by total review count on Tabelog. Ratings on a 5.0 scale.</p>
+
+  <div class="entry top3">
+    <div class="entry-rank">1</div>
+    <div class="entry-info">
+      <h3>China Soba Komuro</h3>
+      <div class="entry-jp">支那ソバ 小むろ</div>
+      <div class="entry-meta">
+        <span class="tag">Ramen / Tsukemen</span>
+        <span class="tag">&#165;1,000-1,999</span>
+        <span class="tag cash">Cash Only</span>
+        <span class="tag award">Ramen EAST 100 (2023-2025)</span>
+      </div>
+      <div class="entry-distance">5 min walk from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.84</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+      <div class="score-reviews">1,422 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E6%94%AF%E9%82%A3%E3%82%BD%E3%83%90+%E5%B0%8F%E3%82%80%E3%82%8D+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry top3">
+    <div class="entry-rank">2</div>
+    <div class="entry-info">
+      <h3>Steak Ishii</h3>
+      <div class="entry-jp">ステーキ石井</div>
+      <div class="entry-meta">
+        <span class="tag">Steak / Hamburger</span>
+        <span class="tag">&#165;1,000-5,999</span>
+        <span class="tag cash">Cash Only</span>
+        <span class="tag award">Steak EAST 100 (2025)</span>
+      </div>
+      <div class="entry-distance">5 min walk from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.57</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">433 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E7%9F%B3%E4%BA%95+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry top3">
+    <div class="entry-rank">3</div>
+    <div class="entry-info">
+      <h3>Dokuissho Gyoza</h3>
+      <div class="entry-jp">独一処餃子 行徳店</div>
+      <div class="entry-meta">
+        <span class="tag">Chinese / Dumpling</span>
+      </div>
+      <div class="entry-distance">215m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.50</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">278 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E7%8B%AC%E4%B8%80%E5%87%A6%E9%A4%83%E5%AD%90+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">4</div>
+    <div class="entry-info">
+      <h3>Niku to Kome Hajime</h3>
+      <div class="entry-jp">肉と米 はじめ 行徳店</div>
+      <div class="entry-meta">
+        <span class="tag">Steak / Hamburger</span>
+      </div>
+      <div class="entry-distance">228m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.13</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">173 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%81%A8%E7%B1%B3+%E3%81%AF%E3%81%98%E3%82%81+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">5</div>
+    <div class="entry-info">
+      <h3>Bombay Palace</h3>
+      <div class="entry-jp">ボンベイパレス</div>
+      <div class="entry-meta">
+        <span class="tag">Indian Curry</span>
+      </div>
+      <div class="entry-distance">345m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.43</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">153 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%83%9C%E3%83%B3%E3%83%99%E3%82%A4%E3%83%91%E3%83%AC%E3%82%B9+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">6</div>
+    <div class="entry-info">
+      <h3>Vege Bar Chibattoria</h3>
+      <div class="entry-jp">ベジバル CHIBATTORIA</div>
+      <div class="entry-meta">
+        <span class="tag">Italian / Vegetarian</span>
+      </div>
+      <div class="entry-distance">690m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.55</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">120 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=CHIBATTORIA+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">7</div>
+    <div class="entry-info">
+      <h3>Koma</h3>
+      <div class="entry-jp">コマ</div>
+      <div class="entry-meta">
+        <span class="tag">Chicken / Izakaya</span>
+      </div>
+      <div class="entry-distance">186m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.32</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">87 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%B3%E3%83%9E+%E8%A1%8C%E5%BE%B3+%E5%B1%85%E9%85%92%E5%B1%8B" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">8</div>
+    <div class="entry-info">
+      <h3>Shichirinbo</h3>
+      <div class="entry-jp">七輪房 南行徳店</div>
+      <div class="entry-meta">
+        <span class="tag">Yakiniku / BBQ</span>
+      </div>
+      <div class="entry-distance">669m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.07</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">72 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E8%BC%AA%E6%88%BF+%E5%8D%97%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">9</div>
+    <div class="entry-info">
+      <h3>Gyotoku En</h3>
+      <div class="entry-jp">行徳苑</div>
+      <div class="entry-meta">
+        <span class="tag">Yakiniku / Wagyu</span>
+      </div>
+      <div class="entry-distance">125m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.23</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">63 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E8%8B%91+%E7%84%BC%E8%82%89" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">10</div>
+    <div class="entry-info">
+      <h3>Niku Bar Sunoki</h3>
+      <div class="entry-jp">肉バル スノーキー 行徳店</div>
+      <div class="entry-meta">
+        <span class="tag">Steak / Meat Bar</span>
+      </div>
+      <div class="entry-distance">Near station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.35</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">54 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%83%90%E3%83%AB+%E3%82%B9%E3%83%8E%E3%83%BC%E3%82%AD%E3%83%BC+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">11</div>
+    <div class="entry-info">
+      <h3>Yuyutei</h3>
+      <div class="entry-jp">遊遊亭</div>
+      <div class="entry-meta">
+        <span class="tag">Yakiniku</span>
+      </div>
+      <div class="entry-distance">212m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.25</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">52 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E9%81%8A%E9%81%8A%E4%BA%AD+%E8%A1%8C%E5%BE%B3+%E7%84%BC%E8%82%89" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">12</div>
+    <div class="entry-info">
+      <h3>Gyotoku Hikodori</h3>
+      <div class="entry-jp">行徳彦酉</div>
+      <div class="entry-meta">
+        <span class="tag">Yakitori / Izakaya</span>
+      </div>
+      <div class="entry-distance">77m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.09</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">42 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E5%BD%A6%E9%85%89" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">13</div>
+    <div class="entry-info">
+      <h3>Torizou</h3>
+      <div class="entry-jp">鳥蔵 行徳店</div>
+      <div class="entry-meta">
+        <span class="tag">Yakitori / Nabe</span>
+      </div>
+      <div class="entry-distance">123m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.04</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">34 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E8%94%B5+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">14</div>
+    <div class="entry-info">
+      <h3>Chikuzenya</h3>
+      <div class="entry-jp">ちくぜんや 行徳店</div>
+      <div class="entry-meta">
+        <span class="tag">Grilled Tripe / Izakaya</span>
+      </div>
+      <div class="entry-distance">84m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.04</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">32 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%81%A1%E3%81%8F%E3%81%9C%E3%82%93%E3%82%84+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">15</div>
+    <div class="entry-info">
+      <h3>SAKURA</h3>
+      <div class="entry-jp">サクラ</div>
+      <div class="entry-meta">
+        <span class="tag">Indian Curry / Dining Bar</span>
+      </div>
+      <div class="entry-distance">148m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.09</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">29 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%AF%E3%83%A9+SAKURA+%E8%A1%8C%E5%BE%B3+%E3%82%AB%E3%83%AC%E3%83%BC" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">16</div>
+    <div class="entry-info">
+      <h3>Tori Ichiza</h3>
+      <div class="entry-jp">炭火串焼 鳥一座</div>
+      <div class="entry-meta">
+        <span class="tag">Yakitori / Izakaya</span>
+      </div>
+      <div class="entry-distance">230m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.09</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">28 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E4%B8%80%E5%BA%A7+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">17</div>
+    <div class="entry-info">
+      <h3>UNCLESAM</h3>
+      <div class="entry-jp">アンクルサム</div>
+      <div class="entry-meta">
+        <span class="tag">Dining Bar / American</span>
+      </div>
+      <div class="entry-distance">169m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.13</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">26 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%B3%E3%82%AF%E3%83%AB%E3%82%B5%E3%83%A0+UNCLESAM+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">18</div>
+    <div class="entry-info">
+      <h3>Orion Shokudo</h3>
+      <div class="entry-jp">オリオン食堂</div>
+      <div class="entry-meta">
+        <span class="tag">Okinawa Cuisine</span>
+      </div>
+      <div class="entry-distance">163m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.08</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">25 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%83%AA%E3%82%AA%E3%83%B3%E9%A3%9F%E5%A0%82+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">19</div>
+    <div class="entry-info">
+      <h3>Ajifu</h3>
+      <div class="entry-jp">味富 中華居酒屋</div>
+      <div class="entry-meta">
+        <span class="tag">Chinese / Sichuan</span>
+      </div>
+      <div class="entry-distance">322m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.17</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">18 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E5%91%B3%E5%AF%8C+%E4%B8%AD%E8%8F%AF%E5%B1%85%E9%85%92%E5%B1%8B+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">20</div>
+    <div class="entry-info">
+      <h3>Thank You Sakaba</h3>
+      <div class="entry-jp">Thank You 酒場 行徳店</div>
+      <div class="entry-meta">
+        <span class="tag">Izakaya / Seafood</span>
+      </div>
+      <div class="entry-distance">136m from station</div>
+    </div>
+    <div class="entry-score">
+      <div class="score-num">3.08</div>
+      <div class="score-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+      <div class="score-reviews">15 reviews</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Thank+You+%E9%85%92%E5%A0%B4+%E8%A1%8C%E5%BE%B3" target="_blank">Map &#8599;</a>
+    </div>
+  </div>
+
+</section>
+
+<footer class="footer">
+  <div class="footer-design">Design 4 of 10: Dark Premium Gold</div>
+  <div class="footer-credit">Market Research by PimQuin Oracle | April 2026</div>
+</footer>
+
+</body>
+</html>

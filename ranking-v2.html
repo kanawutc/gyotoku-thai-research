@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyotoku Restaurants - Top 20 | Wongnai Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Prompt', -apple-system, sans-serif; background: #fafafa; color: #333; }
+
+        /* Wongnai-style orange header */
+        .header {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%);
+            color: white;
+        }
+        .nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav .brand {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 0.85rem; margin-left: 16px; }
+
+        .hero-section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 45px;
+        }
+        .hero-section h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .hero-section p { font-size: 0.95rem; opacity: 0.9; }
+
+        /* Search */
+        .search-wrap {
+            max-width: 1100px;
+            margin: -22px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .search-box {
+            background: white;
+            border-radius: 28px;
+            padding: 8px 8px 8px 24px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 0.95rem;
+            font-family: 'Prompt', sans-serif;
+        }
+        .search-box .search-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+
+        /* Category pills */
+        .category-pills {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 24px;
+        }
+        .pill {
+            white-space: nowrap;
+            padding: 8px 18px;
+            border-radius: 24px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            border: 1px solid #e0e0e0;
+            background: white;
+            color: #555;
+            cursor: pointer;
+        }
+        .pill.active {
+            background: #ff6b35;
+            color: white;
+            border-color: #ff6b35;
+        }
+
+        /* Stats cards */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .stat-box {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .stat-box .val { font-size: 1.8rem; font-weight: 700; color: #ff6b35; }
+        .stat-box .desc { font-size: 0.75rem; color: #999; margin-top: 4px; }
+
+        /* Restaurant list */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: #ff6b35;
+            border-radius: 2px;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+            margin-bottom: 14px;
+            display: flex;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .food-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+
+        .food-rank {
+            min-width: 56px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 0;
+            background: #fff8f3;
+        }
+        .food-rank .pos {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+        .food-card:nth-child(1) .food-rank { background: linear-gradient(135deg, #fff7e6, #ffecb3); }
+        .food-card:nth-child(1) .food-rank .pos { color: #f57c00; font-size: 1.6rem; }
+        .food-card:nth-child(2) .food-rank { background: #f5f5f5; }
+        .food-card:nth-child(2) .food-rank .pos { color: #9e9e9e; }
+        .food-card:nth-child(3) .food-rank { background: #fbe9e7; }
+        .food-card:nth-child(3) .food-rank .pos { color: #bf360c; }
+
+        .food-info { flex: 1; padding: 14px 18px; }
+        .food-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        .food-name-jp { font-size: 0.78rem; color: #999; margin-top: 1px; }
+
+        /* Wongnai-style star rating */
+        .wongnai-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .star-row {
+            display: flex;
+            gap: 1px;
+        }
+        .star {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            position: relative;
+        }
+        .star::before {
+            content: '\2605';
+            font-size: 16px;
+            color: #e0e0e0;
+        }
+        .star.filled::before { color: #ff6b35; }
+        .star.half::before { color: #ff6b35; }
+        .score { font-size: 0.85rem; font-weight: 600; color: #ff6b35; }
+        .rev-count { font-size: 0.78rem; color: #999; }
+
+        .food-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        .ftag {
+            font-size: 0.7rem;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        .ftag-type { background: #fff3e0; color: #e65100; }
+        .ftag-award { background: #fce4ec; color: #c62828; }
+        .ftag-price { background: #e8f5e9; color: #2e7d32; }
+
+        .food-location {
+            font-size: 0.78rem;
+            color: #777;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .food-actions {
+            min-width: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border-left: 1px solid #f5f5f5;
+        }
+        .btn-map {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            background: #ff6b35;
+            color: white;
+            transition: background 0.2s;
+        }
+        .btn-map:hover { background: #e55a2b; }
+        .btn-fav {
+            border: 1px solid #ff6b35;
+            color: #ff6b35;
+            background: white;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Insights */
+        .insights {
+            background: linear-gradient(135deg, #fff8f3, #fff3e8);
+            border-radius: 16px;
+            padding: 28px;
+            margin-top: 30px;
+        }
+        .insights h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #e65100;
+            margin-bottom: 16px;
+        }
+        .insight-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .insight-item {
+            background: white;
+            border-radius: 12px;
+            padding: 14px 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .insight-item h3 { font-size: 0.9rem; color: #ff6b35; margin-bottom: 4px; }
+        .insight-item p { font-size: 0.8rem; color: #666; line-height: 1.5; }
+
+        footer {
+            background: #2d2d2d;
+            color: #aaa;
+            padding: 28px 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 40px;
+        }
+        footer a { color: #ff6b35; }
+
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 1.4rem; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .food-card { flex-direction: column; }
+            .food-rank { min-width: auto; flex-direction: row; gap: 8px; padding: 10px; }
+            .food-actions { min-width: auto; flex-direction: row; border-left: none; border-top: 1px solid #f5f5f5; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="nav">
+        <div class="brand">GyotokuEats</div>
+        <div>
+            <a href="index.html">Thai Research</a>
+            <a href="ranking.html">Original</a>
+        </div>
+    </div>
+    <div class="hero-section">
+        <h1>Top 20 Most Reviewed Restaurants</h1>
+        <p>Gyotoku Station, Ichikawa | Ranked by reviews from Tabelog, TripAdvisor & Google Maps</p>
+    </div>
+</div>
+
+<div class="search-wrap">
+    <div class="search-box">
+        <input type="text" placeholder="Search restaurants near Gyotoku..." readonly>
+        <button class="search-btn">&#128269;</button>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="category-pills">
+        <div class="pill active">All (20)</div>
+        <div class="pill">Ramen</div>
+        <div class="pill">Steak & Meat</div>
+        <div class="pill">Yakiniku</div>
+        <div class="pill">Izakaya</div>
+        <div class="pill">Chinese</div>
+        <div class="pill">Indian</div>
+        <div class="pill">Italian</div>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-box"><div class="val">20</div><div class="desc">Restaurants</div></div>
+        <div class="stat-box"><div class="val">3,037+</div><div class="desc">Reviews</div></div>
+        <div class="stat-box"><div class="val">3.84</div><div class="desc">Highest</div></div>
+        <div class="stat-box"><div class="val">2</div><div class="desc">Awards</div></div>
+    </div>
+
+    <div class="section-title">Restaurant Rankings</div>
+
+    <!-- #1 -->
+    <div class="food-card">
+        <div class="food-rank"><div class="pos">1</div></div>
+        <div class="food-info">
+            <div class="food-name">China Soba Komuro</div>
+            <div class="food-name-jp">&#25903;&#37027;&#12477;&#12496; &#23567;&#12416;&#12429;</div>
+            <div class="wongnai-rating">
+                <div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star half"></span></div>
+                <span class="score">3.84</span>
+                <span class="rev-count">(1,422 reviews)</span>
+            </div>
+            <div class="food-tags">
+                <span class="ftag ftag-type">Ramen / Tsukemen</span>
+                <span class="ftag ftag-price">&yen;1,000-1,999</span>
+                <span class="ftag ftag-award">Ramen EAST 100</span>
+            </div>
+            <div class="food-location">&#128205; Suehiro 1-18-13, 5 min walk | &#128336; Wed-Sun 10:00-15:30 | Cash only</div>
+        </div>
+        <div class="food-actions">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E6%94%AF%E9%82%A3%E3%82%BD%E3%83%90+%E5%B0%8F%E3%82%80%E3%82%8D+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a>
+            <button class="btn-fav">&#9825; Save</button>
+        </div>
+    </div>
+
+    <!-- #2 -->
+    <div class="food-card">
+        <div class="food-rank"><div class="pos">2</div></div>
+        <div class="food-info">
+            <div class="food-name">Steak Ishii</div>
+            <div class="food-name-jp">&#12473;&#12486;&#12540;&#12461;&#30707;&#20117;</div>
+            <div class="wongnai-rating">
+                <div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star half"></span><span class="star"></span></div>
+                <span class="score">3.57</span>
+                <span class="rev-count">(433 reviews)</span>
+            </div>
+            <div class="food-tags">
+                <span class="ftag ftag-type">Steak / Hamburger</span>
+                <span class="ftag ftag-price">&yen;1,000-5,999</span>
+                <span class="ftag ftag-award">Steak EAST 100</span>
+            </div>
+            <div class="food-location">&#128205; Gyotoku Ekimae 1-7-7, 5 min walk | Cash only | 45 seats</div>
+        </div>
+        <div class="food-actions">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E7%9F%B3%E4%BA%95+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a>
+            <button class="btn-fav">&#9825; Save</button>
+        </div>
+    </div>
+
+    <!-- #3 -->
+    <div class="food-card">
+        <div class="food-rank"><div class="pos">3</div></div>
+        <div class="food-info">
+            <div class="food-name">Dokuissho Gyoza Gyotoku</div>
+            <div class="food-name-jp">&#29420;&#19968;&#20966;&#39187;&#23376; &#34892;&#24499;&#24215;</div>
+            <div class="wongnai-rating">
+                <div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star half"></span><span class="star"></span></div>
+                <span class="score">3.50</span>
+                <span class="rev-count">(278 reviews)</span>
+            </div>
+            <div class="food-tags"><span class="ftag ftag-type">Chinese / Dumpling</span></div>
+            <div class="food-location">&#128205; 215m from station</div>
+        </div>
+        <div class="food-actions">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E7%8B%AC%E4%B8%80%E5%87%A6%E9%A4%83%E5%AD%90+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a>
+        </div>
+    </div>
+
+    <!-- #4-20 -->
+    <div class="food-card"><div class="food-rank"><div class="pos">4</div></div><div class="food-info"><div class="food-name">Niku to Kome Hajime <span class="food-name-jp">&#32905;&#12392;&#31859; &#12399;&#12376;&#12417;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.13</span><span class="rev-count">(173)</span></div><div class="food-tags"><span class="ftag ftag-type">Steak / Hamburger</span></div><div class="food-location">&#128205; 228m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%81%A8%E7%B1%B3+%E3%81%AF%E3%81%98%E3%82%81+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">5</div></div><div class="food-info"><div class="food-name">Bombay Palace <span class="food-name-jp">&#12508;&#12531;&#12505;&#12452;&#12497;&#12524;&#12473;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star half"></span><span class="star"></span></div><span class="score">3.43</span><span class="rev-count">(153)</span></div><div class="food-tags"><span class="ftag ftag-type">Indian Curry</span></div><div class="food-location">&#128205; 345m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E3%83%9C%E3%83%B3%E3%83%99%E3%82%A4%E3%83%91%E3%83%AC%E3%82%B9+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">6</div></div><div class="food-info"><div class="food-name">Vege Bar Chibattoria <span class="food-name-jp">&#12505;&#12472;&#12496;&#12523; CHIBATTORIA</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star half"></span><span class="star"></span></div><span class="score">3.55</span><span class="rev-count">(120)</span></div><div class="food-tags"><span class="ftag ftag-type">Italian / Vegetable</span></div><div class="food-location">&#128205; 690m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=CHIBATTORIA+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">7</div></div><div class="food-info"><div class="food-name">Koma <span class="food-name-jp">&#12467;&#12510;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.32</span><span class="rev-count">(87)</span></div><div class="food-tags"><span class="ftag ftag-type">Chicken / Izakaya</span></div><div class="food-location">&#128205; 186m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E3%82%B3%E3%83%9E+%E8%A1%8C%E5%BE%B3+%E5%B1%85%E9%85%92%E5%B1%8B" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">8</div></div><div class="food-info"><div class="food-name">Shichirinbo <span class="food-name-jp">&#19971;&#36650;&#25151; &#21335;&#34892;&#24499;&#24215;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.07</span><span class="rev-count">(72)</span></div><div class="food-tags"><span class="ftag ftag-type">Yakiniku (BBQ)</span></div><div class="food-location">&#128205; 669m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E8%BC%AA%E6%88%BF+%E5%8D%97%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">9</div></div><div class="food-info"><div class="food-name">Gyotoku En <span class="food-name-jp">&#34892;&#24499;&#33489;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.23</span><span class="rev-count">(63)</span></div><div class="food-tags"><span class="ftag ftag-type">Yakiniku / Wagyu</span></div><div class="food-location">&#128205; 125m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E8%8B%91+%E7%84%BC%E8%82%89" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">10</div></div><div class="food-info"><div class="food-name">Niku Bar Sunoki <span class="food-name-jp">&#12473;&#12494;&#12540;&#12461;&#12540;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.35</span><span class="rev-count">(54)</span></div><div class="food-tags"><span class="ftag ftag-type">Steak / Meat Bar</span></div><div class="food-location">&#128205; Near station</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%83%90%E3%83%AB+%E3%82%B9%E3%83%8E%E3%83%BC%E3%82%AD%E3%83%BC+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">11</div></div><div class="food-info"><div class="food-name">Yuyutei <span class="food-name-jp">&#36938;&#36938;&#20141;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.25</span><span class="rev-count">(52)</span></div><div class="food-tags"><span class="ftag ftag-type">Yakiniku</span></div><div class="food-location">&#128205; 212m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E9%81%8A%E9%81%8A%E4%BA%AD+%E8%A1%8C%E5%BE%B3+%E7%84%BC%E8%82%89" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">12</div></div><div class="food-info"><div class="food-name">Gyotoku Hikodori <span class="food-name-jp">&#34892;&#24499;&#24422;&#37193;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.09</span><span class="rev-count">(42)</span></div><div class="food-tags"><span class="ftag ftag-type">Yakitori / Izakaya</span></div><div class="food-location">&#128205; 77m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E5%BD%A6%E9%85%89" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">13</div></div><div class="food-info"><div class="food-name">Torizou <span class="food-name-jp">&#40165;&#34101;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.04</span><span class="rev-count">(34)</span></div><div class="food-tags"><span class="ftag ftag-type">Yakitori / Nabe</span></div><div class="food-location">&#128205; 123m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E8%94%B5+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">14</div></div><div class="food-info"><div class="food-name">Chikuzenya <span class="food-name-jp">&#12385;&#12367;&#12380;&#12435;&#12420;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.04</span><span class="rev-count">(32)</span></div><div class="food-tags"><span class="ftag ftag-type">Grilled Tripe</span></div><div class="food-location">&#128205; 84m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E3%81%A1%E3%81%8F%E3%81%9C%E3%82%93%E3%82%84+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">15</div></div><div class="food-info"><div class="food-name">SAKURA <span class="food-name-jp">&#12469;&#12463;&#12521;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.09</span><span class="rev-count">(29)</span></div><div class="food-tags"><span class="ftag ftag-type">Indian Curry</span></div><div class="food-location">&#128205; 148m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%AF%E3%83%A9+SAKURA+%E8%A1%8C%E5%BE%B3+%E3%82%AB%E3%83%AC%E3%83%BC" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">16</div></div><div class="food-info"><div class="food-name">Tori Ichiza <span class="food-name-jp">&#40165;&#19968;&#24231;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.09</span><span class="rev-count">(28)</span></div><div class="food-tags"><span class="ftag ftag-type">Yakitori</span></div><div class="food-location">&#128205; 230m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E4%B8%80%E5%BA%A7+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">17</div></div><div class="food-info"><div class="food-name">UNCLESAM <span class="food-name-jp">&#12450;&#12531;&#12463;&#12523;&#12469;&#12512;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.13</span><span class="rev-count">(26)</span></div><div class="food-tags"><span class="ftag ftag-type">Dining Bar</span></div><div class="food-location">&#128205; 169m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%B3%E3%82%AF%E3%83%AB%E3%82%B5%E3%83%A0+UNCLESAM+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">18</div></div><div class="food-info"><div class="food-name">Orion Shokudo <span class="food-name-jp">&#12458;&#12522;&#12458;&#12531;&#39135;&#22530;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.08</span><span class="rev-count">(25)</span></div><div class="food-tags"><span class="ftag ftag-type">Okinawa</span></div><div class="food-location">&#128205; 163m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%83%AA%E3%82%AA%E3%83%B3%E9%A3%9F%E5%A0%82+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">19</div></div><div class="food-info"><div class="food-name">Ajifu <span class="food-name-jp">&#21619;&#23500;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.17</span><span class="rev-count">(18)</span></div><div class="food-tags"><span class="ftag ftag-type">Chinese / Sichuan</span></div><div class="food-location">&#128205; 322m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=%E5%91%B3%E5%AF%8C+%E4%B8%AD%E8%8F%AF%E5%B1%85%E9%85%92%E5%B1%8B+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <div class="food-card"><div class="food-rank"><div class="pos">20</div></div><div class="food-info"><div class="food-name">Thank You Sakaba <span class="food-name-jp">Thank You &#37202;&#22580;</span></div><div class="wongnai-rating"><div class="star-row"><span class="star filled"></span><span class="star filled"></span><span class="star filled"></span><span class="star"></span><span class="star"></span></div><span class="score">3.08</span><span class="rev-count">(15)</span></div><div class="food-tags"><span class="ftag ftag-type">Izakaya / Seafood</span></div><div class="food-location">&#128205; 136m</div></div><div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Thank+You+%E9%85%92%E5%A0%B4+%E8%A1%8C%E5%BE%B3" target="_blank" class="btn-map">&#128506; Maps</a></div></div>
+
+    <!-- Insights -->
+    <div class="insights">
+        <h2>Key Insights</h2>
+        <div class="insight-list">
+            <div class="insight-item"><h3>Ramen is King</h3><p>Komuro dominates with 1,422 reviews &mdash; 3x more than #2. Tabelog Ramen 100 winner 3 years running.</p></div>
+            <div class="insight-item"><h3>Meat Lover's Paradise</h3><p>4 out of top 10 are steak/meat. Gyotoku is carnivore heaven.</p></div>
+            <div class="insight-item"><h3>BBQ Culture</h3><p>3 yakiniku joints in top 11 &mdash; charcoal BBQ runs deep.</p></div>
+            <div class="insight-item"><h3>Two 100 Winners</h3><p>Komuro + Steak Ishii both Tabelog 100. Rare for one station.</p></div>
+            <div class="insight-item"><h3>Walkable</h3><p>16/20 within 350m of station. No taxi needed.</p></div>
+            <div class="insight-item"><h3>Cash Culture</h3><p>Top 2 are cash-only. Bring JPY.</p></div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>Market Research by <strong>PimQuin Oracle</strong> | April 2026</p>
+    <p style="margin-top: 8px;">Sources: <a href="#">Tabelog</a> | <a href="#">TripAdvisor</a> | Google Maps</p>
+    <p style="margin-top: 8px; opacity: 0.6;">Design 2 of 10: Wongnai Orange</p>
+</footer>
+
+</body>
+</html>

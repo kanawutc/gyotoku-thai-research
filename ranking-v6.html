@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 20 Restaurants near Gyotoku Station — Google Maps Style</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue: #1a73e8;
+  --blue-hover: #1557b0;
+  --green: #0d652d;
+  --green-bg: #e6f4ea;
+  --yellow: #e37400;
+  --yellow-bg: #fef7e0;
+  --red: #c5221f;
+  --gray-50: #f8f9fa;
+  --gray-100: #f1f3f4;
+  --gray-200: #e8eaed;
+  --gray-300: #dadce0;
+  --gray-500: #80868b;
+  --gray-700: #5f6368;
+  --gray-900: #202124;
+  --shadow-sm: 0 1px 2px rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+  --shadow-md: 0 1px 3px rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+  --radius: 8px;
+}
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-900);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Top Bar */
+.topbar {
+  background: #fff;
+  border-bottom: 1px solid var(--gray-200);
+  position: sticky; top: 0; z-index: 100;
+  padding: 8px 16px;
+  display: flex; align-items: center; gap: 16px;
+}
+.topbar-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 18px; font-weight: 500; color: var(--gray-700);
+  white-space: nowrap;
+}
+.topbar-logo svg { flex-shrink: 0; }
+.topbar-nav {
+  display: flex; gap: 4px; margin-left: auto;
+}
+.topbar-nav a {
+  padding: 8px 12px; border-radius: 20px;
+  font-size: 13px; font-weight: 500;
+  color: var(--gray-700); transition: background 0.15s;
+}
+.topbar-nav a:hover { background: var(--gray-100); text-decoration: none; }
+.topbar-nav a.active { color: var(--blue); background: #e8f0fe; }
+
+/* Search Bar */
+.search-section {
+  max-width: 720px; margin: 24px auto 0;
+  padding: 0 16px;
+}
+.search-bar {
+  display: flex; align-items: center;
+  background: #fff;
+  border: 1px solid var(--gray-300);
+  border-radius: 24px;
+  padding: 10px 20px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+}
+.search-bar:focus-within { box-shadow: var(--shadow-md); border-color: var(--blue); }
+.search-icon { color: var(--blue); margin-right: 12px; flex-shrink: 0; }
+.search-bar input {
+  border: none; outline: none; flex: 1;
+  font-size: 15px; font-family: inherit;
+  background: transparent;
+}
+.search-bar input::placeholder { color: var(--gray-500); }
+
+/* Header Info */
+.header-info {
+  max-width: 720px; margin: 20px auto 0;
+  padding: 0 16px;
+}
+.header-info h1 {
+  font-size: 22px; font-weight: 400; color: var(--gray-900);
+}
+.header-info h1 strong { font-weight: 700; }
+.header-info .subtitle {
+  font-size: 13px; color: var(--gray-500); margin-top: 4px;
+}
+
+/* Stats Chips */
+.stats-chips {
+  max-width: 720px; margin: 16px auto;
+  padding: 0 16px;
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff; border: 1px solid var(--gray-300);
+  border-radius: 20px; padding: 6px 14px;
+  font-size: 13px; color: var(--gray-700);
+}
+.chip .chip-number {
+  font-weight: 700; color: var(--blue);
+}
+
+/* Insights Panel */
+.insights-panel {
+  max-width: 720px; margin: 16px auto;
+  padding: 0 16px;
+}
+.insights-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 16px 20px;
+}
+.insights-card h2 {
+  font-size: 14px; font-weight: 500; color: var(--gray-700);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.insights-card h2 svg { color: var(--yellow); }
+.insights-list {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}
+.insight-item {
+  font-size: 13px; color: var(--gray-700);
+  padding: 6px 0;
+  display: flex; align-items: baseline; gap: 8px;
+}
+.insight-item .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--blue); flex-shrink: 0;
+  margin-top: 5px;
+}
+@media (max-width: 600px) {
+  .insights-list { grid-template-columns: 1fr; }
+}
+
+/* Restaurant List */
+.restaurant-list {
+  max-width: 720px; margin: 20px auto 40px;
+  padding: 0 16px;
+}
+.list-header {
+  font-size: 14px; font-weight: 500; color: var(--gray-700);
+  margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.list-header .sort-label { font-size: 12px; color: var(--gray-500); }
+
+.r-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 16px 20px;
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 14px;
+  align-items: start;
+  transition: box-shadow 0.15s;
+  cursor: pointer;
+}
+.r-card:hover { box-shadow: var(--shadow-md); }
+
+.r-rank {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+  background: var(--gray-100); color: var(--gray-700);
+}
+.r-card:nth-child(-n+3) .r-rank {
+  background: var(--blue); color: #fff;
+}
+
+.r-body h3 {
+  font-size: 15px; font-weight: 500; margin-bottom: 1px;
+  color: var(--gray-900);
+}
+.r-body .r-jp {
+  font-size: 12px; color: var(--gray-500); margin-bottom: 6px;
+}
+.r-body .r-tags {
+  display: flex; flex-wrap: wrap; gap: 4px;
+  margin-bottom: 6px;
+}
+.r-body .r-tag {
+  background: var(--gray-100);
+  border-radius: 4px; padding: 2px 8px;
+  font-size: 11px; color: var(--gray-700);
+}
+.r-body .r-tag.award {
+  background: #fce8e6; color: var(--red);
+  font-weight: 500;
+}
+.r-details {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  font-size: 12px; color: var(--gray-500);
+  align-items: center;
+}
+.r-details .r-distance {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-weight: 500; color: var(--gray-700);
+}
+.r-details .r-distance svg { color: var(--blue); }
+
+.r-side { text-align: right; }
+.r-score {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 28px;
+  border-radius: 6px;
+  font-size: 14px; font-weight: 700;
+  color: #fff;
+}
+.r-score.high { background: var(--green); }
+.r-score.mid { background: var(--yellow); }
+.r-score.low { background: var(--gray-500); }
+.r-reviews {
+  font-size: 11px; color: var(--gray-500);
+  margin-top: 4px;
+}
+.r-map-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-top: 8px; font-size: 12px; font-weight: 500;
+  color: var(--blue);
+}
+.r-map-link:hover { text-decoration: none; opacity: 0.8; }
+
+/* Footer */
+footer {
+  background: #fff; border-top: 1px solid var(--gray-200);
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 12px; color: var(--gray-500);
+  line-height: 2;
+}
+footer .design-label { font-weight: 500; color: var(--blue); font-size: 13px; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .topbar { padding: 8px 12px; }
+  .topbar-nav a { padding: 6px 8px; font-size: 12px; }
+  .r-card { grid-template-columns: 32px 1fr; gap: 10px; }
+  .r-side { grid-column: 2; text-align: left; display: flex; align-items: center; gap: 12px; }
+  .r-rank { width: 30px; height: 30px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" fill="#ea4335"/></svg>
+    Gyotoku Guide
+  </div>
+  <nav class="topbar-nav">
+    <a href="index.html">Home</a>
+    <a href="ranking.html">Original</a>
+    <a href="ranking-v5.html">V5 Magazine</a>
+    <a href="ranking-v6.html" class="active">V6 Maps</a>
+  </nav>
+</div>
+
+<!-- Search Bar -->
+<div class="search-section">
+  <div class="search-bar">
+    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
+    <input type="text" value="Restaurants near Gyotoku Station" placeholder="Search restaurants...">
+  </div>
+</div>
+
+<!-- Header -->
+<div class="header-info">
+  <h1><strong>Top 20</strong> Most Reviewed Restaurants</h1>
+  <div class="subtitle">Gyotoku Station, Ichikawa-shi, Chiba -- Ranked by review count on Tabelog</div>
+</div>
+
+<!-- Stats Chips -->
+<div class="stats-chips">
+  <div class="chip"><span class="chip-number">20</span> restaurants</div>
+  <div class="chip"><span class="chip-number">3,037+</span> total reviews</div>
+  <div class="chip"><span class="chip-number">3.84</span> highest rating</div>
+  <div class="chip"><span class="chip-number">2</span> Tabelog 100 awards</div>
+</div>
+
+<!-- Insights -->
+<div class="insights-panel">
+  <div class="insights-card">
+    <h2>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
+      Key Insights
+    </h2>
+    <div class="insights-list">
+      <div class="insight-item"><span class="dot"></span><span><strong>Ramen is King</strong> -- Komuro has 1,422 reviews, 3x the runner-up</span></div>
+      <div class="insight-item"><span class="dot"></span><span><strong>Meat Paradise</strong> -- 4 of top 10 are steak/meat-focused</span></div>
+      <div class="insight-item"><span class="dot"></span><span><strong>BBQ Culture</strong> -- 3 yakiniku spots in the top 11</span></div>
+      <div class="insight-item"><span class="dot"></span><span><strong>Walkable</strong> -- 16/20 within 350m of station</span></div>
+      <div class="insight-item"><span class="dot"></span><span><strong>Cash Culture</strong> -- Top 2 restaurants are cash-only</span></div>
+      <div class="insight-item"><span class="dot"></span><span><strong>2 Award Winners</strong> -- Both in Tabelog EAST 100</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Restaurant List -->
+<div class="restaurant-list">
+  <div class="list-header">
+    <span>All restaurants (20)</span>
+    <span class="sort-label">Sorted by: Most reviews</span>
+  </div>
+
+  <!-- 1 -->
+  <div class="r-card">
+    <div class="r-rank">1</div>
+    <div class="r-body">
+      <h3>China Soba Komuro</h3>
+      <div class="r-jp">支那ソバ 小むろ</div>
+      <div class="r-tags">
+        <span class="r-tag">Ramen</span><span class="r-tag">Tsukemen</span>
+        <span class="r-tag award">Ramen EAST 100 (2023-2025)</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg> 5min walk</span>
+        <span>&yen;1,000-1,999</span>
+        <span>Cash only</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score high">3.84</div>
+      <div class="r-reviews">1,422 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E6%94%AF%E9%82%A3%E3%82%BD%E3%83%90+%E5%B0%8F%E3%82%80%E3%82%8D+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="r-card">
+    <div class="r-rank">2</div>
+    <div class="r-body">
+      <h3>Steak Ishii</h3>
+      <div class="r-jp">ステーキ石井</div>
+      <div class="r-tags">
+        <span class="r-tag">Steak</span><span class="r-tag">Hamburger</span>
+        <span class="r-tag award">Steak EAST 100 (2025)</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 5min walk</span>
+        <span>&yen;1,000-5,999</span>
+        <span>Cash only</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score high">3.57</div>
+      <div class="r-reviews">433 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E7%9F%B3%E4%BA%95+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="r-card">
+    <div class="r-rank">3</div>
+    <div class="r-body">
+      <h3>Dokuissho Gyoza</h3>
+      <div class="r-jp">独一処餃子 行徳店</div>
+      <div class="r-tags">
+        <span class="r-tag">Chinese</span><span class="r-tag">Dumpling</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 215m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score high">3.50</div>
+      <div class="r-reviews">278 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E7%8B%AC%E4%B8%80%E5%87%A6%E9%A4%83%E5%AD%90+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="r-card">
+    <div class="r-rank">4</div>
+    <div class="r-body">
+      <h3>Niku to Kome Hajime</h3>
+      <div class="r-jp">肉と米 はじめ 行徳店</div>
+      <div class="r-tags">
+        <span class="r-tag">Steak</span><span class="r-tag">Hamburger</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 228m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score mid">3.13</div>
+      <div class="r-reviews">173 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%81%A8%E7%B1%B3+%E3%81%AF%E3%81%98%E3%82%81+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="r-card">
+    <div class="r-rank">5</div>
+    <div class="r-body">
+      <h3>Bombay Palace</h3>
+      <div class="r-jp">ボンベイパレス</div>
+      <div class="r-tags">
+        <span class="r-tag">Indian Curry</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 345m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score high">3.43</div>
+      <div class="r-reviews">153 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E3%83%9C%E3%83%B3%E3%83%99%E3%82%A4%E3%83%91%E3%83%AC%E3%82%B9+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="r-card">
+    <div class="r-rank">6</div>
+    <div class="r-body">
+      <h3>Vege Bar Chibattoria</h3>
+      <div class="r-jp">ベジバル CHIBATTORIA</div>
+      <div class="r-tags">
+        <span class="r-tag">Italian</span><span class="r-tag">Vegetarian</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 690m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score high">3.55</div>
+      <div class="r-reviews">120 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=CHIBATTORIA+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="r-card">
+    <div class="r-rank">7</div>
+    <div class="r-body">
+      <h3>Koma</h3>
+      <div class="r-jp">コマ</div>
+      <div class="r-tags">
+        <span class="r-tag">Chicken</span><span class="r-tag">Izakaya</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 186m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score mid">3.32</div>
+      <div class="r-reviews">87 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E3%82%B3%E3%83%9E+%E8%A1%8C%E5%BE%B3+%E5%B1%85%E9%85%92%E5%B1%8B" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="r-card">
+    <div class="r-rank">8</div>
+    <div class="r-body">
+      <h3>Shichirinbo</h3>
+      <div class="r-jp">七輪房 南行徳店</div>
+      <div class="r-tags">
+        <span class="r-tag">Yakiniku</span><span class="r-tag">BBQ</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 669m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score low">3.07</div>
+      <div class="r-reviews">72 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E8%BC%AA%E6%88%BF+%E5%8D%97%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="r-card">
+    <div class="r-rank">9</div>
+    <div class="r-body">
+      <h3>Gyotoku En</h3>
+      <div class="r-jp">行徳苑</div>
+      <div class="r-tags">
+        <span class="r-tag">Yakiniku</span><span class="r-tag">Wagyu</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 125m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score mid">3.23</div>
+      <div class="r-reviews">63 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E8%8B%91+%E7%84%BC%E8%82%89" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="r-card">
+    <div class="r-rank">10</div>
+    <div class="r-body">
+      <h3>Niku Bar Sunoki</h3>
+      <div class="r-jp">肉バル スノーキー 行徳店</div>
+      <div class="r-tags">
+        <span class="r-tag">Steak</span><span class="r-tag">Meat Bar</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Near station</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score mid">3.35</div>
+      <div class="r-reviews">54 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%83%90%E3%83%AB+%E3%82%B9%E3%83%8E%E3%83%BC%E3%82%AD%E3%83%BC+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="r-card">
+    <div class="r-rank">11</div>
+    <div class="r-body">
+      <h3>Yuyutei</h3>
+      <div class="r-jp">遊遊亭</div>
+      <div class="r-tags">
+        <span class="r-tag">Yakiniku</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 212m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score mid">3.25</div>
+      <div class="r-reviews">52 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E9%81%8A%E9%81%8A%E4%BA%AD+%E8%A1%8C%E5%BE%B3+%E7%84%BC%E8%82%89" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="r-card">
+    <div class="r-rank">12</div>
+    <div class="r-body">
+      <h3>Gyotoku Hikodori</h3>
+      <div class="r-jp">行徳彦酉</div>
+      <div class="r-tags">
+        <span class="r-tag">Yakitori</span><span class="r-tag">Izakaya</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 77m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score low">3.09</div>
+      <div class="r-reviews">42 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E5%BD%A6%E9%85%89" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 13 -->
+  <div class="r-card">
+    <div class="r-rank">13</div>
+    <div class="r-body">
+      <h3>Torizou</h3>
+      <div class="r-jp">鳥蔵 行徳店</div>
+      <div class="r-tags">
+        <span class="r-tag">Yakitori</span><span class="r-tag">Nabe</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 123m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score low">3.04</div>
+      <div class="r-reviews">34 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E8%94%B5+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 14 -->
+  <div class="r-card">
+    <div class="r-rank">14</div>
+    <div class="r-body">
+      <h3>Chikuzenya</h3>
+      <div class="r-jp">ちくぜんや 行徳店</div>
+      <div class="r-tags">
+        <span class="r-tag">Grilled Tripe</span><span class="r-tag">Izakaya</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 84m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score low">3.04</div>
+      <div class="r-reviews">32 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E3%81%A1%E3%81%8F%E3%81%9C%E3%82%93%E3%82%84+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 15 -->
+  <div class="r-card">
+    <div class="r-rank">15</div>
+    <div class="r-body">
+      <h3>SAKURA</h3>
+      <div class="r-jp">サクラ</div>
+      <div class="r-tags">
+        <span class="r-tag">Indian Curry</span><span class="r-tag">Dining Bar</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 148m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score low">3.09</div>
+      <div class="r-reviews">29 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%AF%E3%83%A9+SAKURA+%E8%A1%8C%E5%BE%B3+%E3%82%AB%E3%83%AC%E3%83%BC" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 16 -->
+  <div class="r-card">
+    <div class="r-rank">16</div>
+    <div class="r-body">
+      <h3>Tori Ichiza</h3>
+      <div class="r-jp">炭火串焼 鳥一座</div>
+      <div class="r-tags">
+        <span class="r-tag">Yakitori</span><span class="r-tag">Izakaya</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 230m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score low">3.09</div>
+      <div class="r-reviews">28 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E4%B8%80%E5%BA%A7+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 17 -->
+  <div class="r-card">
+    <div class="r-rank">17</div>
+    <div class="r-body">
+      <h3>UNCLESAM</h3>
+      <div class="r-jp">アンクルサム</div>
+      <div class="r-tags">
+        <span class="r-tag">Dining Bar</span><span class="r-tag">American</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 169m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score mid">3.13</div>
+      <div class="r-reviews">26 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%B3%E3%82%AF%E3%83%AB%E3%82%B5%E3%83%A0+UNCLESAM+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 18 -->
+  <div class="r-card">
+    <div class="r-rank">18</div>
+    <div class="r-body">
+      <h3>Orion Shokudo</h3>
+      <div class="r-jp">オリオン食堂</div>
+      <div class="r-tags">
+        <span class="r-tag">Okinawa Cuisine</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 163m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score low">3.08</div>
+      <div class="r-reviews">25 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%83%AA%E3%82%AA%E3%83%B3%E9%A3%9F%E5%A0%82+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 19 -->
+  <div class="r-card">
+    <div class="r-rank">19</div>
+    <div class="r-body">
+      <h3>Ajifu</h3>
+      <div class="r-jp">味富 中華居酒屋</div>
+      <div class="r-tags">
+        <span class="r-tag">Chinese</span><span class="r-tag">Sichuan</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 322m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score mid">3.17</div>
+      <div class="r-reviews">18 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=%E5%91%B3%E5%AF%8C+%E4%B8%AD%E8%8F%AF%E5%B1%85%E9%85%92%E5%B1%8B+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+  <!-- 20 -->
+  <div class="r-card">
+    <div class="r-rank">20</div>
+    <div class="r-body">
+      <h3>Thank You Sakaba</h3>
+      <div class="r-jp">Thank You 酒場 行徳店</div>
+      <div class="r-tags">
+        <span class="r-tag">Izakaya</span><span class="r-tag">Seafood</span>
+      </div>
+      <div class="r-details">
+        <span class="r-distance"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> 136m</span>
+      </div>
+    </div>
+    <div class="r-side">
+      <div class="r-score low">3.08</div>
+      <div class="r-reviews">15 reviews</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=Thank+You+%E9%85%92%E5%A0%B4+%E8%A1%8C%E5%BE%B3" target="_blank" class="r-map-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg> Maps</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="design-label">Design 6 of 10: Google Maps / Local Guide</div>
+  <div>Market Research by PimQuin Oracle | April 2026</div>
+  <div>Data sourced from Tabelog. All ratings and review counts as of research date.</div>
+</footer>
+
+</body>
+</html>

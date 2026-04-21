@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>行徳駅 レストランランキング TOP20 | Gyotoku Station Restaurant Ranking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #f5f5f0;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Navigation */
+  .top-nav {
+    background: #fff;
+    border-bottom: 3px solid #f5a623;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .top-nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+  }
+  .top-nav .logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f5a623;
+    text-decoration: none;
+  }
+  .top-nav .logo span { color: #333; font-weight: 400; font-size: 13px; margin-left: 8px; }
+  .nav-links { display: flex; gap: 16px; }
+  .nav-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: #f5a623; background: #fff8ee; }
+
+  /* Header */
+  .page-header {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 24px 16px;
+  }
+  .page-header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .breadcrumb {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 8px;
+  }
+  .breadcrumb a { color: #f5a623; text-decoration: none; }
+  .page-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+  }
+  .page-header .subtitle {
+    font-size: 13px;
+    color: #888;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 12px 16px;
+  }
+  .stats-bar-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #666;
+  }
+  .stat-item .stat-num {
+    font-weight: 700;
+    font-size: 18px;
+    color: #f5a623;
+  }
+
+  /* Main content */
+  .main-content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 16px;
+  }
+
+  /* Restaurant list */
+  .restaurant-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .restaurant-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .restaurant-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .restaurant-card.top3 {
+    border-left: 4px solid #f5a623;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  /* Rank badge */
+  .rank-badge {
+    min-width: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    border-right: 1px solid #e0e0e0;
+    padding: 12px 8px;
+  }
+  .rank-badge .rank-num {
+    font-size: 24px;
+    font-weight: 900;
+    color: #ccc;
+    line-height: 1;
+  }
+  .top3 .rank-badge .rank-num { color: #f5a623; }
+  .rank-badge .rank-label {
+    font-size: 9px;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Score circle */
+  .score-section {
+    min-width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-right: 1px solid #f0f0f0;
+  }
+  .score-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .score-high { background: linear-gradient(135deg, #f5a623, #e8920e); }
+  .score-mid { background: linear-gradient(135deg, #f5c563, #e8a82e); }
+  .score-low { background: linear-gradient(135deg, #d4b87a, #c4a060); }
+  .review-count {
+    font-size: 10px;
+    color: #999;
+    white-space: nowrap;
+  }
+
+  /* Info section */
+  .info-section {
+    flex: 1;
+    padding: 12px 16px;
+  }
+  .restaurant-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 2px;
+  }
+  .restaurant-name-jp {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+  }
+  .info-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    border: 1px solid;
+  }
+  .tag-genre { background: #fff8ee; border-color: #f5d89a; color: #9a7a2e; }
+  .tag-distance { background: #f0f7ff; border-color: #a8cdf5; color: #3a6ea5; }
+  .tag-price { background: #f5f0ff; border-color: #c5a8f5; color: #6a3ea5; }
+  .tag-cash { background: #fff0f0; border-color: #f5a8a8; color: #a53e3e; }
+  .tag-award { background: #fffbe0; border-color: #f5d623; color: #8a7a0e; font-weight: 700; }
+
+  .info-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    color: #999;
+  }
+  .maps-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #f5a623;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .maps-link:hover { color: #e8920e; text-decoration: underline; }
+  .maps-link svg { width: 12px; height: 12px; }
+
+  /* Sidebar */
+  .sidebar { display: flex; flex-direction: column; gap: 12px; }
+
+  .sidebar-box {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .sidebar-box-header {
+    background: #f5a623;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 12px;
+  }
+  .sidebar-box-body {
+    padding: 12px;
+  }
+
+  .insight-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .insight-item:last-child { border-bottom: none; }
+  .insight-item strong { color: #f5a623; }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .stat-box {
+    background: #fafafa;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+  }
+  .stat-box .num {
+    font-size: 22px;
+    font-weight: 900;
+    color: #f5a623;
+    line-height: 1;
+  }
+  .stat-box .label {
+    font-size: 10px;
+    color: #999;
+    margin-top: 2px;
+  }
+
+  .genre-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 11px;
+  }
+  .genre-bar .genre-name { flex: 0 0 80px; color: #666; }
+  .genre-bar .bar-track {
+    flex: 1;
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .genre-bar .bar-fill {
+    height: 100%;
+    background: #f5a623;
+    border-radius: 4px;
+  }
+  .genre-bar .bar-count { flex: 0 0 20px; text-align: right; color: #999; }
+
+  /* Footer */
+  .page-footer {
+    background: #333;
+    color: #999;
+    padding: 24px 16px;
+    margin-top: 24px;
+    text-align: center;
+    font-size: 12px;
+  }
+  .page-footer a { color: #f5a623; text-decoration: none; }
+  .page-footer .design-label { color: #666; margin-top: 8px; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .main-content {
+      grid-template-columns: 1fr;
+    }
+    .card-header { flex-wrap: wrap; }
+    .rank-badge { min-width: 40px; }
+    .score-section { min-width: 64px; padding: 8px; }
+    .score-circle { width: 44px; height: 44px; font-size: 15px; }
+    .info-section { padding: 8px 12px; }
+    .restaurant-name { font-size: 14px; }
+    .stats-bar-inner { gap: 12px; }
+    .nav-links a { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="logo">Gyotoku Ranking<span>| 行徳グルメ</span></a>
+    <div class="nav-links">
+      <a href="index.html">Thai Research</a>
+      <a href="ranking.html">Main Ranking</a>
+      <a href="ranking-v9.html" style="color:#f5a623;">v9 Tabelog</a>
+      <a href="ranking-v10.html">v10 App</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">TOP</a> &gt; <a href="ranking.html">ランキング</a> &gt; 口コミ数順</div>
+    <h1>行徳駅周辺 口コミ数ランキング TOP20</h1>
+    <div class="subtitle">Top 20 Most Reviewed Restaurants near Gyotoku Station | Sorted by Review Count</div>
+  </div>
+</div>
+
+<!-- Stats bar -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item"><span class="stat-num">20</span> 掲載店舗</div>
+    <div class="stat-item"><span class="stat-num">3,037+</span> 総口コミ数</div>
+    <div class="stat-item"><span class="stat-num">3.84</span> 最高スコア</div>
+    <div class="stat-item"><span class="stat-num">2</span> 百名店受賞</div>
+    <div class="stat-item"><span class="stat-num">16/20</span> 徒歩5分以内</div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main-content">
+
+  <!-- Restaurant List -->
+  <div class="restaurant-list">
+
+    <!-- #1 -->
+    <div class="restaurant-card top3">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">1</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-high">3.84</div>
+          <div class="review-count">1,422 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">China Soba Komuro</div>
+          <div class="restaurant-name-jp">支那ソバ 小むろ</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Ramen / Tsukemen</span>
+            <span class="tag tag-distance">5min walk</span>
+            <span class="tag tag-price">&yen;1,000-1,999</span>
+            <span class="tag tag-cash">Cash Only</span>
+            <span class="tag tag-award">Ramen EAST 100 (2023-2025)</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E6%94%AF%E9%82%A3%E3%82%BD%E3%83%90+%E5%B0%8F%E3%82%80%E3%82%8D+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+            <span>| 口コミ数3倍で圧倒的1位</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #2 -->
+    <div class="restaurant-card top3">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">2</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-mid">3.57</div>
+          <div class="review-count">433 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Steak Ishii</div>
+          <div class="restaurant-name-jp">ステーキ石井</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Steak / Hamburger</span>
+            <span class="tag tag-distance">5min walk</span>
+            <span class="tag tag-price">&yen;1,000-5,999</span>
+            <span class="tag tag-cash">Cash Only</span>
+            <span class="tag tag-award">Steak EAST 100 (2025)</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E7%9F%B3%E4%BA%95+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #3 -->
+    <div class="restaurant-card top3">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">3</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-mid">3.50</div>
+          <div class="review-count">278 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Dokuissho Gyoza</div>
+          <div class="restaurant-name-jp">独一処餃子 行徳店</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Chinese / Dumpling</span>
+            <span class="tag tag-distance">215m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E7%8B%AC%E4%B8%80%E5%87%A6%E9%A4%83%E5%AD%90+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #4 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">4</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.13</div>
+          <div class="review-count">173 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Niku to Kome Hajime</div>
+          <div class="restaurant-name-jp">肉と米 はじめ 行徳店</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Steak / Hamburger</span>
+            <span class="tag tag-distance">228m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%81%A8%E7%B1%B3+%E3%81%AF%E3%81%98%E3%82%81+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #5 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">5</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-mid">3.43</div>
+          <div class="review-count">153 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Bombay Palace</div>
+          <div class="restaurant-name-jp">ボンベイパレス</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Indian Curry</span>
+            <span class="tag tag-distance">345m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%83%9C%E3%83%B3%E3%83%99%E3%82%A4%E3%83%91%E3%83%AC%E3%82%B9+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #6 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">6</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-mid">3.55</div>
+          <div class="review-count">120 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Vege Bar Chibattoria</div>
+          <div class="restaurant-name-jp">ベジバル CHIBATTORIA</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Italian / Veg</span>
+            <span class="tag tag-distance">690m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=CHIBATTORIA+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #7 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">7</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.32</div>
+          <div class="review-count">87 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Koma</div>
+          <div class="restaurant-name-jp">コマ</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Chicken / Izakaya</span>
+            <span class="tag tag-distance">186m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%B3%E3%83%9E+%E8%A1%8C%E5%BE%B3+%E5%B1%85%E9%85%92%E5%B1%8B" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #8 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">8</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.07</div>
+          <div class="review-count">72 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Shichirinbo</div>
+          <div class="restaurant-name-jp">七輪房 南行徳店</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Yakiniku / BBQ</span>
+            <span class="tag tag-distance">669m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E8%BC%AA%E6%88%BF+%E5%8D%97%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #9 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">9</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.23</div>
+          <div class="review-count">63 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Gyotoku En</div>
+          <div class="restaurant-name-jp">行徳苑</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Yakiniku / Wagyu</span>
+            <span class="tag tag-distance">125m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E8%8B%91+%E7%84%BC%E8%82%89" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #10 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">10</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.35</div>
+          <div class="review-count">54 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Niku Bar Sunoki</div>
+          <div class="restaurant-name-jp">肉バル スノーキー 行徳店</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Steak / Meat Bar</span>
+            <span class="tag tag-distance">Near station</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%83%90%E3%83%AB+%E3%82%B9%E3%83%8E%E3%83%BC%E3%82%AD%E3%83%BC+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #11 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">11</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.25</div>
+          <div class="review-count">52 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Yuyutei</div>
+          <div class="restaurant-name-jp">遊遊亭</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Yakiniku</span>
+            <span class="tag tag-distance">212m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E9%81%8A%E9%81%8A%E4%BA%AD+%E8%A1%8C%E5%BE%B3+%E7%84%BC%E8%82%89" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #12 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">12</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.09</div>
+          <div class="review-count">42 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Gyotoku Hikodori</div>
+          <div class="restaurant-name-jp">行徳彦酉</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Yakitori / Izakaya</span>
+            <span class="tag tag-distance">77m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E5%BD%A6%E9%85%89" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #13 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">13</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.04</div>
+          <div class="review-count">34 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Torizou</div>
+          <div class="restaurant-name-jp">鳥蔵 行徳店</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Yakitori / Nabe</span>
+            <span class="tag tag-distance">123m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E8%94%B5+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #14 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">14</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.04</div>
+          <div class="review-count">32 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Chikuzenya</div>
+          <div class="restaurant-name-jp">ちくぜんや 行徳店</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Grilled Tripe / Izakaya</span>
+            <span class="tag tag-distance">84m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%81%A1%E3%81%8F%E3%81%9C%E3%82%93%E3%82%84+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #15 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">15</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.09</div>
+          <div class="review-count">29 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">SAKURA</div>
+          <div class="restaurant-name-jp">サクラ</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Indian Curry / Dining Bar</span>
+            <span class="tag tag-distance">148m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%AF%E3%83%A9+SAKURA+%E8%A1%8C%E5%BE%B3+%E3%82%AB%E3%83%AC%E3%83%BC" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #16 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">16</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.09</div>
+          <div class="review-count">28 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Tori Ichiza</div>
+          <div class="restaurant-name-jp">炭火串焼 鳥一座</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Yakitori / Izakaya</span>
+            <span class="tag tag-distance">230m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E4%B8%80%E5%BA%A7+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #17 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">17</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.13</div>
+          <div class="review-count">26 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">UNCLESAM</div>
+          <div class="restaurant-name-jp">アンクルサム</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Dining Bar / American</span>
+            <span class="tag tag-distance">169m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%B3%E3%82%AF%E3%83%AB%E3%82%B5%E3%83%A0+UNCLESAM+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #18 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">18</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.08</div>
+          <div class="review-count">25 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Orion Shokudo</div>
+          <div class="restaurant-name-jp">オリオン食堂</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Okinawa Cuisine</span>
+            <span class="tag tag-distance">163m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%83%AA%E3%82%AA%E3%83%B3%E9%A3%9F%E5%A0%82+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #19 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">19</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.17</div>
+          <div class="review-count">18 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Ajifu</div>
+          <div class="restaurant-name-jp">味富 中華居酒屋</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Chinese / Sichuan</span>
+            <span class="tag tag-distance">322m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=%E5%91%B3%E5%AF%8C+%E4%B8%AD%E8%8F%AF%E5%B1%85%E9%85%92%E5%B1%8B+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- #20 -->
+    <div class="restaurant-card">
+      <div class="card-header">
+        <div class="rank-badge"><span class="rank-num">20</span><span class="rank-label">rank</span></div>
+        <div class="score-section">
+          <div class="score-circle score-low">3.08</div>
+          <div class="review-count">15 口コミ</div>
+        </div>
+        <div class="info-section">
+          <div class="restaurant-name">Thank You Sakaba</div>
+          <div class="restaurant-name-jp">Thank You 酒場 行徳店</div>
+          <div class="info-tags">
+            <span class="tag tag-genre">Izakaya / Seafood</span>
+            <span class="tag tag-distance">136m</span>
+          </div>
+          <div class="info-meta">
+            <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Thank+You+%E9%85%92%E5%A0%B4+%E8%A1%8C%E5%BE%B3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <!-- Key Insights -->
+    <div class="sidebar-box">
+      <div class="sidebar-box-header">Key Insights / 分析</div>
+      <div class="sidebar-box-body">
+        <div class="insight-item"><strong>Ramen is King</strong> &mdash; Komuro dominates with 1,422 reviews, 3x the #2 restaurant. Undisputed local champion.</div>
+        <div class="insight-item"><strong>Meat Paradise</strong> &mdash; 4 of the top 10 are steak/meat restaurants. Gyotoku loves its beef.</div>
+        <div class="insight-item"><strong>BBQ Culture</strong> &mdash; 3 yakiniku joints in the top 11, showing strong BBQ demand.</div>
+        <div class="insight-item"><strong>Two Tabelog 100 Winners</strong> &mdash; Komuro (Ramen EAST) and Ishii (Steak EAST) both awarded.</div>
+        <div class="insight-item"><strong>Walkable</strong> &mdash; 16/20 restaurants within 350m of the station.</div>
+        <div class="insight-item"><strong>Cash Culture</strong> &mdash; Top 2 restaurants are cash-only. Bring yen!</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="sidebar-box">
+      <div class="sidebar-box-header">Statistics / 統計</div>
+      <div class="sidebar-box-body">
+        <div class="stat-grid">
+          <div class="stat-box"><div class="num">20</div><div class="label">Restaurants</div></div>
+          <div class="stat-box"><div class="num">3,037+</div><div class="label">Total Reviews</div></div>
+          <div class="stat-box"><div class="num">3.84</div><div class="label">Highest Score</div></div>
+          <div class="stat-box"><div class="num">2</div><div class="label">Awards</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Genre breakdown -->
+    <div class="sidebar-box">
+      <div class="sidebar-box-header">Genre Breakdown / ジャンル別</div>
+      <div class="sidebar-box-body">
+        <div class="genre-bar">
+          <span class="genre-name">Steak/Meat</span>
+          <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
+          <span class="bar-count">4</span>
+        </div>
+        <div class="genre-bar">
+          <span class="genre-name">Yakiniku</span>
+          <div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>
+          <span class="bar-count">3</span>
+        </div>
+        <div class="genre-bar">
+          <span class="genre-name">Yakitori</span>
+          <div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>
+          <span class="bar-count">3</span>
+        </div>
+        <div class="genre-bar">
+          <span class="genre-name">Chinese</span>
+          <div class="bar-track"><div class="bar-fill" style="width:40%"></div></div>
+          <span class="bar-count">2</span>
+        </div>
+        <div class="genre-bar">
+          <span class="genre-name">Indian</span>
+          <div class="bar-track"><div class="bar-fill" style="width:40%"></div></div>
+          <span class="bar-count">2</span>
+        </div>
+        <div class="genre-bar">
+          <span class="genre-name">Ramen</span>
+          <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+          <span class="bar-count">1</span>
+        </div>
+        <div class="genre-bar">
+          <span class="genre-name">Italian</span>
+          <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+          <span class="bar-count">1</span>
+        </div>
+        <div class="genre-bar">
+          <span class="genre-name">Izakaya</span>
+          <div class="bar-track"><div class="bar-fill" style="width:40%"></div></div>
+          <span class="bar-count">2</span>
+        </div>
+        <div class="genre-bar">
+          <span class="genre-name">Other</span>
+          <div class="bar-track"><div class="bar-fill" style="width:40%"></div></div>
+          <span class="bar-count">2</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="page-footer">
+  <div>Design 9 of 10: Japanese Tabelog</div>
+  <div style="margin-top:4px">Market Research by <a href="index.html">PimQuin Oracle</a> | April 2026</div>
+  <div class="design-label" style="margin-top:8px">
+    <a href="index.html">Thai Research</a> &middot; <a href="ranking.html">Main Ranking</a> &middot; <a href="ranking-v10.html">v10 App &rarr;</a>
+  </div>
+</footer>
+
+</body>
+</html>

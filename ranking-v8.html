@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 20 Restaurants near Gyotoku Station | Yelp Red</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --red: #d32323;
+  --red-dark: #af1c1c;
+  --red-light: #ff4d4d;
+  --bg: #f5f5f6;
+  --white: #ffffff;
+  --text: #333;
+  --text-light: #666;
+  --text-muted: #999;
+  --border: #e6e6e6;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Nav */
+nav {
+  background: var(--red);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+nav .nav-logo {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+nav .nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+nav .nav-links a:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* Header */
+.header {
+  background: var(--white);
+  border-bottom: 3px solid var(--red);
+  padding: 40px 24px 32px;
+  text-align: center;
+}
+.header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.header h1 span { color: var(--red); }
+.header p {
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+/* Stats */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  max-width: 800px;
+  margin: 24px auto;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+.stat-box {
+  flex: 1;
+  text-align: center;
+  padding: 20px 16px;
+  border-right: 1px solid var(--border);
+}
+.stat-box:last-child { border-right: none; }
+.stat-box .num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--red);
+}
+.stat-box .label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Filter Bar */
+.filter-bar {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-right: 4px;
+}
+.filter-pill {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-pill:hover, .filter-pill.active {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+}
+
+/* Insights */
+.insights-section {
+  max-width: 900px;
+  margin: 20px auto 10px;
+  padding: 0 16px;
+}
+.insights-card {
+  background: #fff8f8;
+  border: 1px solid #fdd;
+  border-left: 4px solid var(--red);
+  border-radius: 6px;
+  padding: 16px 20px;
+}
+.insights-card h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px;
+}
+.insight-item {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  padding-left: 12px;
+  position: relative;
+}
+.insight-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+/* Restaurant List */
+.restaurant-list {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+.restaurant-card {
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.15s;
+  border: 1px solid var(--border);
+}
+.restaurant-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+
+/* Rating circle on left */
+.card-rating-col {
+  width: 80px;
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 8px;
+  background: #fafafa;
+  border-right: 1px solid var(--border);
+}
+.rating-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rank-num {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+/* Content middle */
+.card-content {
+  flex: 1;
+  padding: 14px 16px;
+  min-width: 0;
+}
+.card-top-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.card-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.card-jp {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.recommended-badge {
+  background: var(--red);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.award-tag {
+  background: #fff3e0;
+  color: #e65100;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border: 1px solid #ffe0b2;
+}
+.card-stars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 6px;
+}
+.star {
+  color: var(--red);
+  font-size: 0.85rem;
+}
+.star.empty {
+  color: #ddd;
+}
+.star.half {
+  position: relative;
+  color: #ddd;
+}
+.star.half::before {
+  content: '\2605';
+  position: absolute;
+  overflow: hidden;
+  color: var(--red);
+}
+.review-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-left: 6px;
+  font-weight: 600;
+}
+.card-meta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.meta-item {
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+.meta-item strong {
+  color: var(--text);
+}
+
+/* Action column right */
+.card-actions {
+  width: 120px;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-left: 1px solid var(--border);
+}
+.btn-maps {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--red);
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  transition: background 0.2s;
+  text-align: center;
+  white-space: nowrap;
+}
+.btn-maps:hover { background: var(--red-dark); }
+.distance-tag {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Red accent bar on top-rated */
+.restaurant-card.top-rated {
+  border-left: 4px solid var(--red);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  background: #2b2b2b;
+  color: #ccc;
+  margin-top: 40px;
+}
+footer .design-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+footer .credit {
+  font-size: 0.75rem;
+  color: #999;
+}
+footer .powered {
+  margin-top: 12px;
+  font-size: 0.65rem;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .restaurant-card {
+    flex-wrap: wrap;
+  }
+  .card-rating-col {
+    width: 60px;
+    min-width: 60px;
+    padding: 12px 6px;
+  }
+  .rating-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 0.8rem;
+  }
+  .card-actions {
+    width: 100%;
+    min-width: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding: 10px 16px;
+  }
+  .card-name { font-size: 0.9rem; }
+  .header h1 { font-size: 1.4rem; }
+  .stats-row { flex-wrap: wrap; }
+  .stat-box { min-width: 50%; }
+  .stat-box:nth-child(2) { border-right: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Gyotoku Eats</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="ranking.html">Main Ranking</a>
+  </div>
+</nav>
+
+<div class="header">
+  <h1>Top 20 <span>Most Reviewed</span> Restaurants</h1>
+  <p>Near Gyotoku Station -- ranked by review count on Tabelog</p>
+</div>
+
+<div class="stats-row">
+  <div class="stat-box">
+    <div class="num">20</div>
+    <div class="label">Restaurants</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">3,037+</div>
+    <div class="label">Total Reviews</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">3.84</div>
+    <div class="label">Highest Rating</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">2</div>
+    <div class="label">Award Winners</div>
+  </div>
+</div>
+
+<div class="filter-bar" id="filterBar">
+  <span class="filter-label">Filter:</span>
+  <span class="filter-pill active" data-filter="all">All (20)</span>
+  <span class="filter-pill" data-filter="ramen">Ramen</span>
+  <span class="filter-pill" data-filter="steak">Steak/Meat</span>
+  <span class="filter-pill" data-filter="yakiniku">Yakiniku/BBQ</span>
+  <span class="filter-pill" data-filter="izakaya">Izakaya</span>
+  <span class="filter-pill" data-filter="curry">Curry</span>
+  <span class="filter-pill" data-filter="chinese">Chinese</span>
+  <span class="filter-pill" data-filter="other">Other</span>
+</div>
+
+<div class="insights-section">
+  <div class="insights-card">
+    <h3>Key Insights</h3>
+    <div class="insights-grid">
+      <div class="insight-item">Ramen is King -- Komuro has 1,422 reviews (3x #2)</div>
+      <div class="insight-item">Meat Paradise -- 4 of top 10 are steak/meat</div>
+      <div class="insight-item">BBQ Culture -- 3 yakiniku in top 11</div>
+      <div class="insight-item">Two Tabelog 100 Winners</div>
+      <div class="insight-item">Walkable -- 16/20 within 350m</div>
+      <div class="insight-item">Cash Culture -- Top 2 are cash-only</div>
+    </div>
+  </div>
+</div>
+
+<div class="restaurant-list" id="restaurantList"></div>
+
+<footer>
+  <div class="design-label">Design 8 of 10: Yelp Red</div>
+  <div class="credit">Market Research by PimQuin Oracle | April 2026</div>
+  <div class="powered">Data sourced from Tabelog. All ratings and review counts as of April 2026.</div>
+</footer>
+
+<script>
+const restaurants = [
+  { rank:1, name:"China Soba Komuro", jp:"支那ソバ 小むろ", type:"Ramen/Tsukemen", cat:"ramen", rating:3.84, reviews:1422, dist:"5min walk", price:"&#165;1,000-1,999", note:"Cash only", award:"Ramen EAST 100 (2023-2025)", maps:"https://www.google.com/maps/search/?api=1&query=%E6%94%AF%E9%82%A3%E3%82%BD%E3%83%90+%E5%B0%8F%E3%82%80%E3%82%8D+%E8%A1%8C%E5%BE%B3" },
+  { rank:2, name:"Steak Ishii", jp:"ステーキ石井", type:"Steak/Hamburger", cat:"steak", rating:3.57, reviews:433, dist:"5min walk", price:"&#165;1,000-5,999", note:"Cash only", award:"Steak EAST 100 (2025)", maps:"https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E7%9F%B3%E4%BA%95+%E8%A1%8C%E5%BE%B3" },
+  { rank:3, name:"Dokuissho Gyoza", jp:"独一処餃子 行徳店", type:"Chinese/Dumpling", cat:"chinese", rating:3.50, reviews:278, dist:"215m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E7%8B%AC%E4%B8%80%E5%87%A6%E9%A4%83%E5%AD%90+%E8%A1%8C%E5%BE%B3" },
+  { rank:4, name:"Niku to Kome Hajime", jp:"肉と米 はじめ 行徳店", type:"Steak/Hamburger", cat:"steak", rating:3.13, reviews:173, dist:"228m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%81%A8%E7%B1%B3+%E3%81%AF%E3%81%98%E3%82%81+%E8%A1%8C%E5%BE%B3" },
+  { rank:5, name:"Bombay Palace", jp:"ボンベイパレス", type:"Indian Curry", cat:"curry", rating:3.43, reviews:153, dist:"345m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E3%83%9C%E3%83%B3%E3%83%99%E3%82%A4%E3%83%91%E3%83%AC%E3%82%B9+%E8%A1%8C%E5%BE%B3" },
+  { rank:6, name:"Vege Bar Chibattoria", jp:"ベジバル CHIBATTORIA", type:"Italian/Veg", cat:"other", rating:3.55, reviews:120, dist:"690m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=CHIBATTORIA+%E8%A1%8C%E5%BE%B3" },
+  { rank:7, name:"Koma", jp:"コマ", type:"Chicken/Izakaya", cat:"izakaya", rating:3.32, reviews:87, dist:"186m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E3%82%B3%E3%83%9E+%E8%A1%8C%E5%BE%B3+%E5%B1%85%E9%85%92%E5%B1%8B" },
+  { rank:8, name:"Shichirinbo", jp:"七輪房 南行徳店", type:"Yakiniku/BBQ", cat:"yakiniku", rating:3.07, reviews:72, dist:"669m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E8%BC%AA%E6%88%BF+%E5%8D%97%E8%A1%8C%E5%BE%B3" },
+  { rank:9, name:"Gyotoku En", jp:"行徳苑", type:"Yakiniku/Wagyu", cat:"yakiniku", rating:3.23, reviews:63, dist:"125m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E8%8B%91+%E7%84%BC%E8%82%89" },
+  { rank:10, name:"Niku Bar Sunoki", jp:"肉バル スノーキー 行徳店", type:"Steak/Meat Bar", cat:"steak", rating:3.35, reviews:54, dist:"Near station", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%83%90%E3%83%AB+%E3%82%B9%E3%83%8E%E3%83%BC%E3%82%AD%E3%83%BC+%E8%A1%8C%E5%BE%B3" },
+  { rank:11, name:"Yuyutei", jp:"遊遊亭", type:"Yakiniku", cat:"yakiniku", rating:3.25, reviews:52, dist:"212m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E9%81%8A%E9%81%8A%E4%BA%AD+%E8%A1%8C%E5%BE%B3+%E7%84%BC%E8%82%89" },
+  { rank:12, name:"Gyotoku Hikodori", jp:"行徳彦酉", type:"Yakitori/Izakaya", cat:"izakaya", rating:3.09, reviews:42, dist:"77m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E5%BD%A6%E9%85%89" },
+  { rank:13, name:"Torizou", jp:"鳥蔵 行徳店", type:"Yakitori/Nabe", cat:"izakaya", rating:3.04, reviews:34, dist:"123m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E8%94%B5+%E8%A1%8C%E5%BE%B3" },
+  { rank:14, name:"Chikuzenya", jp:"ちくぜんや 行徳店", type:"Grilled Tripe/Izakaya", cat:"izakaya", rating:3.04, reviews:32, dist:"84m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E3%81%A1%E3%81%8F%E3%81%9C%E3%82%93%E3%82%84+%E8%A1%8C%E5%BE%B3" },
+  { rank:15, name:"SAKURA", jp:"サクラ", type:"Indian Curry/Dining Bar", cat:"curry", rating:3.09, reviews:29, dist:"148m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%AF%E3%83%A9+SAKURA+%E8%A1%8C%E5%BE%B3+%E3%82%AB%E3%83%AC%E3%83%BC" },
+  { rank:16, name:"Tori Ichiza", jp:"炭火串焼 鳥一座", type:"Yakitori/Izakaya", cat:"izakaya", rating:3.09, reviews:28, dist:"230m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E4%B8%80%E5%BA%A7+%E8%A1%8C%E5%BE%B3" },
+  { rank:17, name:"UNCLESAM", jp:"アンクルサム", type:"Dining Bar/American", cat:"other", rating:3.13, reviews:26, dist:"169m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%B3%E3%82%AF%E3%83%AB%E3%82%B5%E3%83%A0+UNCLESAM+%E8%A1%8C%E5%BE%B3" },
+  { rank:18, name:"Orion Shokudo", jp:"オリオン食堂", type:"Okinawa Cuisine", cat:"other", rating:3.08, reviews:25, dist:"163m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%83%AA%E3%82%AA%E3%83%B3%E9%A3%9F%E5%A0%82+%E8%A1%8C%E5%BE%B3" },
+  { rank:19, name:"Ajifu", jp:"味富 中華居酒屋", type:"Chinese/Sichuan", cat:"chinese", rating:3.17, reviews:18, dist:"322m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=%E5%91%B3%E5%AF%8C+%E4%B8%AD%E8%8F%AF%E5%B1%85%E9%85%92%E5%B1%8B+%E8%A1%8C%E5%BE%B3" },
+  { rank:20, name:"Thank You Sakaba", jp:"Thank You 酒場 行徳店", type:"Izakaya/Seafood", cat:"izakaya", rating:3.08, reviews:15, dist:"136m", price:"", note:"", award:"", maps:"https://www.google.com/maps/search/?api=1&query=Thank+You+%E9%85%92%E5%A0%B4+%E8%A1%8C%E5%BE%B3" }
+];
+
+function renderStars(rating) {
+  const full = Math.floor(rating);
+  const hasHalf = (rating - full) >= 0.3;
+  const empty = 5 - full - (hasHalf ? 1 : 0);
+  let html = '';
+  for (let i = 0; i < full; i++) html += '<span class="star">&#9733;</span>';
+  if (hasHalf) html += '<span class="star">&#9733;</span>'; // simplified half as full
+  for (let i = 0; i < empty; i++) html += '<span class="star empty">&#9733;</span>';
+  return html;
+}
+
+function renderList(filter) {
+  const list = document.getElementById('restaurantList');
+  list.innerHTML = '';
+
+  const filtered = filter === 'all' ? restaurants : restaurants.filter(r => r.cat === filter);
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:#999;font-size:0.9rem;">No restaurants found in this category.</div>';
+    return;
+  }
+
+  filtered.forEach(r => {
+    const isTopRated = r.rating >= 3.50;
+    const isRecommended = r.rating >= 3.43;
+
+    let badges = '';
+    if (isRecommended) badges += `<span class="recommended-badge">Recommended</span>`;
+    if (r.award) badges += ` <span class="award-tag">${r.award}</span>`;
+
+    let metaItems = `<span class="meta-item"><strong>Type:</strong> ${r.type}</span>`;
+    if (r.price) metaItems += `<span class="meta-item"><strong>Price:</strong> ${r.price}</span>`;
+    if (r.note) metaItems += `<span class="meta-item"><strong>Note:</strong> ${r.note}</span>`;
+
+    const card = document.createElement('div');
+    card.className = 'restaurant-card' + (isTopRated ? ' top-rated' : '');
+    card.dataset.cat = r.cat;
+
+    card.innerHTML = `
+      <div class="card-rating-col">
+        <div class="rating-circle">${r.rating}</div>
+        <div class="rank-num">#${r.rank}</div>
+      </div>
+      <div class="card-content">
+        <div class="card-top-row">
+          <span class="card-name">${r.name}</span>
+          <span class="card-jp">${r.jp}</span>
+          ${badges}
+        </div>
+        <div class="card-stars">
+          ${renderStars(r.rating)}
+          <span class="review-count">${r.reviews.toLocaleString()} reviews</span>
+        </div>
+        <div class="card-meta">
+          ${metaItems}
+        </div>
+      </div>
+      <div class="card-actions">
+        <a href="${r.maps}" target="_blank" rel="noopener" class="btn-maps">Google Maps</a>
+        <span class="distance-tag">${r.dist}</span>
+      </div>
+    `;
+
+    list.appendChild(card);
+  });
+}
+
+// Filter pills
+document.getElementById('filterBar').addEventListener('click', (e) => {
+  if (!e.target.classList.contains('filter-pill')) return;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  e.target.classList.add('active');
+  renderList(e.target.dataset.filter);
+});
+
+// Initial render
+renderList('all');
+</script>
+
+</body>
+</html>
