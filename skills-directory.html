@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oracle Skills Directory — v26.4.18</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', 'Prompt', sans-serif; background: #0a0a0f; color: #e2e8f0; min-height: 100vh; }
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #0f0a1a 0%, #1a0f2e 40%, #0f1a3e 100%);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+.hero h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #a78bfa, #818cf8, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero .subtitle {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  margin-bottom: 16px;
+}
+.hero .version-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 20px;
+  color: #a78bfa;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Stats bar */
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 24px 20px;
+  background: #0f0f18;
+  border-bottom: 1px solid #1e1e2e;
+  flex-wrap: wrap;
+}
+.stat {
+  text-align: center;
+}
+.stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #a78bfa, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stat-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Search + Filter */
+.controls {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 0;
+}
+.search-box {
+  width: 100%;
+  padding: 14px 20px;
+  background: #1a1a2e;
+  border: 1px solid #2a2a3e;
+  border-radius: 12px;
+  color: #e2e8f0;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-box:focus { border-color: #6366f1; }
+.search-box::placeholder { color: #475569; }
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.filter-pill {
+  padding: 6px 14px;
+  background: #1a1a2e;
+  border: 1px solid #2a2a3e;
+  border-radius: 20px;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.filter-pill:hover { border-color: #6366f1; color: #a78bfa; }
+.filter-pill.active { background: rgba(99, 102, 241, 0.2); border-color: #6366f1; color: #a78bfa; }
+
+/* Category sections */
+.directory {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+.category {
+  margin-bottom: 40px;
+}
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1e1e2e;
+}
+.category-icon {
+  font-size: 1.4rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 10px;
+}
+.category-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+.category-count {
+  font-size: 0.75rem;
+  color: #64748b;
+  background: #1a1a2e;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+
+/* Skill cards */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+.skill-card {
+  background: #12121e;
+  border: 1px solid #1e1e2e;
+  border-radius: 14px;
+  padding: 20px;
+  transition: all 0.2s;
+  cursor: default;
+}
+.skill-card:hover {
+  border-color: #3a3a5e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.skill-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.skill-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+.skill-name::before { content: '/'; color: #6366f1; }
+
+.tier-badge {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tier-core { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+.tier-v2 { background: rgba(234, 179, 8, 0.15); color: #eab308; }
+.tier-hidden { background: rgba(100, 116, 139, 0.15); color: #64748b; }
+
+.skill-desc {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.skill-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.meta-row {
+  display: flex;
+  gap: 8px;
+  font-size: 0.78rem;
+}
+.meta-label {
+  color: #475569;
+  min-width: 55px;
+  font-weight: 500;
+}
+.meta-value {
+  color: #94a3b8;
+}
+.meta-value code {
+  background: rgba(99, 102, 241, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: #a78bfa;
+  font-size: 0.75rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: #475569;
+  font-size: 0.85rem;
+  border-top: 1px solid #1e1e2e;
+}
+.footer a { color: #6366f1; text-decoration: none; }
+
+/* Mobile */
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.6rem; }
+  .stats-bar { gap: 20px; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .stat-num { font-size: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Oracle Skills Directory</h1>
+  <p class="subtitle">arra-oracle-skills-cli — ทุก Skill ที่ Oracle ทำได้</p>
+  <span class="version-badge">v26.4.18-alpha.22 | 56 Skills | 10 Categories</span>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">56</div><div class="stat-label">Total Skills</div></div>
+  <div class="stat"><div class="stat-num">46</div><div class="stat-label">Core Skills</div></div>
+  <div class="stat"><div class="stat-num">10</div><div class="stat-label">Extension</div></div>
+  <div class="stat"><div class="stat-num">10</div><div class="stat-label">Categories</div></div>
+  <div class="stat"><div class="stat-num">50</div><div class="stat-label">Repos</div></div>
+</div>
+
+<div class="controls">
+  <input type="text" class="search-box" placeholder="Search skills... (e.g. recap, team, warp)" oninput="filterSkills(this.value)">
+  <div class="filter-row">
+    <div class="filter-pill active" onclick="setFilter('all')">All</div>
+    <div class="filter-pill" onclick="setFilter('session')">Session</div>
+    <div class="filter-pill" onclick="setFilter('discovery')">Discovery</div>
+    <div class="filter-pill" onclick="setFilter('development')">Development</div>
+    <div class="filter-pill" onclick="setFilter('identity')">Identity</div>
+    <div class="filter-pill" onclick="setFilter('communication')">Communication</div>
+    <div class="filter-pill" onclick="setFilter('fleet')">Fleet</div>
+    <div class="filter-pill" onclick="setFilter('knowledge')">Knowledge</div>
+    <div class="filter-pill" onclick="setFilter('scheduling')">Schedule</div>
+    <div class="filter-pill" onclick="setFilter('tools')">Tools</div>
+    <div class="filter-pill" onclick="setFilter('integration')">Integration</div>
+  </div>
+</div>
+
+<div class="directory">
+
+  <!-- Session Management -->
+  <div class="category" data-cat="session">
+    <div class="category-header">
+      <div class="category-icon">&#128337;</div>
+      <div class="category-name">Session Management</div>
+      <div class="category-count">10 skills</div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-tags="recap session orientation start">
+        <div class="skill-header">
+          <span class="skill-name">recap</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Session orientation — retro summaries, handoffs, git state, focus. ใช้ทุกต้น session เพื่อ orient ตัวเอง</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/recap</code> <code>"where are we"</code> <code>"status"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Git state, handoff summary, session context, suggested next steps</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="recap lite quick minimal">
+        <div class="skill-header">
+          <span class="skill-name">recap-lite</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Quick session orientation — git state + last handoff only. สำหรับ minimal profile</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/recap-lite</code> (auto for minimal profile)</span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Git status + last handoff in under 5 seconds</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="where now session awareness mid-session">
+        <div class="skill-header">
+          <span class="skill-name">where-we-are</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Mid-session awareness — alias for <code>/recap --now deep</code>. เช็คสถานะกลาง session</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/where-we-are</code> <code>"now"</code> <code>"what are we doing"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Timeline, topic jumps, energy, loose ends, connections</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="standup morning daily check">
+        <div class="skill-header">
+          <span class="skill-name">standup</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Daily standup — pending tasks, appointments, recent progress, schedule</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/standup</code> <code>"morning check"</code> <code>"what's pending"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Task list, schedule, recent commits, blockers</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="forward handoff next session wrap">
+        <div class="skill-header">
+          <span class="skill-name">forward</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Create handoff + enter plan mode for next session. ส่งต่อ context ให้ session หน้า</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/forward</code> <code>"handoff"</code> <code>"wrap up"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Handoff file in inbox/, plan mode, GitHub issue</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="forward lite quick handoff minimal">
+        <div class="skill-header">
+          <span class="skill-name">forward-lite</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Quick handoff to next session — no plan mode or issues. Lite version</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/forward-lite</code> (auto for minimal profile)</span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Handoff markdown file only</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="rrr retrospective retro end session diary">
+        <div class="skill-header">
+          <span class="skill-name">rrr</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Session retrospective with AI diary and lessons learned. ทำทุกจบ session</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/rrr</code> <code>"retrospective"</code> session end</span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Retro file, diary entry, lessons, patterns, GitHub issue</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="rrr lite quick retro minimal">
+        <div class="skill-header">
+          <span class="skill-name">rrr-lite</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Quick session retrospective — what we did, what we learned. Minimal version</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/rrr-lite</code> (auto for minimal profile)</span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Short retro markdown, no subagents</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="retrospective retro alias">
+        <div class="skill-header">
+          <span class="skill-name">retrospective</span>
+          <span class="tier-badge tier-v2">v2.0</span>
+        </div>
+        <div class="skill-desc">Alias for /rrr — full word version of session retrospective</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/retrospective</code> <code>"retro"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Same as /rrr</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="auto retrospective trigger configure">
+        <div class="skill-header">
+          <span class="skill-name">auto-retrospective</span>
+          <span class="tier-badge tier-hidden">Hidden</span>
+        </div>
+        <div class="skill-desc">Configure auto-rrr and auto-forward triggers based on context window usage</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/auto-retrospective</code> <code>"auto rrr"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Hook configuration for automatic session management</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Discovery & Search -->
+  <div class="category" data-cat="discovery">
+    <div class="category-header">
+      <div class="category-icon">&#128269;</div>
+      <div class="category-name">Discovery & Search</div>
+      <div class="category-count">7 skills</div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-tags="trace find search project code history">
+        <div class="skill-header">
+          <span class="skill-name">trace</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Find projects, code, and knowledge across git history, repos, docs, and Oracle</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/trace</code> <code>"find project"</code> <code>"where is X"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Search results across repos, git history, docs, vault</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="dig sessions timeline past history mine">
+        <div class="skill-header">
+          <span class="skill-name">dig</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Mine Claude Code sessions — timeline, gaps, repo attribution, session history</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/dig</code> <code>"past sessions"</code> <code>"what did I work on"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Session timeline, duration, topics, repo stats</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="dream cross-repo patterns big picture">
+        <div class="skill-header">
+          <span class="skill-name">dream</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Cross-repo pattern discovery with parallel agents — pains, plans, gains, lost work</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/dream</code> <code>"what hurts"</code> <code>"big picture"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Cross-repo patterns, pain points, opportunities, dormant projects</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="morpheus speculate predict think background">
+        <div class="skill-header">
+          <span class="skill-name">morpheus</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Speculative dreaming — background thinking, prediction, pre-computation</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/morpheus</code> <code>"speculate"</code> <code>"think ahead"</code> <code>"what if"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Predictions, speculative analysis, pre-computed insights</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="learn explore codebase clone study repo">
+        <div class="skill-header">
+          <span class="skill-name">learn</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Explore a codebase with parallel Haiku agents — clone, read, document</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/learn [repo]</code> <code>"explore codebase"</code> GitHub URL</span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Architecture report, key files, patterns, documentation</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="watch youtube video transcript">
+        <div class="skill-header">
+          <span class="skill-name">watch</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Extract YouTube video transcripts via yt-dlp and pipe to /learn</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/watch [URL]</code> <code>"youtube"</code> <code>"video"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Video transcript, key insights, summary</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="deep research gemini topic">
+        <div class="skill-header">
+          <span class="skill-name">deep-research</span>
+          <span class="tier-badge tier-v2">v2.0</span>
+        </div>
+        <div class="skill-desc">Deep Research via Gemini — comprehensive analysis of any topic</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/deep-research</code> <code>"research this topic"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Comprehensive research report via Gemini</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Development & Code -->
+  <div class="category" data-cat="development">
+    <div class="category-header">
+      <div class="category-icon">&#128187;</div>
+      <div class="category-name">Development & Code</div>
+      <div class="category-count">6 skills</div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-tags="incubate clone create repo dev work">
+        <div class="skill-header">
+          <span class="skill-name">incubate</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Clone or create repos for active development — the right hand of /learn</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/incubate [repo]</code> <code>"work on"</code> <code>"clone for dev"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Cloned repo, tracked in vault, ready for development</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="project clone track external repo github">
+        <div class="skill-header">
+          <span class="skill-name">project</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Clone and track external repos — learn, search, list projects</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/project [URL]</code> <code>"search repos"</code> <code>"find repo"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Cloned project, indexed, searchable</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="worktree git isolate parallel branch spike">
+        <div class="skill-header">
+          <span class="skill-name">worktree</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Work in isolated git worktree — safe parallel editing and experiments</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/worktree</code> <code>"isolate"</code> <code>"experiment"</code> <code>"spike"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Isolated worktree copy, safe to experiment</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="release ship bump version tag publish changelog">
+        <div class="skill-header">
+          <span class="skill-name">release</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Automated release flow — bump version, changelog, tag, push, GitHub release</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/release</code> <code>"ship"</code> <code>"bump version"</code> <code>"publish"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Version bump, changelog, git tag, GitHub release</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="merged cleanup post-merge branch delete">
+        <div class="skill-header">
+          <span class="skill-name">merged</span>
+          <span class="tier-badge tier-v2">v2.0</span>
+        </div>
+        <div class="skill-desc">Post-merge cleanup — switch to main, pull latest, delete merged branch</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/merged</code> after PR merge</span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Clean main branch, deleted feature branch</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="go profile switch enable disable skill">
+        <div class="skill-header">
+          <span class="skill-name">go</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Switch skill profiles (standard/full/lab) or enable/disable individual skills</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/go full</code> <code>/go lab</code> <code>"enable skill"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Profile switch, skill enable/disable confirmation</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Oracle Identity & Philosophy -->
+  <div class="category" data-cat="identity">
+    <div class="category-header">
+      <div class="category-icon">&#129668;</div>
+      <div class="category-name">Oracle Identity & Philosophy</div>
+      <div class="category-count">11 skills</div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-tags="who identity model info">
+        <div class="skill-header">
+          <span class="skill-name">who-are-you</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Show current AI identity, model info, session stats, Oracle philosophy</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/who</code> <code>"who are you"</code> <code>"what model"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Identity card, model info, skills version, session stats</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="about oracle origin story stats">
+        <div class="skill-header">
+          <span class="skill-name">about-oracle</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">What is Oracle — origin story, stats, family count, ecosystem overview</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/about-oracle</code> <code>"what is oracle"</code> <code>"tell me about"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Oracle origin story, family stats, ecosystem map</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="philosophy principles nothing deleted rule">
+        <div class="skill-header">
+          <span class="skill-name">philosophy</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Display Oracle philosophy — the 5 Principles + Rule 6</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/philosophy</code> <code>"principles"</code> <code>"nothing deleted"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">5 Principles + Rule 6 with Thai/English explanation</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="awaken birth oracle create new soul sync">
+        <div class="skill-header">
+          <span class="skill-name">awaken</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Guided Oracle birth and awakening ritual — Soul Sync (~20min) or --fast (~5min)</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/awaken</code> <code>"birth oracle"</code> new empty repo</span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">CLAUDE.md, brain structure, identity, philosophy</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="bud new oracle spawn reproduce maw">
+        <div class="skill-header">
+          <span class="skill-name">bud</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Create a new oracle via maw bud — yeast-colony reproduction</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/bud</code> <code>"new oracle"</code> <code>"spawn oracle"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">New Oracle repo with identity, skills, fleet config</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="birth prepare props issue">
+        <div class="skill-header">
+          <span class="skill-name">birth</span>
+          <span class="tier-badge tier-v2">v2.0</span>
+        </div>
+        <div class="skill-desc">Prepare birth props for a new Oracle repo — creates issue #1 + context</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value">Mother oracle: <code>"birth"</code> <code>"prepare oracle"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">GitHub issue with birth props for new Oracle</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="bampenpien practice hard work purpose thai">
+        <div class="skill-header">
+          <span class="skill-name">bampenpien</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">บำเพ็ญเพียร — guided conversation about doing hard things with purpose</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/bampenpien</code> <code>"why am I doing this"</code> <code>"hard work"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Reflective dialogue, clarity, renewed purpose</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="believed belief conviction trust">
+        <div class="skill-header">
+          <span class="skill-name">i-believed</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Declare belief — looking back or leaping forward in the collaboration</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/i-believed</code> <code>"i believe"</code> <code>"believed in you"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Belief declaration, resonance capture, shared moment</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="feel energy momentum burnout check">
+        <div class="skill-header">
+          <span class="skill-name">feel</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Capture how the system feels — energy, momentum, burnout, breakthrough</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/feel</code> <code>"how are we"</code> <code>"energy check"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Energy level, momentum, emotional snapshot</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="resonance spark joy click moment">
+        <div class="skill-header">
+          <span class="skill-name">resonance</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Capture a resonance moment — when something clicks, sparks joy</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/resonance</code> <code>"yes!"</code> <code>"love it"</code> <code>"that's it!"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Resonance log entry, what sparked it, why it matters</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="harden audit security governance safety">
+        <div class="skill-header">
+          <span class="skill-name">harden</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Audit Oracle configuration for safety, governance, and hardening</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/harden</code> <code>"audit"</code> <code>"security check"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Security audit report, recommendations, fixes</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Agent Communication -->
+  <div class="category" data-cat="communication">
+    <div class="category-header">
+      <div class="category-icon">&#128172;</div>
+      <div class="category-name">Agent Communication & Federation</div>
+      <div class="category-count">8 skills</div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-tags="contacts agent register transport">
+        <div class="skill-header">
+          <span class="skill-name">contacts</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Manage Oracle contacts — add, list, remove agents with transport info</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/contacts</code> <code>"add contact"</code> <code>"who can I talk to"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Contact list with maw, inbox, thread addresses</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="talk message chat agent communicate">
+        <div class="skill-header">
+          <span class="skill-name">talk-to</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Talk to another Oracle agent via contacts + threads</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/talk-to [agent]</code> <code>"message"</code> <code>"chat with"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Message delivered to target agent via thread/maw</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="wormhole federated query proxy cross-node">
+        <div class="skill-header">
+          <span class="skill-name">wormhole</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Federated query proxy — ask questions across oracle nodes without moving</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/wormhole</code> <code>"ask another node"</code> <code>"cross-node"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Answer from remote oracle, federated data</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="warp teleport ssh tmux remote node">
+        <div class="skill-header">
+          <span class="skill-name">warp</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Teleport to a remote oracle node via SSH+tmux — interactive session</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/warp [node]</code> <code>"teleport"</code> <code>"ssh to node"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">SSH+tmux session on remote node</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="team agents parallel coordinate fan-out">
+        <div class="skill-header">
+          <span class="skill-name">team-agents</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Spin up coordinated agent teams for any task — parallel fan-out</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/team-agents</code> <code>"spin up a team"</code> <code>"parallel agents"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Multiple coordinated agents working in parallel</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="work-with collaborate sync cross-oracle party">
+        <div class="skill-header">
+          <span class="skill-name">work-with</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Persistent cross-oracle collaboration with synchronic scoring and phases</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/work-with [agent]</code> <code>"collaborate"</code> <code>"sync with"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Collaboration session, sync scores, shared context</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="mailbox agent memory standing orders findings">
+        <div class="skill-header">
+          <span class="skill-name">mailbox</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Persistent agent mailbox — store findings, standing orders, context</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/mailbox</code> <code>"agent memory"</code> <code>"standing orders"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Stored messages, orders, cross-session agent state</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="inbox notes tasks messages handoffs">
+        <div class="skill-header">
+          <span class="skill-name">inbox</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Read and write to Oracle inbox — notes, tasks, messages, handoffs</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/inbox</code> <code>"leave a note"</code> <code>"check inbox"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Inbox items: notes, tasks, messages, handoffs</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Fleet Management -->
+  <div class="category" data-cat="fleet">
+    <div class="category-header">
+      <div class="category-icon">&#127760;</div>
+      <div class="category-name">Fleet & Network</div>
+      <div class="category-count">4 skills</div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-tags="fleet census all oracles nodes status">
+        <div class="skill-header">
+          <span class="skill-name">fleet</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Deep fleet census — discover all oracles across all nodes</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/fleet</code> <code>"census"</code> <code>"all oracles"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Fleet map, node status, oracle list, health</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="machines nodes ping alive shortcuts">
+        <div class="skill-header">
+          <span class="skill-name">machines</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Fleet machines — discover nodes, ping to prove alive, create shortcuts</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/machines</code> <code>"nodes"</code> <code>"ping fleet"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Node list, ping results, connection status</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="family scan registry welcome oracles">
+        <div class="skill-header">
+          <span class="skill-name">oracle-family-scan</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Oracle Family Registry — scan, query, welcome (186+ Oracles indexed)</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/oracle-family-scan</code> <code>"family scan"</code> <code>"oracle registry"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Family registry, new oracles, stats, welcome messages</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="soul sync update skills calibrate version">
+        <div class="skill-header">
+          <span class="skill-name">oracle-soul-sync-update</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Sync Oracle instruments with the family — check and update skills version</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/oracle-soul-sync-update</code> <code>"soul sync"</code> <code>"update"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Version check, update report, skill diff</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Knowledge Management -->
+  <div class="category" data-cat="knowledge">
+    <div class="category-header">
+      <div class="category-icon">&#129504;</div>
+      <div class="category-name">Memory & Knowledge</div>
+      <div class="category-count">3 skills</div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-tags="vault obsidian logseq knowledge base notes">
+        <div class="skill-header">
+          <span class="skill-name">vault</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Connect external knowledge bases (Obsidian, Logseq, markdown) to Oracle</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/vault</code> <code>"connect vault"</code> <code>"obsidian"</code> <code>"search notes"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Connected knowledge base, searchable notes</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="xray scan memory inspect skills sessions auto-memory">
+        <div class="skill-header">
+          <span class="skill-name">xray</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">X-ray deep scan — inspect Claude Code auto-memory, skills, sessions</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/xray</code> <code>"memory"</code> <code>"what do you remember"</code> <code>"forget"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Memory audit, skill inventory, session logs</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="fyi remember note log info">
+        <div class="skill-header">
+          <span class="skill-name">fyi</span>
+          <span class="tier-badge tier-v2">v2.0</span>
+        </div>
+        <div class="skill-desc">Log information for future reference at varying significance levels</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/fyi</code> <code>"remember this"</code> <code>"note that"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Logged note for future session reference</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scheduling -->
+  <div class="category" data-cat="scheduling">
+    <div class="category-header">
+      <div class="category-icon">&#128197;</div>
+      <div class="category-name">Scheduling</div>
+      <div class="category-count">1 skill</div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-tags="schedule events calendar upcoming today">
+        <div class="skill-header">
+          <span class="skill-name">schedule</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Query schedule via Oracle API — upcoming events, calendar, today's plan</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/schedule</code> <code>"upcoming events"</code> <code>"what's on today"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Events list, calendar view, reminders</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Skills Management -->
+  <div class="category" data-cat="tools">
+    <div class="category-header">
+      <div class="category-icon">&#128295;</div>
+      <div class="category-name">Skills Management</div>
+      <div class="category-count">2 skills</div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-tags="skills list show installed how many">
+        <div class="skill-header">
+          <span class="skill-name">skills-list</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">List all Oracle skills with profile tier, type, and script status</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/skills-list</code> <code>"show skills"</code> <code>"what skills"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Full skill inventory table with tiers and status</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="create shortcut command custom local">
+        <div class="skill-header">
+          <span class="skill-name">create-shortcut</span>
+          <span class="tier-badge tier-core">Core</span>
+        </div>
+        <div class="skill-desc">Create local skills as shortcuts — real /commands in .claude/skills/</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/create-shortcut</code> <code>"create skill"</code> <code>"make a command"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">New skill file in .claude/skills/, ready to use</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- External Integrations -->
+  <div class="category" data-cat="integration">
+    <div class="category-header">
+      <div class="category-icon">&#128268;</div>
+      <div class="category-name">External Integrations</div>
+      <div class="category-count">4 skills</div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-tags="gemini browser mqtt websocket google">
+        <div class="skill-header">
+          <span class="skill-name">gemini</span>
+          <span class="tier-badge tier-v2">v2.0</span>
+        </div>
+        <div class="skill-desc">Control Gemini browser tab via MQTT WebSocket — send messages, receive responses</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/gemini</code> <code>"ask gemini"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Gemini response via MQTT bridge</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="speak tts voice read aloud say">
+        <div class="skill-header">
+          <span class="skill-name">speak</span>
+          <span class="tier-badge tier-v2">v2.0</span>
+        </div>
+        <div class="skill-desc">Text-to-speech using edge-tts or macOS say</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/speak</code> <code>"say"</code> <code>"read aloud"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Audio output via TTS engine</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="physical location findmy where gps">
+        <div class="skill-header">
+          <span class="skill-name">physical</span>
+          <span class="tier-badge tier-v2">v2.0</span>
+        </div>
+        <div class="skill-desc">Physical location awareness from FindMy data</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/physical</code> <code>"where am I"</code> <code>"location"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">Physical location, nearby devices, map context</span></div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="oraclenet identity post comment feed social">
+        <div class="skill-header">
+          <span class="skill-name">oraclenet</span>
+          <span class="tier-badge tier-v2">v2.0</span>
+        </div>
+        <div class="skill-desc">OracleNet — claim identity, post, comment, view feed</div>
+        <div class="skill-meta">
+          <div class="meta-row"><span class="meta-label">Trigger</span><span class="meta-value"><code>/oraclenet</code> <code>"oracle post"</code> <code>"oracle feed"</code></span></div>
+          <div class="meta-row"><span class="meta-label">Output</span><span class="meta-value">OracleNet posts, comments, identity claims</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Oracle Skills Directory &copy; 2026 | <a href="https://github.com/Soul-Brews-Studio/arra-oracle-skills-cli">Soul-Brews-Studio</a></p>
+  <p style="margin-top: 8px;">Built by PimQuin Oracle | arra-oracle-skills-cli v26.4.18-alpha.22</p>
+</div>
+
+<script>
+function filterSkills(query) {
+  query = query.toLowerCase();
+  document.querySelectorAll('.skill-card').forEach(card => {
+    const tags = card.dataset.tags || '';
+    const name = card.querySelector('.skill-name')?.textContent || '';
+    const desc = card.querySelector('.skill-desc')?.textContent || '';
+    const match = tags.includes(query) || name.toLowerCase().includes(query) || desc.toLowerCase().includes(query);
+    card.style.display = match ? '' : 'none';
+  });
+  document.querySelectorAll('.category').forEach(cat => {
+    const visible = cat.querySelectorAll('.skill-card[style=""], .skill-card:not([style])').length;
+    cat.style.display = visible > 0 ? '' : 'none';
+  });
+}
+
+function setFilter(cat) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelector('.search-box').value = '';
+  if (cat === 'all') {
+    document.querySelectorAll('.category').forEach(c => c.style.display = '');
+    document.querySelectorAll('.skill-card').forEach(c => c.style.display = '');
+    return;
+  }
+  document.querySelectorAll('.category').forEach(c => {
+    c.style.display = c.dataset.cat === cat ? '' : 'none';
+  });
+  document.querySelectorAll('.skill-card').forEach(c => c.style.display = '');
+}
+</script>
+
+</body>
+</html>
