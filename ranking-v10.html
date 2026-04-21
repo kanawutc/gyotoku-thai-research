@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Gyotoku Eats | Top 20 Restaurants</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f7; color: #1d1d1f;
+            max-width: 480px; margin: 0 auto; padding-bottom: 80px; min-height: 100vh;
+        }
+        .status-bar { background: #ff6b6b; padding: 8px 20px; display: flex; justify-content: space-between; font-size: 0.7rem; color: white; font-weight: 600; }
+        .app-header { background: white; padding: 16px 20px 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 0 rgba(0,0,0,0.08); }
+        .app-header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .app-logo { font-size: 1.3rem; font-weight: 800; color: #ff6b6b; }
+        .app-nav a { color: #8e8e93; text-decoration: none; font-size: 0.78rem; margin-left: 12px; }
+        .search-input { width: 100%; padding: 10px 16px; border-radius: 12px; border: none; background: #f2f2f7; font-size: 0.9rem; outline: none; font-family: inherit; }
+        .featured-section { padding: 16px 0 0 20px; }
+        .featured-title { font-size: 0.8rem; font-weight: 700; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+        .featured-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 16px; padding-right: 20px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .featured-scroll::-webkit-scrollbar { display: none; }
+        .featured-card { min-width: 260px; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); flex-shrink: 0; text-decoration: none; color: white; }
+        .featured-bg { height: 160px; padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; }
+        .featured-card:nth-child(1) .featured-bg { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
+        .featured-card:nth-child(2) .featured-bg { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+        .featured-card:nth-child(3) .featured-bg { background: linear-gradient(135deg, #00b894, #55efc4); }
+        .featured-badge { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.25); backdrop-filter: blur(10px); padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+        .featured-emoji { font-size: 2.5rem; margin-bottom: 8px; }
+        .featured-name { font-size: 1.1rem; font-weight: 700; }
+        .featured-sub { font-size: 0.78rem; opacity: 0.85; margin-top: 2px; }
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 16px 20px; }
+        .stat-pill { background: white; border-radius: 12px; padding: 12px 8px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+        .stat-pill .num { font-size: 1.2rem; font-weight: 800; color: #ff6b6b; }
+        .stat-pill .lbl { font-size: 0.6rem; color: #8e8e93; margin-top: 2px; }
+        .section-header { padding: 8px 20px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .section-header h2 { font-size: 1.1rem; font-weight: 700; }
+        .section-header .count { font-size: 0.78rem; color: #8e8e93; }
+        .card-list { padding: 0 20px; }
+        .app-card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); display: flex; gap: 14px; align-items: flex-start; transition: transform 0.15s; }
+        .app-card:active { transform: scale(0.98); }
+        .card-rank-circle { min-width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.95rem; color: white; background: #ff6b6b; flex-shrink: 0; }
+        .app-card:nth-child(1) .card-rank-circle { background: linear-gradient(135deg, #FFD700, #FFA500); }
+        .app-card:nth-child(2) .card-rank-circle { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); }
+        .app-card:nth-child(3) .card-rank-circle { background: linear-gradient(135deg, #CD7F32, #A0522D); }
+        .card-info { flex: 1; min-width: 0; }
+        .card-name-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+        .card-title { font-size: 0.95rem; font-weight: 700; color: #1d1d1f; }
+        .card-jp { font-size: 0.72rem; color: #8e8e93; margin-top: 1px; }
+        .card-rating-badge { background: #ff6b6b; color: white; padding: 2px 8px; border-radius: 8px; font-size: 0.72rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+        .card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+        .ctag { font-size: 0.65rem; padding: 2px 8px; border-radius: 6px; font-weight: 600; }
+        .ctag-type { background: #fff0f0; color: #ff6b6b; }
+        .ctag-award { background: #fff8e1; color: #f57f17; }
+        .ctag-price { background: #e8f5e9; color: #2e7d32; }
+        .card-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+        .card-meta { font-size: 0.72rem; color: #8e8e93; }
+        .card-reviews { font-size: 0.72rem; color: #636366; font-weight: 600; }
+        .fab-maps { display: inline-flex; align-items: center; gap: 3px; padding: 5px 10px; border-radius: 8px; background: #ff6b6b; color: white; text-decoration: none; font-size: 0.68rem; font-weight: 700; }
+        .fab-maps:hover { background: #e55a5a; }
+        .insights-section { padding: 16px 20px; }
+        .insight-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 12px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .insight-scroll::-webkit-scrollbar { display: none; }
+        .insight-chip { min-width: 200px; background: white; border-radius: 14px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); flex-shrink: 0; }
+        .insight-chip h3 { font-size: 0.82rem; color: #ff6b6b; margin-bottom: 4px; }
+        .insight-chip p { font-size: 0.72rem; color: #636366; line-height: 1.4; }
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: white; border-top: 1px solid #e5e5ea; display: flex; justify-content: space-around; padding: 8px 0 20px; z-index: 200; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: #8e8e93; font-size: 0.6rem; font-weight: 500; }
+        .nav-item.active { color: #ff6b6b; }
+        .nav-icon { font-size: 1.3rem; }
+        .app-footer { text-align: center; padding: 20px; font-size: 0.7rem; color: #8e8e93; }
+        .app-footer a { color: #ff6b6b; text-decoration: none; }
+        @media (min-width: 481px) { body { border-left: 1px solid #e5e5ea; border-right: 1px solid #e5e5ea; } }
+    </style>
+</head>
+<body>
+
+<div class="status-bar"><span>Gyotoku Station</span><span>April 2026</span></div>
+
+<div class="app-header">
+    <div class="app-header-top">
+        <div class="app-logo">GyotokuEats</div>
+        <div class="app-nav"><a href="index.html">Home</a><a href="ranking.html">Classic</a></div>
+    </div>
+    <input type="text" class="search-input" placeholder="Search restaurants..." readonly>
+</div>
+
+<div class="featured-section">
+    <div class="featured-title">Top Picks</div>
+    <div class="featured-scroll">
+        <a href="https://www.google.com/maps/search/?api=1&query=%E6%94%AF%E9%82%A3%E3%82%BD%E3%83%90+%E5%B0%8F%E3%82%80%E3%82%8D+%E8%A1%8C%E5%BE%B3" target="_blank" class="featured-card">
+            <div class="featured-bg"><div class="featured-badge">#1 Most Reviewed</div><div class="featured-emoji">&#127836;</div><div class="featured-name">China Soba Komuro</div><div class="featured-sub">1,422 reviews | 3.84 | Ramen 100</div></div>
+        </a>
+        <a href="https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E7%9F%B3%E4%BA%95+%E8%A1%8C%E5%BE%B3" target="_blank" class="featured-card">
+            <div class="featured-bg"><div class="featured-badge">#2 Steak Champion</div><div class="featured-emoji">&#129385;</div><div class="featured-name">Steak Ishii</div><div class="featured-sub">433 reviews | 3.57 | Steak 100</div></div>
+        </a>
+        <a href="https://www.google.com/maps/search/?api=1&query=%E7%8B%AC%E4%B8%80%E5%87%A6%E9%A4%83%E5%AD%90+%E8%A1%8C%E5%BE%B3" target="_blank" class="featured-card">
+            <div class="featured-bg"><div class="featured-badge">#3 Gyoza Master</div><div class="featured-emoji">&#129791;</div><div class="featured-name">Dokuissho Gyoza</div><div class="featured-sub">278 reviews | 3.50 | Chinese</div></div>
+        </a>
+    </div>
+</div>
+
+<div class="stats-row">
+    <div class="stat-pill"><div class="num">20</div><div class="lbl">Ranked</div></div>
+    <div class="stat-pill"><div class="num">3K+</div><div class="lbl">Reviews</div></div>
+    <div class="stat-pill"><div class="num">3.84</div><div class="lbl">Highest</div></div>
+    <div class="stat-pill"><div class="num">2</div><div class="lbl">Awards</div></div>
+</div>
+
+<div class="section-header"><h2>All Rankings</h2><span class="count">20 restaurants</span></div>
+
+<div class="card-list">
+    <div class="app-card"><div class="card-rank-circle">1</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">China Soba Komuro</div><div class="card-jp">&#25903;&#37027;&#12477;&#12496; &#23567;&#12416;&#12429;</div></div><div class="card-rating-badge">3.84</div></div><div class="card-tags"><span class="ctag ctag-type">Ramen</span><span class="ctag ctag-price">&yen;1K-2K</span><span class="ctag ctag-award">Ramen 100</span></div><div class="card-bottom"><span class="card-meta">5min | Cash | 18 seats</span><a href="https://www.google.com/maps/search/?api=1&query=%E6%94%AF%E9%82%A3%E3%82%BD%E3%83%90+%E5%B0%8F%E3%82%80%E3%82%8D+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">1,422 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">2</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Steak Ishii</div><div class="card-jp">&#12473;&#12486;&#12540;&#12461;&#30707;&#20117;</div></div><div class="card-rating-badge">3.57</div></div><div class="card-tags"><span class="ctag ctag-type">Steak</span><span class="ctag ctag-price">&yen;1K-6K</span><span class="ctag ctag-award">Steak 100</span></div><div class="card-bottom"><span class="card-meta">5min | Cash | 45 seats</span><a href="https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E7%9F%B3%E4%BA%95+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">433 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">3</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Dokuissho Gyoza</div><div class="card-jp">&#29420;&#19968;&#20966;&#39187;&#23376;</div></div><div class="card-rating-badge">3.50</div></div><div class="card-tags"><span class="ctag ctag-type">Chinese / Gyoza</span></div><div class="card-bottom"><span class="card-meta">215m</span><a href="https://www.google.com/maps/search/?api=1&query=%E7%8B%AC%E4%B8%80%E5%87%A6%E9%A4%83%E5%AD%90+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">278 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">4</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Niku to Kome Hajime</div><div class="card-jp">&#32905;&#12392;&#31859; &#12399;&#12376;&#12417;</div></div><div class="card-rating-badge">3.13</div></div><div class="card-tags"><span class="ctag ctag-type">Steak</span></div><div class="card-bottom"><span class="card-meta">228m</span><a href="https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%81%A8%E7%B1%B3+%E3%81%AF%E3%81%98%E3%82%81+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">173 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">5</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Bombay Palace</div><div class="card-jp">&#12508;&#12531;&#12505;&#12452;&#12497;&#12524;&#12473;</div></div><div class="card-rating-badge">3.43</div></div><div class="card-tags"><span class="ctag ctag-type">Indian Curry</span></div><div class="card-bottom"><span class="card-meta">345m</span><a href="https://www.google.com/maps/search/?api=1&query=%E3%83%9C%E3%83%B3%E3%83%99%E3%82%A4%E3%83%91%E3%83%AC%E3%82%B9+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">153 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">6</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Vege Bar Chibattoria</div><div class="card-jp">&#12505;&#12472;&#12496;&#12523; CHIBATTORIA</div></div><div class="card-rating-badge">3.55</div></div><div class="card-tags"><span class="ctag ctag-type">Italian / Veg</span></div><div class="card-bottom"><span class="card-meta">690m</span><a href="https://www.google.com/maps/search/?api=1&query=CHIBATTORIA+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">120 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">7</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Koma</div><div class="card-jp">&#12467;&#12510;</div></div><div class="card-rating-badge">3.32</div></div><div class="card-tags"><span class="ctag ctag-type">Chicken / Izakaya</span></div><div class="card-bottom"><span class="card-meta">186m</span><a href="https://www.google.com/maps/search/?api=1&query=%E3%82%B3%E3%83%9E+%E8%A1%8C%E5%BE%B3+%E5%B1%85%E9%85%92%E5%B1%8B" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">87 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">8</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Shichirinbo</div><div class="card-jp">&#19971;&#36650;&#25151; &#21335;&#34892;&#24499;</div></div><div class="card-rating-badge">3.07</div></div><div class="card-tags"><span class="ctag ctag-type">Yakiniku (BBQ)</span></div><div class="card-bottom"><span class="card-meta">669m</span><a href="https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E8%BC%AA%E6%88%BF+%E5%8D%97%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">72 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">9</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Gyotoku En</div><div class="card-jp">&#34892;&#24499;&#33489;</div></div><div class="card-rating-badge">3.23</div></div><div class="card-tags"><span class="ctag ctag-type">Yakiniku / Wagyu</span></div><div class="card-bottom"><span class="card-meta">125m</span><a href="https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E8%8B%91+%E7%84%BC%E8%82%89" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">63 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">10</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Niku Bar Sunoki</div><div class="card-jp">&#12473;&#12494;&#12540;&#12461;&#12540;</div></div><div class="card-rating-badge">3.35</div></div><div class="card-tags"><span class="ctag ctag-type">Steak / Meat Bar</span></div><div class="card-bottom"><span class="card-meta">Near stn.</span><a href="https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%83%90%E3%83%AB+%E3%82%B9%E3%83%8E%E3%83%BC%E3%82%AD%E3%83%BC+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">54 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">11</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Yuyutei</div><div class="card-jp">&#36938;&#36938;&#20141;</div></div><div class="card-rating-badge">3.25</div></div><div class="card-tags"><span class="ctag ctag-type">Yakiniku</span></div><div class="card-bottom"><span class="card-meta">212m</span><a href="https://www.google.com/maps/search/?api=1&query=%E9%81%8A%E9%81%8A%E4%BA%AD+%E8%A1%8C%E5%BE%B3+%E7%84%BC%E8%82%89" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">52 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">12</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Gyotoku Hikodori</div><div class="card-jp">&#34892;&#24499;&#24422;&#37193;</div></div><div class="card-rating-badge">3.09</div></div><div class="card-tags"><span class="ctag ctag-type">Yakitori</span></div><div class="card-bottom"><span class="card-meta">77m</span><a href="https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E5%BD%A6%E9%85%89" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">42 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">13</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Torizou</div><div class="card-jp">&#40165;&#34101;</div></div><div class="card-rating-badge">3.04</div></div><div class="card-tags"><span class="ctag ctag-type">Yakitori / Nabe</span></div><div class="card-bottom"><span class="card-meta">123m</span><a href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E8%94%B5+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">34 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">14</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Chikuzenya</div><div class="card-jp">&#12385;&#12367;&#12380;&#12435;&#12420;</div></div><div class="card-rating-badge">3.04</div></div><div class="card-tags"><span class="ctag ctag-type">Grilled Tripe</span></div><div class="card-bottom"><span class="card-meta">84m</span><a href="https://www.google.com/maps/search/?api=1&query=%E3%81%A1%E3%81%8F%E3%81%9C%E3%82%93%E3%82%84+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">32 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">15</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">SAKURA</div><div class="card-jp">&#12469;&#12463;&#12521;</div></div><div class="card-rating-badge">3.09</div></div><div class="card-tags"><span class="ctag ctag-type">Indian Curry</span></div><div class="card-bottom"><span class="card-meta">148m</span><a href="https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%AF%E3%83%A9+SAKURA+%E8%A1%8C%E5%BE%B3+%E3%82%AB%E3%83%AC%E3%83%BC" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">29 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">16</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Tori Ichiza</div><div class="card-jp">&#40165;&#19968;&#24231;</div></div><div class="card-rating-badge">3.09</div></div><div class="card-tags"><span class="ctag ctag-type">Yakitori</span></div><div class="card-bottom"><span class="card-meta">230m</span><a href="https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E4%B8%80%E5%BA%A7+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">28 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">17</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">UNCLESAM</div><div class="card-jp">&#12450;&#12531;&#12463;&#12523;&#12469;&#12512;</div></div><div class="card-rating-badge">3.13</div></div><div class="card-tags"><span class="ctag ctag-type">Dining Bar</span></div><div class="card-bottom"><span class="card-meta">169m</span><a href="https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%B3%E3%82%AF%E3%83%AB%E3%82%B5%E3%83%A0+UNCLESAM+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">26 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">18</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Orion Shokudo</div><div class="card-jp">&#12458;&#12522;&#12458;&#12531;&#39135;&#22530;</div></div><div class="card-rating-badge">3.08</div></div><div class="card-tags"><span class="ctag ctag-type">Okinawa</span></div><div class="card-bottom"><span class="card-meta">163m</span><a href="https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%83%AA%E3%82%AA%E3%83%B3%E9%A3%9F%E5%A0%82+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">25 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">19</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Ajifu</div><div class="card-jp">&#21619;&#23500;</div></div><div class="card-rating-badge">3.17</div></div><div class="card-tags"><span class="ctag ctag-type">Chinese / Sichuan</span></div><div class="card-bottom"><span class="card-meta">322m</span><a href="https://www.google.com/maps/search/?api=1&query=%E5%91%B3%E5%AF%8C+%E4%B8%AD%E8%8F%AF%E5%B1%85%E9%85%92%E5%B1%8B+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">18 reviews</span></div></div></div>
+
+    <div class="app-card"><div class="card-rank-circle">20</div><div class="card-info"><div class="card-name-row"><div><div class="card-title">Thank You Sakaba</div><div class="card-jp">Thank You &#37202;&#22580;</div></div><div class="card-rating-badge">3.08</div></div><div class="card-tags"><span class="ctag ctag-type">Izakaya / Seafood</span></div><div class="card-bottom"><span class="card-meta">136m</span><a href="https://www.google.com/maps/search/?api=1&query=Thank+You+%E9%85%92%E5%A0%B4+%E8%A1%8C%E5%BE%B3" target="_blank" class="fab-maps">&#128506; Maps</a></div><div class="card-bottom"><span class="card-reviews">15 reviews</span></div></div></div>
+</div>
+
+<div class="insights-section">
+    <div class="featured-title">Insights</div>
+    <div class="insight-scroll">
+        <div class="insight-chip"><h3>Ramen is King</h3><p>Komuro: 1,422 reviews, 3x more than #2. Ramen 100 winner 3 years.</p></div>
+        <div class="insight-chip"><h3>Meat Paradise</h3><p>4 out of top 10 are steak/meat restaurants.</p></div>
+        <div class="insight-chip"><h3>BBQ Culture</h3><p>3 yakiniku joints in top 11. Charcoal BBQ runs deep.</p></div>
+        <div class="insight-chip"><h3>Two 100 Winners</h3><p>Komuro + Steak Ishii. Rare for one station.</p></div>
+        <div class="insight-chip"><h3>Walkable</h3><p>16/20 within 350m. No taxi needed.</p></div>
+        <div class="insight-chip"><h3>Cash Culture</h3><p>Top 2 are cash-only. Bring JPY.</p></div>
+    </div>
+</div>
+
+<div class="app-footer">
+    <p>Market Research by <strong>PimQuin Oracle</strong> | April 2026</p>
+    <p style="margin-top: 4px;">Sources: <a href="#">Tabelog</a> | <a href="#">TripAdvisor</a> | Google Maps</p>
+    <p style="margin-top: 4px; opacity: 0.6;">Design 10 of 10: Mobile App Cards</p>
+</div>
+
+<div class="bottom-nav">
+    <a href="#" class="nav-item active"><span class="nav-icon">&#127860;</span>Ranking</a>
+    <a href="#" class="nav-item"><span class="nav-icon">&#128506;</span>Map</a>
+    <a href="#" class="nav-item"><span class="nav-icon">&#128269;</span>Search</a>
+    <a href="index.html" class="nav-item"><span class="nav-icon">&#127969;</span>Home</a>
+</div>
+
+</body>
+</html>

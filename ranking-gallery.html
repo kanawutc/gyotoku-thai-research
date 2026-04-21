@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gyotoku Thai Restaurant Ranking - Design Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', 'Prompt', sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; }
+
+.hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+.hero h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #f5af19, #f12711);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero p {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.hero .badge {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 6px 16px;
+  background: rgba(245, 175, 25, 0.15);
+  border: 1px solid rgba(245, 175, 25, 0.3);
+  border-radius: 20px;
+  color: #f5af19;
+  font-size: 0.85rem;
+}
+
+.gallery {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: #1a1a1a;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid #2a2a2a;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  border-color: #3a3a3a;
+}
+
+.card-preview {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+.card-preview iframe {
+  width: 200%;
+  height: 200%;
+  transform: scale(0.5);
+  transform-origin: top left;
+  border: none;
+  pointer-events: none;
+}
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.8));
+}
+
+.card-body {
+  padding: 20px;
+}
+.card-number {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  background: linear-gradient(135deg, #f5af19, #f12711);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.card-desc {
+  color: #94a3b8;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.tag {
+  padding: 3px 10px;
+  background: #2a2a2a;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: #cbd5e1;
+}
+
+.card-link {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  background: linear-gradient(135deg, #f5af19, #f12711);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: opacity 0.2s;
+}
+.card-link:hover { opacity: 0.85; }
+
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: #475569;
+  font-size: 0.85rem;
+  border-top: 1px solid #1e1e1e;
+}
+.footer a { color: #f5af19; text-decoration: none; }
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.6rem; }
+  .gallery { grid-template-columns: 1fr; padding: 20px 16px 60px; }
+  .card-preview { height: 180px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Gyotoku Thai Restaurant Ranking</h1>
+  <p>10 Landing Page Designs - เลือกแบบที่ชอบที่สุด<br>ร้านอาหารไทยยอดนิยม 20 อันดับในเกียวโตคุ</p>
+  <span class="badge">10 Designs / 20 Restaurants / Google Maps Reviews</span>
+</div>
+
+<div class="gallery">
+
+  <div class="card">
+    <div class="card-preview">
+      <iframe src="ranking-v1" loading="lazy"></iframe>
+      <div class="card-overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-number">1</div>
+      <div class="card-title">TripAdvisor Classic</div>
+      <div class="card-desc">สไตล์ TripAdvisor สีเขียว bubble ratings, search bar, sort tabs</div>
+      <div class="card-tags">
+        <span class="tag">Green</span>
+        <span class="tag">Bubble Rating</span>
+        <span class="tag">Sort Tabs</span>
+      </div>
+      <a href="ranking-v1" class="card-link">View Design</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <iframe src="ranking-v2" loading="lazy"></iframe>
+      <div class="card-overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-number">2</div>
+      <div class="card-title">Wongnai Orange</div>
+      <div class="card-desc">สไตล์ Wongnai สีส้ม ฟอนต์ไทย Prompt, category pills, star ratings</div>
+      <div class="card-tags">
+        <span class="tag">Orange</span>
+        <span class="tag">Thai Font</span>
+        <span class="tag">Food Cards</span>
+      </div>
+      <a href="ranking-v2" class="card-link">View Design</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <iframe src="ranking-v3" loading="lazy"></iframe>
+      <div class="card-overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-number">3</div>
+      <div class="card-title">Modern Minimal White</div>
+      <div class="card-desc">สไตล์ Michelin Guide สะอาดตา gold accents สำหรับ top 3</div>
+      <div class="card-tags">
+        <span class="tag">White</span>
+        <span class="tag">Minimal</span>
+        <span class="tag">Michelin</span>
+      </div>
+      <a href="ranking-v3" class="card-link">View Design</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <iframe src="ranking-v4" loading="lazy"></iframe>
+      <div class="card-overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-number">4</div>
+      <div class="card-title">Dark Premium Gold</div>
+      <div class="card-desc">สไตล์ luxury magazine พื้นดำ ทอง หรูหรา premium feel</div>
+      <div class="card-tags">
+        <span class="tag">Dark</span>
+        <span class="tag">Gold</span>
+        <span class="tag">Luxury</span>
+      </div>
+      <a href="ranking-v4" class="card-link">View Design</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <iframe src="ranking-v5" loading="lazy"></iframe>
+      <div class="card-overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-number">5</div>
+      <div class="card-title">Magazine Editorial</div>
+      <div class="card-desc">สไตล์นิตยสาร editorial layout, DM Serif Display, warm cream tones</div>
+      <div class="card-tags">
+        <span class="tag">Editorial</span>
+        <span class="tag">Cream</span>
+        <span class="tag">Serif</span>
+      </div>
+      <a href="ranking-v5" class="card-link">View Design</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <iframe src="ranking-v6" loading="lazy"></iframe>
+      <div class="card-overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-number">6</div>
+      <div class="card-title">Google Maps / Local Guide</div>
+      <div class="card-desc">สไตล์ Google Maps สีฟ้า Material Design cards, rating badges</div>
+      <div class="card-tags">
+        <span class="tag">Blue</span>
+        <span class="tag">Material</span>
+        <span class="tag">Google</span>
+      </div>
+      <a href="ranking-v6" class="card-link">View Design</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <iframe src="ranking-v7" loading="lazy"></iframe>
+      <div class="card-overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-number">7</div>
+      <div class="card-title">Instagram Food Grid</div>
+      <div class="card-desc">สไตล์ Instagram grid layout, gradient backgrounds, hover reveal</div>
+      <div class="card-tags">
+        <span class="tag">Grid</span>
+        <span class="tag">Gradient</span>
+        <span class="tag">Instagram</span>
+      </div>
+      <a href="ranking-v7" class="card-link">View Design</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <iframe src="ranking-v8" loading="lazy"></iframe>
+      <div class="card-overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-number">8</div>
+      <div class="card-title">Yelp Red</div>
+      <div class="card-desc">สไตล์ Yelp สีแดง horizontal cards, rating circles, filter pills</div>
+      <div class="card-tags">
+        <span class="tag">Red</span>
+        <span class="tag">Yelp</span>
+        <span class="tag">Horizontal</span>
+      </div>
+      <a href="ranking-v8" class="card-link">View Design</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <iframe src="ranking-v9" loading="lazy"></iframe>
+      <div class="card-overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-number">9</div>
+      <div class="card-title">Japanese Tabelog</div>
+      <div class="card-desc">สไตล์ Tabelog สีส้ม Noto Sans JP, score breakdown แบบญี่ปุ่น</div>
+      <div class="card-tags">
+        <span class="tag">Orange</span>
+        <span class="tag">Tabelog</span>
+        <span class="tag">Japanese</span>
+      </div>
+      <a href="ranking-v9" class="card-link">View Design</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <iframe src="ranking-v10" loading="lazy"></iframe>
+      <div class="card-overlay"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-number">10</div>
+      <div class="card-title">Mobile App Cards</div>
+      <div class="card-desc">สไตล์ Mobile App max-width 480px, bottom nav, horizontal scroll top 3</div>
+      <div class="card-tags">
+        <span class="tag">Mobile</span>
+        <span class="tag">App</span>
+        <span class="tag">Coral</span>
+      </div>
+      <a href="ranking-v10" class="card-link">View Design</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Gyotoku Thai Restaurant Research &copy; 2026 | <a href="ranking">Original Ranking</a></p>
+  <p style="margin-top: 8px;">Made with data from Google Maps Reviews</p>
+</div>
+
+</body>
+</html>

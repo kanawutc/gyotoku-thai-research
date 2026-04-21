@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 20 Restaurants near Gyotoku Station | Instagram Food Grid</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fafafa;
+  color: #262626;
+  min-height: 100vh;
+}
+
+/* Nav */
+nav {
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: background 0.2s;
+}
+nav a:hover { background: rgba(255,255,255,0.2); }
+nav .nav-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: #fff;
+  text-align: center;
+  padding: 60px 20px 50px;
+}
+.header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.header p {
+  font-size: 1.1rem;
+  font-weight: 300;
+  opacity: 0.95;
+}
+
+/* Stats Bar */
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 28px 20px;
+  background: #fff;
+  border-bottom: 1px solid #efefef;
+  flex-wrap: wrap;
+}
+.stat-item {
+  text-align: center;
+}
+.stat-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #833ab4, #fd1d1d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-label {
+  font-size: 0.75rem;
+  color: #8e8e8e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+/* Insights */
+.insights {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+.insights h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.insight-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.insight-pill {
+  background: linear-gradient(135deg, rgba(131,58,180,0.1), rgba(252,176,69,0.1));
+  border: 1px solid rgba(131,58,180,0.2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #833ab4;
+}
+
+/* Grid */
+.grid-container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 16px;
+}
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+/* Cards */
+.card {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.card.featured {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+/* First card is large */
+.card:nth-child(1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.card-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  transition: transform 0.4s ease;
+}
+.card:nth-child(1) .card-bg { font-size: 7rem; }
+.card:hover .card-bg { transform: scale(1.05); }
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.75));
+  padding: 40px 12px 12px;
+  color: #fff;
+}
+.card-rank {
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.25);
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 4px;
+  backdrop-filter: blur(4px);
+}
+.card-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.card:nth-child(1) .card-name { font-size: 1.3rem; }
+.card:nth-child(2) .card-name,
+.card:nth-child(3) .card-name { font-size: 0.95rem; }
+.card-rating {
+  font-size: 0.72rem;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+/* Award badge */
+.award-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: linear-gradient(135deg, #fcb045, #fd1d1d);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+/* Hover detail overlay */
+.card-hover {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 16px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+.card:hover .card-hover { opacity: 1; }
+.card-hover .hover-name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.card:nth-child(1) .card-hover .hover-name { font-size: 1.5rem; }
+.card-hover .hover-jp {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+.card-hover .hover-detail {
+  font-size: 0.72rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+.card-hover .hover-detail span {
+  display: block;
+}
+.card-hover .maps-link {
+  display: inline-block;
+  margin-top: 12px;
+  background: linear-gradient(135deg, #833ab4, #fd1d1d);
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+.card-hover .maps-link:hover { transform: scale(1.05); }
+
+/* Expanded detail */
+.card-expanded {
+  display: none;
+  grid-column: 1 / -1;
+  background: #fff;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+  padding: 24px;
+  margin: 4px 0;
+  animation: slideDown 0.3s ease;
+}
+.card-expanded.active { display: block; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.expanded-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.expanded-emoji {
+  font-size: 2.5rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(131,58,180,0.1), rgba(252,176,69,0.1));
+}
+.expanded-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.expanded-subtitle {
+  font-size: 0.85rem;
+  color: #8e8e8e;
+}
+.expanded-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.detail-item {
+  font-size: 0.82rem;
+  color: #555;
+}
+.detail-item strong { color: #262626; }
+.expanded-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+.expanded-actions a {
+  background: linear-gradient(135deg, #833ab4, #fd1d1d);
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.expanded-actions a:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(131,58,180,0.3);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  background: #fff;
+  border-top: 1px solid #efefef;
+  margin-top: 40px;
+}
+footer .design-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #262626;
+  margin-bottom: 4px;
+}
+footer .credit {
+  font-size: 0.75rem;
+  color: #8e8e8e;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .food-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 1;
+    aspect-ratio: 16/9;
+  }
+  .header h1 { font-size: 1.6rem; }
+  .stats-bar { gap: 20px; }
+  .stat-num { font-size: 1.3rem; }
+}
+@media (max-width: 480px) {
+  .food-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  .card-name { font-size: 0.7rem; }
+  .card-hover .hover-name { font-size: 0.85rem; }
+  .card-hover .hover-detail { font-size: 0.65rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-title">Gyotoku Eats</span>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="ranking.html">Main Ranking</a>
+  </div>
+</nav>
+
+<div class="header">
+  <h1>Top 20 Most Reviewed</h1>
+  <p>Restaurants near Gyotoku Station -- ranked by review count</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">20</div>
+    <div class="stat-label">Restaurants</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3,037+</div>
+    <div class="stat-label">Total Reviews</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3.84</div>
+    <div class="stat-label">Highest Rating</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">2</div>
+    <div class="stat-label">Award Winners</div>
+  </div>
+</div>
+
+<div class="insights">
+  <h2>Key Insights</h2>
+  <div class="insight-pills">
+    <div class="insight-pill">Ramen is King -- Komuro has 1,422 reviews (3x #2)</div>
+    <div class="insight-pill">Meat Paradise -- 4 of top 10 are steak/meat</div>
+    <div class="insight-pill">BBQ Culture -- 3 yakiniku in top 11</div>
+    <div class="insight-pill">Two Tabelog 100 Winners</div>
+    <div class="insight-pill">Walkable -- 16/20 within 350m</div>
+    <div class="insight-pill">Cash Culture -- Top 2 are cash-only</div>
+  </div>
+</div>
+
+<div class="grid-container">
+  <div class="food-grid" id="foodGrid">
+    <!-- Cards injected by JS -->
+  </div>
+</div>
+
+<footer>
+  <div class="design-label">Design 7 of 10: Instagram Food Grid</div>
+  <div class="credit">Market Research by PimQuin Oracle | April 2026</div>
+</footer>
+
+<script>
+const restaurants = [
+  { rank:1, name:"China Soba Komuro", jp:"支那ソバ 小むろ", type:"Ramen/Tsukemen", rating:3.84, reviews:1422, dist:"5min walk", price:"&yen;1,000-1,999", note:"Cash only", award:"Ramen EAST 100 (2023-2025)", emoji:"🍜", gradient:"linear-gradient(135deg,#ff6b6b,#ffa07a)", maps:"https://www.google.com/maps/search/?api=1&query=%E6%94%AF%E9%82%A3%E3%82%BD%E3%83%90+%E5%B0%8F%E3%82%80%E3%82%8D+%E8%A1%8C%E5%BE%B3" },
+  { rank:2, name:"Steak Ishii", jp:"ステーキ石井", type:"Steak/Hamburger", rating:3.57, reviews:433, dist:"5min walk", price:"&yen;1,000-5,999", note:"Cash only", award:"Steak EAST 100 (2025)", emoji:"🥩", gradient:"linear-gradient(135deg,#8b0000,#cd5c5c)", maps:"https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E7%9F%B3%E4%BA%95+%E8%A1%8C%E5%BE%B3" },
+  { rank:3, name:"Dokuissho Gyoza", jp:"独一処餃子 行徳店", type:"Chinese/Dumpling", rating:3.50, reviews:278, dist:"215m", price:"", note:"", award:"", emoji:"🥟", gradient:"linear-gradient(135deg,#f7971e,#ffd200)", maps:"https://www.google.com/maps/search/?api=1&query=%E7%8B%AC%E4%B8%80%E5%87%A6%E9%A4%83%E5%AD%90+%E8%A1%8C%E5%BE%B3" },
+  { rank:4, name:"Niku to Kome Hajime", jp:"肉と米 はじめ 行徳店", type:"Steak/Hamburger", rating:3.13, reviews:173, dist:"228m", price:"", note:"", award:"", emoji:"🍖", gradient:"linear-gradient(135deg,#c0392b,#e74c3c)", maps:"https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%81%A8%E7%B1%B3+%E3%81%AF%E3%81%98%E3%82%81+%E8%A1%8C%E5%BE%B3" },
+  { rank:5, name:"Bombay Palace", jp:"ボンベイパレス", type:"Indian Curry", rating:3.43, reviews:153, dist:"345m", price:"", note:"", award:"", emoji:"🍛", gradient:"linear-gradient(135deg,#f2994a,#f2c94c)", maps:"https://www.google.com/maps/search/?api=1&query=%E3%83%9C%E3%83%B3%E3%83%99%E3%82%A4%E3%83%91%E3%83%AC%E3%82%B9+%E8%A1%8C%E5%BE%B3" },
+  { rank:6, name:"Vege Bar Chibattoria", jp:"ベジバル CHIBATTORIA", type:"Italian/Veg", rating:3.55, reviews:120, dist:"690m", price:"", note:"", award:"", emoji:"🥗", gradient:"linear-gradient(135deg,#56ab2f,#a8e063)", maps:"https://www.google.com/maps/search/?api=1&query=CHIBATTORIA+%E8%A1%8C%E5%BE%B3" },
+  { rank:7, name:"Koma", jp:"コマ", type:"Chicken/Izakaya", rating:3.32, reviews:87, dist:"186m", price:"", note:"", award:"", emoji:"🍗", gradient:"linear-gradient(135deg,#e44d26,#f16529)", maps:"https://www.google.com/maps/search/?api=1&query=%E3%82%B3%E3%83%9E+%E8%A1%8C%E5%BE%B3+%E5%B1%85%E9%85%92%E5%B1%8B" },
+  { rank:8, name:"Shichirinbo", jp:"七輪房 南行徳店", type:"Yakiniku/BBQ", rating:3.07, reviews:72, dist:"669m", price:"", note:"", award:"", emoji:"🔥", gradient:"linear-gradient(135deg,#d32f2f,#ff6f00)", maps:"https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E8%BC%AA%E6%88%BF+%E5%8D%97%E8%A1%8C%E5%BE%B3" },
+  { rank:9, name:"Gyotoku En", jp:"行徳苑", type:"Yakiniku/Wagyu", rating:3.23, reviews:63, dist:"125m", price:"", note:"", award:"", emoji:"🥓", gradient:"linear-gradient(135deg,#b71c1c,#e65100)", maps:"https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E8%8B%91+%E7%84%BC%E8%82%89" },
+  { rank:10, name:"Niku Bar Sunoki", jp:"肉バル スノーキー 行徳店", type:"Steak/Meat Bar", rating:3.35, reviews:54, dist:"Near station", price:"", note:"", award:"", emoji:"🍷", gradient:"linear-gradient(135deg,#6a1b9a,#ab47bc)", maps:"https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%83%90%E3%83%AB+%E3%82%B9%E3%83%8E%E3%83%BC%E3%82%AD%E3%83%BC+%E8%A1%8C%E5%BE%B3" },
+  { rank:11, name:"Yuyutei", jp:"遊遊亭", type:"Yakiniku", rating:3.25, reviews:52, dist:"212m", price:"", note:"", award:"", emoji:"🥘", gradient:"linear-gradient(135deg,#e65100,#ff9800)", maps:"https://www.google.com/maps/search/?api=1&query=%E9%81%8A%E9%81%8A%E4%BA%AD+%E8%A1%8C%E5%BE%B3+%E7%84%BC%E8%82%89" },
+  { rank:12, name:"Gyotoku Hikodori", jp:"行徳彦酉", type:"Yakitori/Izakaya", rating:3.09, reviews:42, dist:"77m", price:"", note:"", award:"", emoji:"🍢", gradient:"linear-gradient(135deg,#ff8f00,#ffc107)", maps:"https://www.google.com/maps/search/?api=1&query=%E8%A1%8C%E5%BE%B3%E5%BD%A6%E9%85%89" },
+  { rank:13, name:"Torizou", jp:"鳥蔵 行徳店", type:"Yakitori/Nabe", rating:3.04, reviews:34, dist:"123m", price:"", note:"", award:"", emoji:"🍲", gradient:"linear-gradient(135deg,#bf360c,#e64a19)", maps:"https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E8%94%B5+%E8%A1%8C%E5%BE%B3" },
+  { rank:14, name:"Chikuzenya", jp:"ちくぜんや 行徳店", type:"Grilled Tripe/Izakaya", rating:3.04, reviews:32, dist:"84m", price:"", note:"", award:"", emoji:"🫕", gradient:"linear-gradient(135deg,#4e342e,#8d6e63)", maps:"https://www.google.com/maps/search/?api=1&query=%E3%81%A1%E3%81%8F%E3%81%9C%E3%82%93%E3%82%84+%E8%A1%8C%E5%BE%B3" },
+  { rank:15, name:"SAKURA", jp:"サクラ", type:"Indian Curry/Dining Bar", rating:3.09, reviews:29, dist:"148m", price:"", note:"", award:"", emoji:"🌸", gradient:"linear-gradient(135deg,#e91e63,#f48fb1)", maps:"https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%AF%E3%83%A9+SAKURA+%E8%A1%8C%E5%BE%B3+%E3%82%AB%E3%83%AC%E3%83%BC" },
+  { rank:16, name:"Tori Ichiza", jp:"炭火串焼 鳥一座", type:"Yakitori/Izakaya", rating:3.09, reviews:28, dist:"230m", price:"", note:"", award:"", emoji:"🍡", gradient:"linear-gradient(135deg,#ff6f00,#ffab00)", maps:"https://www.google.com/maps/search/?api=1&query=%E9%B3%A5%E4%B8%80%E5%BA%A7+%E8%A1%8C%E5%BE%B3" },
+  { rank:17, name:"UNCLESAM", jp:"アンクルサム", type:"Dining Bar/American", rating:3.13, reviews:26, dist:"169m", price:"", note:"", award:"", emoji:"🍔", gradient:"linear-gradient(135deg,#1565c0,#42a5f5)", maps:"https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%B3%E3%82%AF%E3%83%AB%E3%82%B5%E3%83%A0+UNCLESAM+%E8%A1%8C%E5%BE%B3" },
+  { rank:18, name:"Orion Shokudo", jp:"オリオン食堂", type:"Okinawa Cuisine", rating:3.08, reviews:25, dist:"163m", price:"", note:"", award:"", emoji:"🌺", gradient:"linear-gradient(135deg,#00838f,#4dd0e1)", maps:"https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%83%AA%E3%82%AA%E3%83%B3%E9%A3%9F%E5%A0%82+%E8%A1%8C%E5%BE%B3" },
+  { rank:19, name:"Ajifu", jp:"味富 中華居酒屋", type:"Chinese/Sichuan", rating:3.17, reviews:18, dist:"322m", price:"", note:"", award:"", emoji:"🌶️", gradient:"linear-gradient(135deg,#c62828,#ef5350)", maps:"https://www.google.com/maps/search/?api=1&query=%E5%91%B3%E5%AF%8C+%E4%B8%AD%E8%8F%AF%E5%B1%85%E9%85%92%E5%B1%8B+%E8%A1%8C%E5%BE%B3" },
+  { rank:20, name:"Thank You Sakaba", jp:"Thank You 酒場 行徳店", type:"Izakaya/Seafood", rating:3.08, reviews:15, dist:"136m", price:"", note:"", award:"", emoji:"🐟", gradient:"linear-gradient(135deg,#0277bd,#4fc3f7)", maps:"https://www.google.com/maps/search/?api=1&query=Thank+You+%E9%85%92%E5%A0%B4+%E8%A1%8C%E5%BE%B3" }
+];
+
+const grid = document.getElementById('foodGrid');
+
+restaurants.forEach((r, i) => {
+  const card = document.createElement('div');
+  card.className = 'card' + (i < 3 ? ' featured' : '');
+
+  let awardHTML = r.award ? `<div class="award-badge">${r.award}</div>` : '';
+  let priceHTML = r.price ? `<span>Price: ${r.price}</span>` : '';
+  let noteHTML = r.note ? `<span>${r.note}</span>` : '';
+
+  card.innerHTML = `
+    ${awardHTML}
+    <div class="card-bg" style="background:${r.gradient}">${r.emoji}</div>
+    <div class="card-overlay">
+      <div class="card-rank">#${r.rank}</div>
+      <div class="card-name">${r.name}</div>
+      <div class="card-rating">${r.rating}/5 &middot; ${r.reviews.toLocaleString()} reviews</div>
+    </div>
+    <div class="card-hover">
+      <div class="hover-name">${r.name}</div>
+      <div class="hover-jp">${r.jp}</div>
+      <div class="hover-detail">
+        <span>${r.type}</span>
+        <span>${r.rating}/5 &middot; ${r.reviews.toLocaleString()} reviews</span>
+        <span>${r.dist} from station</span>
+        ${priceHTML}
+        ${noteHTML}
+        ${r.award ? `<span style="color:#fcb045;font-weight:600">${r.award}</span>` : ''}
+      </div>
+      <a href="${r.maps}" target="_blank" rel="noopener" class="maps-link" onclick="event.stopPropagation()">Open in Maps</a>
+    </div>
+  `;
+
+  card.addEventListener('click', () => {
+    const existing = document.querySelector('.card-expanded.active');
+    if (existing && existing.dataset.rank == r.rank) {
+      existing.classList.remove('active');
+      existing.remove();
+      return;
+    }
+    if (existing) { existing.classList.remove('active'); existing.remove(); }
+
+    const expanded = document.createElement('div');
+    expanded.className = 'card-expanded active';
+    expanded.dataset.rank = r.rank;
+    expanded.innerHTML = `
+      <div class="expanded-header">
+        <div class="expanded-emoji">${r.emoji}</div>
+        <div>
+          <div class="expanded-title">#${r.rank} ${r.name}</div>
+          <div class="expanded-subtitle">${r.jp} &middot; ${r.type}</div>
+        </div>
+      </div>
+      <div class="expanded-details">
+        <div class="detail-item"><strong>Rating:</strong> ${r.rating}/5</div>
+        <div class="detail-item"><strong>Reviews:</strong> ${r.reviews.toLocaleString()}</div>
+        <div class="detail-item"><strong>Distance:</strong> ${r.dist}</div>
+        ${r.price ? `<div class="detail-item"><strong>Price:</strong> ${r.price}</div>` : ''}
+        ${r.note ? `<div class="detail-item"><strong>Note:</strong> ${r.note}</div>` : ''}
+        ${r.award ? `<div class="detail-item"><strong>Award:</strong> ${r.award}</div>` : ''}
+      </div>
+      <div class="expanded-actions">
+        <a href="${r.maps}" target="_blank" rel="noopener">View on Google Maps</a>
+      </div>
+    `;
+
+    // Insert after current row
+    const cards = Array.from(grid.children).filter(c => c.classList.contains('card'));
+    const cardIndex = cards.indexOf(card);
+    const nextSibling = card.nextElementSibling;
+    if (nextSibling) {
+      grid.insertBefore(expanded, nextSibling);
+    } else {
+      grid.appendChild(expanded);
+    }
+  });
+
+  grid.appendChild(card);
+});
+</script>
+
+</body>
+</html>
