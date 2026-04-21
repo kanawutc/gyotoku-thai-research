@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golf Equipment Shops near Gyotoku - ร้านอุปกรณ์กอล์ฟใกล้เกียวโตคุ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', 'Prompt', sans-serif; background: #0d0d0d; color: #e8e0d8; line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+
+/* Nav */
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(13,13,13,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; padding: 14px 0; }
+.nav-inner { max-width: 940px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { font-size: 15px; font-weight: 600; color: #4a9e6d; letter-spacing: 1px; }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { font-size: 13px; font-weight: 500; color: #666; letter-spacing: 0.3px; transition: color 0.2s; }
+.nav-links a:hover { color: #4a9e6d; }
+
+/* Hero */
+.hero { max-width: 940px; margin: 0 auto; padding: 80px 24px 60px; text-align: center; }
+.hero-label { font-size: 11px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #4a9e6d; margin-bottom: 20px; }
+.hero h1 { font-size: 40px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; color: #f5e6d3; }
+.hero-sub { font-size: 15px; color: #777; font-weight: 300; max-width: 560px; margin: 0 auto 40px; line-height: 1.7; }
+.hero-stats { display: flex; justify-content: center; gap: 48px; padding-top: 36px; border-top: 1px solid #222; }
+.hero-stat-num { font-size: 36px; font-weight: 700; display: block; background: linear-gradient(135deg, #4a9e6d, #8fd4a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-stat-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #666; font-weight: 500; }
+
+/* Info Cards */
+.info-section { max-width: 940px; margin: 0 auto; padding: 0 24px 64px; }
+.section-title { font-size: 22px; font-weight: 700; margin-bottom: 28px; text-align: center; color: #f5e6d3; }
+.info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.info-card { padding: 24px; border: 1px solid #222; border-radius: 8px; background: #111; transition: border-color 0.3s; }
+.info-card:hover { border-color: #4a9e6d; }
+.info-icon { font-size: 24px; margin-bottom: 10px; }
+.info-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #4a9e6d; }
+.info-text { font-size: 13px; color: #888; line-height: 1.55; }
+
+/* Shop List */
+.list { max-width: 940px; margin: 0 auto; padding: 0 24px 80px; }
+.list-sub { font-size: 13px; color: #555; margin-bottom: 40px; text-align: center; }
+
+.entry { display: grid; grid-template-columns: 60px 1fr auto; gap: 20px; align-items: start; padding: 28px 20px; margin-bottom: 8px; border: 1px solid #1a1a1a; border-radius: 8px; background: #111; transition: border-color 0.3s, background 0.3s; }
+.entry:hover { border-color: #333; background: #151515; }
+
+.entry-rank { font-size: 28px; font-weight: 700; color: #333; text-align: center; padding-top: 2px; }
+.entry.featured .entry-rank { background: linear-gradient(135deg, #4a9e6d, #8fd4a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 32px; }
+
+.entry-info h3 { font-size: 17px; font-weight: 600; margin-bottom: 2px; color: #f5e6d3; }
+.entry-jp { font-size: 13px; color: #666; margin-bottom: 4px; }
+.entry-th { font-size: 13px; color: #888; margin-bottom: 10px; font-style: italic; }
+.entry-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.tag { font-size: 11px; padding: 4px 11px; border: 1px solid #2a2a2a; border-radius: 20px; color: #888; font-weight: 500; background: transparent; }
+.tag.highlight { border-color: #4a9e6d; color: #4a9e6d; background: rgba(74,158,109,0.08); }
+.tag.new { border-color: #d4a574; color: #d4a574; background: rgba(212,165,116,0.08); }
+.tag.used { border-color: #7a9ec2; color: #7a9ec2; background: rgba(122,158,194,0.08); }
+.entry-detail { font-size: 12px; color: #555; line-height: 1.6; }
+
+.entry-right { text-align: right; min-width: 120px; }
+.entry-type { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #4a9e6d; margin-bottom: 6px; }
+.entry-hours { font-size: 12px; color: #666; margin-bottom: 4px; }
+.entry-access { font-size: 12px; color: #555; }
+.maps-link { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 500; color: #666; border: 1px solid #2a2a2a; padding: 4px 12px; border-radius: 20px; transition: all 0.2s; }
+.maps-link:hover { color: #4a9e6d; border-color: #4a9e6d; }
+
+/* Category Sections */
+.category-header { max-width: 940px; margin: 0 auto; padding: 40px 24px 20px; }
+.category-title { font-size: 18px; font-weight: 600; color: #4a9e6d; padding-bottom: 12px; border-bottom: 1px solid #222; display: flex; align-items: center; gap: 10px; }
+.category-count { font-size: 12px; color: #555; font-weight: 400; }
+
+/* Footer */
+.footer { border-top: 1px solid #1a1a1a; padding: 44px 24px; text-align: center; max-width: 940px; margin: 0 auto; }
+.footer-design { font-size: 14px; color: #555; margin-bottom: 6px; font-weight: 500; }
+.footer-credit { font-size: 12px; color: #333; }
+.footer-links { margin-top: 16px; display: flex; justify-content: center; gap: 20px; }
+.footer-links a { font-size: 12px; color: #4a9e6d; transition: opacity 0.2s; }
+.footer-links a:hover { opacity: 0.7; }
+
+/* Responsive */
+@media (max-width: 700px) {
+  .hero h1 { font-size: 26px; }
+  .hero-stats { flex-direction: column; gap: 20px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .entry { grid-template-columns: 44px 1fr; gap: 12px; padding: 20px 16px; }
+  .entry-right { grid-column: 2; text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">GYOTOKU GOLF GUIDE</div>
+    <div class="nav-links">
+      <a href="ranking">Thai Ranking</a>
+      <a href="ranking-gallery">Gallery</a>
+      <a href="golf-shops">Golf Shops</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">Gyotoku Area Golf Guide</div>
+  <h1>Golf Equipment Shops<br>near Gyotoku Station</h1>
+  <p>ร้านขายอุปกรณ์กอล์ฟใกล้สถานีเกียวโตคุ ทั้งร้านใหญ่ ร้านมือสอง สตูดิโอฝึกซ้อม รวมครบทุกอย่างสำหรับนักกอล์ฟ</p>
+  <div class="hero-stats">
+    <div>
+      <span class="hero-stat-num">8</span>
+      <span class="hero-stat-label">Shops & Studios</span>
+    </div>
+    <div>
+      <span class="hero-stat-num">3</span>
+      <span class="hero-stat-label">Categories</span>
+    </div>
+    <div>
+      <span class="hero-stat-num">5km</span>
+      <span class="hero-stat-label">Radius</span>
+    </div>
+  </div>
+</div>
+
+<div class="info-section">
+  <h2 class="section-title">Area Highlights</h2>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-icon">&#9971;</div>
+      <div class="info-title">Golf Partner Urayasu</div>
+      <div class="info-text">ร้านกอล์ฟมือสองที่ใหญ่ที่สุดในย่าน มีคลับมือสองกว่า 1,000 ชิ้น เดินจาก Minami-Gyotoku แค่ 9 นาที</div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">&#127947;</div>
+      <div class="info-text">Rookie Golf Studio ตรงหน้าสถานีเกียวโตคุ เปิด 24 ชม. ฝึกซ้อมได้ทุกเวลา ห้องส่วนตัวพร้อมเครื่อง launch monitor</div>
+      <div class="info-title">Rookie Golf Studio</div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">&#128717;</div>
+      <div class="info-title">Golf 5 Shops Ichikawa</div>
+      <div class="info-text">ร้านใหญ่ในห้าง SHOPS Ichikawa อยู่ใน Sports Depo ชั้น 2 มีทั้งคลับใหม่ เสื้อผ้า และอุปกรณ์ครบ</div>
+    </div>
+  </div>
+</div>
+
+<!-- Category: Golf Equipment Shops (New & Used) -->
+<div class="category-header">
+  <div class="category-title">&#9971; Golf Equipment Shops <span class="category-count">5 shops</span></div>
+</div>
+
+<div class="list">
+
+  <div class="entry featured">
+    <div class="entry-rank">1</div>
+    <div class="entry-info">
+      <h3>Golf Partner Urayasu</h3>
+      <div class="entry-jp">ゴルフパートナー 浦安店</div>
+      <div class="entry-th">กอล์ฟพาร์ทเนอร์ อุระยะสุ</div>
+      <div class="entry-meta">
+        <span class="tag used">Used Clubs</span>
+        <span class="tag highlight">New Clubs</span>
+        <span class="tag">Accessories</span>
+        <span class="tag">Bags</span>
+      </div>
+      <div class="entry-detail">
+        ร้านกอล์ฟมือสองใหญ่ที่สุดในย่าน มีคลับมือสองคัดคุณภาพกว่า 1,000 ชิ้น รวมถึงคลับใหม่ ลูกกอล์ฟ ถุงมือ กระเป๋า ครบทุกอย่าง<br>
+        <strong>Address:</strong> 千葉県市川市相之川3-13-23<br>
+        <strong>Tel:</strong> 047-312-6911
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Used + New</div>
+      <div class="entry-hours">10:00 - 20:00</div>
+      <div class="entry-access">Minami-Gyotoku 9 min walk</div>
+      <a href="https://maps.google.com/?q=ゴルフパートナー+浦安店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry featured">
+    <div class="entry-rank">2</div>
+    <div class="entry-info">
+      <h3>Golf 5 Shops Ichikawa</h3>
+      <div class="entry-jp">ゴルフ5 ショップス市川店</div>
+      <div class="entry-th">กอล์ฟ 5 ช็อปส์ อิชิกาวะ</div>
+      <div class="entry-meta">
+        <span class="tag highlight">New Clubs</span>
+        <span class="tag new">Alpen Group</span>
+        <span class="tag">Wear</span>
+        <span class="tag">Fitting</span>
+      </div>
+      <div class="entry-detail">
+        ร้านกอล์ฟใหม่ในเครือ Alpen Group อยู่ชั้น 2 ของห้าง SHOPS Ichikawa ภายใน Sports Depo มีคลับใหม่ ชุดกอล์ฟ รองเท้า อุปกรณ์ครบ<br>
+        <strong>Address:</strong> 千葉県市川市鬼高3-28-16 SHOPS市川 2F<br>
+        <strong>Tel:</strong> 047-393-5290
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">New Equipment</div>
+      <div class="entry-hours">10:00 - 21:00</div>
+      <div class="entry-access">Near Ichikawa IC</div>
+      <a href="https://maps.google.com/?q=ゴルフ5+ショップス市川店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry featured">
+    <div class="entry-rank">3</div>
+    <div class="entry-info">
+      <h3>Victoria Golf Ichikawa Inter</h3>
+      <div class="entry-jp">ヴィクトリアゴルフ 市川インター店</div>
+      <div class="entry-th">วิกตอเรียกอล์ฟ อิชิกาวะอินเตอร์</div>
+      <div class="entry-meta">
+        <span class="tag highlight">New Clubs</span>
+        <span class="tag used">Used Clubs</span>
+        <span class="tag">Trial Area</span>
+        <span class="tag">Parking</span>
+      </div>
+      <div class="entry-detail">
+        ร้านใหญ่มีทั้งคลับใหม่ เสื้อผ้ากอล์ฟ และมือสองกว่า 1,000 ชิ้น มีพื้นที่ทดลองตี ลานจอดรถกว้าง ขายลูกหลงหน้าร้านด้วย<br>
+        <strong>Address:</strong> 千葉県市川市稲荷木1-25-3<br>
+        <strong>Tel:</strong> 047-393-6771
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">New + Used</div>
+      <div class="entry-hours">Mon-Sat 10:30-20:00<br>Sun 10:30-19:30</div>
+      <div class="entry-access">Near Ichikawa IC</div>
+      <a href="https://maps.google.com/?q=ヴィクトリアゴルフ+市川インター店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">4</div>
+    <div class="entry-info">
+      <h3>Golf Partner Victoria Golf Ichikawa Inter</h3>
+      <div class="entry-jp">ゴルフパートナー ヴィクトリアゴルフ市川インター店</div>
+      <div class="entry-th">กอล์ฟพาร์ทเนอร์ ใน วิกตอเรียกอล์ฟ อิชิกาวะ</div>
+      <div class="entry-meta">
+        <span class="tag used">Used Specialist</span>
+        <span class="tag">Buy & Sell</span>
+        <span class="tag">Trade-in</span>
+      </div>
+      <div class="entry-detail">
+        โซนมือสองภายในร้าน Victoria Golf รับซื้อ-ขาย-เทรดอินคลับมือสอง มีสต็อกเยอะและหมุนเวียนตลอด เหมาะหาของดีราคาถูก<br>
+        <strong>Address:</strong> 千葉県市川市稲荷木1-25-3 (inside Victoria Golf)<br>
+        <strong>Tel:</strong> 047-393-6771
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Used Specialist</div>
+      <div class="entry-hours">10:30 - 20:00</div>
+      <div class="entry-access">Near Ichikawa IC</div>
+      <a href="https://maps.google.com/?q=ゴルフパートナー+ヴィクトリアゴルフ市川インター店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">5</div>
+    <div class="entry-info">
+      <h3>Niki Golf Chiba Makuhari</h3>
+      <div class="entry-jp">二木ゴルフ 千葉幕張店</div>
+      <div class="entry-th">นิกิกอล์ฟ ชิบะมาคุฮาริ</div>
+      <div class="entry-meta">
+        <span class="tag highlight">Large Store</span>
+        <span class="tag">New Clubs</span>
+        <span class="tag">Trial Range</span>
+        <span class="tag">Parking</span>
+      </div>
+      <div class="entry-detail">
+        ร้านกอล์ฟขนาดใหญ่บนถนน Route 14 มีพื้นที่ทดลองตี จอดรถสะดวก สต็อกครบทุกแบรนด์ ไกลจากเกียวโตคุนิดหน่อยแต่คุ้มค่าเดินทาง<br>
+        <strong>Address:</strong> 千葉県千葉市美浜区若葉2-3<br>
+        <strong>Tel:</strong> 043-275-4334
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Large Retailer</div>
+      <div class="entry-hours">Mon-Fri 10:30-20:00<br>Sat-Sun 10:00-20:00</div>
+      <div class="entry-access">~30 min by car</div>
+      <a href="https://maps.google.com/?q=二木ゴルフ+千葉幕張店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Category: Golf Studios & Practice -->
+<div class="category-header">
+  <div class="category-title">&#127947; Golf Studios & Practice <span class="category-count">2 studios</span></div>
+</div>
+
+<div class="list">
+
+  <div class="entry featured">
+    <div class="entry-rank">1</div>
+    <div class="entry-info">
+      <h3>Rookie Golf Studio Gyotoku</h3>
+      <div class="entry-jp">ルーキーゴルフスタジオ 行徳店</div>
+      <div class="entry-th">รูกี้ กอล์ฟ สตูดิโอ เกียวโตคุ</div>
+      <div class="entry-meta">
+        <span class="tag highlight">24h Open</span>
+        <span class="tag new">Private Rooms</span>
+        <span class="tag">Launch Monitor</span>
+        <span class="tag">Membership</span>
+      </div>
+      <div class="entry-detail">
+        สตูดิโอกอล์ฟในร่มเปิด 24 ชม. 365 วัน ห้องส่วนตัว 5 ห้อง มี launch monitor รุ่นใหม่ล่าสุด ตีได้ไม่จำกัดลูก เหมาะฝึกซ้อมตลอดเวลา<br>
+        <strong>Address:</strong> 千葉県市川市行徳駅前1-22-12 パピヤンビル3F<br>
+        <strong>Membership:</strong> from 9,900 yen/month<br>
+        <strong>Rating:</strong> 5.0 stars
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Indoor Studio</div>
+      <div class="entry-hours">24h / 365 days</div>
+      <div class="entry-access">Gyotoku Stn 1 min walk</div>
+      <a href="https://maps.google.com/?q=ルーキーゴルフスタジオ+行徳店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">2</div>
+    <div class="entry-info">
+      <h3>Rookie Golf Studio Minami-Gyotoku</h3>
+      <div class="entry-jp">ルーキーゴルフスタジオ 南行徳店</div>
+      <div class="entry-th">รูกี้ กอล์ฟ สตูดิโอ มินามิเกียวโตคุ</div>
+      <div class="entry-meta">
+        <span class="tag highlight">24h Open</span>
+        <span class="tag">Private Rooms</span>
+        <span class="tag">Launch Monitor</span>
+      </div>
+      <div class="entry-detail">
+        สาขาที่สองของ Rookie Golf Studio ที่สถานี Minami-Gyotoku บรรยากาศเดียวกัน ห้องส่วนตัว เครื่อง launch monitor ฝึกซ้อมได้ 24 ชม.<br>
+        <strong>Address:</strong> 千葉県市川市南行徳 (near Minami-Gyotoku Station)
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Indoor Studio</div>
+      <div class="entry-hours">24h / 365 days</div>
+      <div class="entry-access">Minami-Gyotoku Stn</div>
+      <a href="https://maps.google.com/?q=ルーキーゴルフスタジオ+南行徳店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Category: Online & Delivery -->
+<div class="category-header">
+  <div class="category-title">&#128230; Online Shops (Nationwide Delivery) <span class="category-count">1 shop</span></div>
+</div>
+
+<div class="list">
+
+  <div class="entry">
+    <div class="entry-rank">1</div>
+    <div class="entry-info">
+      <h3>GDO Golf Garage (Online)</h3>
+      <div class="entry-jp">GDOゴルフガレージ</div>
+      <div class="entry-th">GDO กอล์ฟ การาจ (ออนไลน์)</div>
+      <div class="entry-meta">
+        <span class="tag used">Used Clubs</span>
+        <span class="tag highlight">Largest Online</span>
+        <span class="tag">Delivery</span>
+        <span class="tag">Trade-in</span>
+      </div>
+      <div class="entry-detail">
+        ร้านออนไลน์ใหญ่ที่สุดของญี่ปุ่น มีคลับมือสองหลายหมื่นชิ้น สั่งส่งถึงบ้านได้ มีระบบเทรดอินออนไลน์ เหมาะคนที่ไม่สะดวกไปร้าน<br>
+        <strong>Website:</strong> shop.golfdigest.co.jp
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Online Shop</div>
+      <div class="entry-hours">24h (Online)</div>
+      <div class="entry-access">Nationwide Delivery</div>
+      <a href="https://shop.golfdigest.co.jp/" class="maps-link" target="_blank" rel="noopener">Visit Shop &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-design">Gyotoku Golf Equipment Guide &copy; 2026</div>
+  <div class="footer-credit">Research compiled from Google Maps, official websites & local directories</div>
+  <div class="footer-links">
+    <a href="ranking">Thai Restaurant Ranking</a>
+    <a href="ranking-gallery">Design Gallery</a>
+    <a href="golf-shops">Golf Shops</a>
+  </div>
+</div>
+
+</body>
+</html>
