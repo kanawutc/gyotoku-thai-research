@@ -22,7 +22,7 @@ a { color: inherit; text-decoration: none; }
 .hero { max-width: 940px; margin: 0 auto; padding: 80px 24px 60px; text-align: center; }
 .hero-label { font-size: 11px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #4a9e6d; margin-bottom: 20px; }
 .hero h1 { font-size: 40px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; color: #f5e6d3; }
-.hero-sub { font-size: 15px; color: #777; font-weight: 300; max-width: 560px; margin: 0 auto 40px; line-height: 1.7; }
+.hero-sub { font-size: 15px; color: #777; font-weight: 300; max-width: 620px; margin: 0 auto 40px; line-height: 1.7; }
 .hero-stats { display: flex; justify-content: center; gap: 48px; padding-top: 36px; border-top: 1px solid #222; }
 .hero-stat-num { font-size: 36px; font-weight: 700; display: block; background: linear-gradient(135deg, #4a9e6d, #8fd4a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .hero-stat-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #666; font-weight: 500; }
@@ -38,7 +38,7 @@ a { color: inherit; text-decoration: none; }
 .info-text { font-size: 13px; color: #888; line-height: 1.55; }
 
 /* Shop List */
-.list { max-width: 940px; margin: 0 auto; padding: 0 24px 80px; }
+.list { max-width: 940px; margin: 0 auto; padding: 0 24px 40px; }
 .list-sub { font-size: 13px; color: #555; margin-bottom: 40px; text-align: center; }
 
 .entry { display: grid; grid-template-columns: 60px 1fr auto; gap: 20px; align-items: start; padding: 28px 20px; margin-bottom: 8px; border: 1px solid #1a1a1a; border-radius: 8px; background: #111; transition: border-color 0.3s, background 0.3s; }
@@ -55,12 +55,15 @@ a { color: inherit; text-decoration: none; }
 .tag.highlight { border-color: #4a9e6d; color: #4a9e6d; background: rgba(74,158,109,0.08); }
 .tag.new { border-color: #d4a574; color: #d4a574; background: rgba(212,165,116,0.08); }
 .tag.used { border-color: #7a9ec2; color: #7a9ec2; background: rgba(122,158,194,0.08); }
+.tag.premium { border-color: #c9a84c; color: #c9a84c; background: rgba(201,168,76,0.08); }
 .entry-detail { font-size: 12px; color: #555; line-height: 1.6; }
+.entry-detail strong { color: #999; font-weight: 600; }
 
-.entry-right { text-align: right; min-width: 120px; }
+.entry-right { text-align: right; min-width: 140px; }
 .entry-type { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #4a9e6d; margin-bottom: 6px; }
 .entry-hours { font-size: 12px; color: #666; margin-bottom: 4px; }
 .entry-access { font-size: 12px; color: #555; }
+.entry-closed { font-size: 11px; color: #c25b5b; margin-top: 4px; }
 .maps-link { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 500; color: #666; border: 1px solid #2a2a2a; padding: 4px 12px; border-radius: 20px; transition: all 0.2s; }
 .maps-link:hover { color: #4a9e6d; border-color: #4a9e6d; }
 
@@ -68,6 +71,7 @@ a { color: inherit; text-decoration: none; }
 .category-header { max-width: 940px; margin: 0 auto; padding: 40px 24px 20px; }
 .category-title { font-size: 18px; font-weight: 600; color: #4a9e6d; padding-bottom: 12px; border-bottom: 1px solid #222; display: flex; align-items: center; gap: 10px; }
 .category-count { font-size: 12px; color: #555; font-weight: 400; }
+.category-desc { font-size: 13px; color: #666; margin-top: 10px; line-height: 1.6; max-width: 700px; }
 
 /* Footer */
 .footer { border-top: 1px solid #1a1a1a; padding: 44px 24px; text-align: center; max-width: 940px; margin: 0 auto; }
@@ -101,21 +105,21 @@ a { color: inherit; text-decoration: none; }
 </nav>
 
 <div class="hero">
-  <div class="hero-label">Gyotoku Area Golf Guide</div>
+  <div class="hero-label">Gyotoku Area Complete Golf Guide</div>
   <h1>Golf Equipment Shops<br>near Gyotoku Station</h1>
-  <p>ร้านขายอุปกรณ์กอล์ฟใกล้สถานีเกียวโตคุ ทั้งร้านใหญ่ ร้านมือสอง สตูดิโอฝึกซ้อม รวมครบทุกอย่างสำหรับนักกอล์ฟ</p>
+  <p class="hero-sub">ร้านขายอุปกรณ์กอล์ฟใกล้เกียวโตคุ ครบทุกแบรนด์ ตั้งแต่ร้านทั่วไป ร้านมือสอง สตูดิโอฝึกซ้อม ไปจนถึงร้านแบรนด์ HONMA, Miura, Titleist, Mizuno Pro พร้อมข้อมูลสาขาละเอียด</p>
   <div class="hero-stats">
     <div>
-      <span class="hero-stat-num">8</span>
+      <span class="hero-stat-num">22</span>
       <span class="hero-stat-label">Shops & Studios</span>
     </div>
     <div>
-      <span class="hero-stat-num">3</span>
+      <span class="hero-stat-num">6</span>
       <span class="hero-stat-label">Categories</span>
     </div>
     <div>
-      <span class="hero-stat-num">5km</span>
-      <span class="hero-stat-label">Radius</span>
+      <span class="hero-stat-num">4</span>
+      <span class="hero-stat-label">Premium Brands</span>
     </div>
   </div>
 </div>
@@ -129,21 +133,24 @@ a { color: inherit; text-decoration: none; }
       <div class="info-text">ร้านกอล์ฟมือสองที่ใหญ่ที่สุดในย่าน มีคลับมือสองกว่า 1,000 ชิ้น เดินจาก Minami-Gyotoku แค่ 9 นาที</div>
     </div>
     <div class="info-card">
-      <div class="info-icon">&#127947;</div>
-      <div class="info-text">Rookie Golf Studio ตรงหน้าสถานีเกียวโตคุ เปิด 24 ชม. ฝึกซ้อมได้ทุกเวลา ห้องส่วนตัวพร้อมเครื่อง launch monitor</div>
-      <div class="info-title">Rookie Golf Studio</div>
+      <div class="info-icon">&#127942;</div>
+      <div class="info-title">HONMA Golf Chiba</div>
+      <div class="info-text">ร้าน HONMA Direct Store ใกล้ที่สุด ฟิตติ้งฟรี มี Golf School ชั้น 2 มีห้องตี พร้อมช่าง certified fitter</div>
     </div>
     <div class="info-card">
-      <div class="info-icon">&#128717;</div>
-      <div class="info-title">Golf 5 Shops Ichikawa</div>
-      <div class="info-text">ร้านใหญ่ในห้าง SHOPS Ichikawa อยู่ใน Sports Depo ชั้น 2 มีทั้งคลับใหม่ เสื้อผ้า และอุปกรณ์ครบ</div>
+      <div class="info-icon">&#127947;</div>
+      <div class="info-title">Rookie Golf Studio</div>
+      <div class="info-text">สตูดิโอกอล์ฟในร่มตรงหน้าสถานีเกียวโตคุ เปิด 24 ชม. ห้องส่วนตัวพร้อม launch monitor</div>
     </div>
   </div>
 </div>
 
-<!-- Category: Golf Equipment Shops (New & Used) -->
+<!-- ============================================ -->
+<!-- Category 1: Golf Equipment Shops (New & Used) -->
+<!-- ============================================ -->
 <div class="category-header">
   <div class="category-title">&#9971; Golf Equipment Shops <span class="category-count">5 shops</span></div>
+  <div class="category-desc">ร้านขายอุปกรณ์กอล์ฟทั่วไป ทั้งคลับใหม่และมือสอง อุปกรณ์เสริม เสื้อผ้า ใกล้เกียวโตคุ</div>
 </div>
 
 <div class="list">
@@ -161,9 +168,10 @@ a { color: inherit; text-decoration: none; }
         <span class="tag">Bags</span>
       </div>
       <div class="entry-detail">
-        ร้านกอล์ฟมือสองใหญ่ที่สุดในย่าน มีคลับมือสองคัดคุณภาพกว่า 1,000 ชิ้น รวมถึงคลับใหม่ ลูกกอล์ฟ ถุงมือ กระเป๋า ครบทุกอย่าง<br>
-        <strong>Address:</strong> 千葉県市川市相之川3-13-23<br>
-        <strong>Tel:</strong> 047-312-6911
+        ร้านกอล์ฟมือสองใหญ่ที่สุดในย่าน มีคลับมือสองคัดคุณภาพกว่า 1,000 ชิ้น รวมถึงคลับใหม่ ลูกกอล์ฟ ถุงมือ กระเป๋า ครบทุกอย่าง รับซื้อ-ขาย-เทรดอิน<br>
+        <strong>Address:</strong> 〒272-0143 千葉県市川市相之川3-13-23<br>
+        <strong>Tel:</strong> 047-312-6911<br>
+        <strong>Parking:</strong> มีที่จอดรถ
       </div>
     </div>
     <div class="entry-right">
@@ -188,8 +196,9 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="entry-detail">
         ร้านกอล์ฟใหม่ในเครือ Alpen Group อยู่ชั้น 2 ของห้าง SHOPS Ichikawa ภายใน Sports Depo มีคลับใหม่ ชุดกอล์ฟ รองเท้า อุปกรณ์ครบ<br>
-        <strong>Address:</strong> 千葉県市川市鬼高3-28-16 SHOPS市川 2F<br>
-        <strong>Tel:</strong> 047-393-5290
+        <strong>Address:</strong> 〒272-0015 千葉県市川市鬼高3-28-16 SHOPS市川 2F<br>
+        <strong>Tel:</strong> 047-393-5290<br>
+        <strong>Parking:</strong> ที่จอดรถห้าง SHOPS Ichikawa
       </div>
     </div>
     <div class="entry-right">
@@ -214,8 +223,9 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="entry-detail">
         ร้านใหญ่มีทั้งคลับใหม่ เสื้อผ้ากอล์ฟ และมือสองกว่า 1,000 ชิ้น มีพื้นที่ทดลองตี ลานจอดรถกว้าง ขายลูกหลงหน้าร้านด้วย<br>
-        <strong>Address:</strong> 千葉県市川市稲荷木1-25-3<br>
-        <strong>Tel:</strong> 047-393-6771
+        <strong>Address:</strong> 〒272-0014 千葉県市川市稲荷木1-25-3<br>
+        <strong>Tel:</strong> 047-393-6771<br>
+        <strong>Parking:</strong> มี ลานจอดรถกว้าง
       </div>
     </div>
     <div class="entry-right">
@@ -239,8 +249,9 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="entry-detail">
         โซนมือสองภายในร้าน Victoria Golf รับซื้อ-ขาย-เทรดอินคลับมือสอง มีสต็อกเยอะและหมุนเวียนตลอด เหมาะหาของดีราคาถูก<br>
-        <strong>Address:</strong> 千葉県市川市稲荷木1-25-3 (inside Victoria Golf)<br>
-        <strong>Tel:</strong> 047-393-6771
+        <strong>Address:</strong> 〒272-0014 千葉県市川市稲荷木1-25-3 (inside Victoria Golf)<br>
+        <strong>Tel:</strong> 047-393-6771<br>
+        <strong>Parking:</strong> ใช้ร่วมกับ Victoria Golf
       </div>
     </div>
     <div class="entry-right">
@@ -265,8 +276,9 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="entry-detail">
         ร้านกอล์ฟขนาดใหญ่บนถนน Route 14 มีพื้นที่ทดลองตี จอดรถสะดวก สต็อกครบทุกแบรนด์ ไกลจากเกียวโตคุนิดหน่อยแต่คุ้มค่าเดินทาง<br>
-        <strong>Address:</strong> 千葉県千葉市美浜区若葉2-3<br>
-        <strong>Tel:</strong> 043-275-4334
+        <strong>Address:</strong> 〒261-0004 千葉県千葉市美浜区若葉2-3<br>
+        <strong>Tel:</strong> 043-275-4334<br>
+        <strong>Parking:</strong> มี ที่จอดรถกว้าง
       </div>
     </div>
     <div class="entry-right">
@@ -279,9 +291,484 @@ a { color: inherit; text-decoration: none; }
 
 </div>
 
-<!-- Category: Golf Studios & Practice -->
+<!-- ============================================ -->
+<!-- Category 2: HONMA Golf Direct Stores -->
+<!-- ============================================ -->
+<div class="category-header">
+  <div class="category-title">&#127942; HONMA Golf Direct Stores <span class="category-count">5 stores</span></div>
+  <div class="category-desc">ร้าน HONMA โดยตรง ทุกสาขามี certified fitter ฟิตติ้งฟรี สั่งคลับ custom ได้ รองรับ Tax-free สำหรับ BERES, Tour World, T//World series</div>
+</div>
+
+<div class="list">
+
+  <div class="entry featured">
+    <div class="entry-rank">1</div>
+    <div class="entry-info">
+      <h3>HONMA Golf Chiba</h3>
+      <div class="entry-jp">本間ゴルフ 千葉店</div>
+      <div class="entry-th">ฮอนม่า กอล์ฟ ชิบะ — ใกล้ที่สุด</div>
+      <div class="entry-meta">
+        <span class="tag premium">HONMA Direct</span>
+        <span class="tag highlight">Free Fitting</span>
+        <span class="tag new">Golf School</span>
+        <span class="tag">Tax-free</span>
+      </div>
+      <div class="entry-detail">
+        ร้าน HONMA สาขาที่ใกล้เกียวโตคุที่สุด มี certified fitter ฟิตติ้งฟรี ชั้น 2 มีห้องตีในร่มพร้อม trajectory analysis, Golf School, บริการเคลือบ Hudlas protective coating<br>
+        <strong>Address:</strong> 〒261-0001 千葉県千葉市美浜区幸町2-24-43<br>
+        <strong>Tel:</strong> 043-388-0271<br>
+        <strong>Parking:</strong> ฟรี (ร่วมกับที่จอดรถ 7-Eleven)<br>
+        <strong>Bus:</strong> จาก Chiba Sta. West Exit สาย 27 → ป้าย Saiwai McDonald's → เดิน 1 นาที
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">HONMA Direct</div>
+      <div class="entry-hours">10:30 - 19:00</div>
+      <div class="entry-access">JR Nishi-Chiba 15 min<br>Keisei Midori-dai 13 min</div>
+      <div class="entry-closed">Closed: Tuesday</div>
+      <a href="https://maps.google.com/?q=本間ゴルフ+千葉店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry featured">
+    <div class="entry-rank">2</div>
+    <div class="entry-info">
+      <h3>HONMA Golf Kanda</h3>
+      <div class="entry-jp">本間ゴルフ 神田店</div>
+      <div class="entry-th">ฮอนม่า กอล์ฟ คันดะ — รีโนเวทใหม่ 2024</div>
+      <div class="entry-meta">
+        <span class="tag premium">HONMA Direct</span>
+        <span class="tag highlight">Gear Sommelier</span>
+        <span class="tag new">Renovated 2024</span>
+        <span class="tag">Repair</span>
+      </div>
+      <div class="entry-detail">
+        สาขาคันดะ รีโนเวทใหม่ก.ย. 2024 มี "Gear Sommelier" ประจำร้าน ห้องตีพร้อม trajectory analysis ช่างซ่อมและปรับคลับ certified craftsmen ประจำร้าน<br>
+        <strong>Address:</strong> 〒101-0044 東京都千代田区鍛冶町1-5-7 江原ビル1F<br>
+        <strong>Tel:</strong> 03-3255-0577<br>
+        <strong>Parking:</strong> ไม่มี<br>
+        <strong>Services:</strong> ฟิตติ้งฟรี, ซ่อม/ปรับคลับ, Tax-free, UnionPay
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">HONMA Direct</div>
+      <div class="entry-hours">Mon-Fri 10:30-19:30<br>Sat-Sun 10:30-19:00</div>
+      <div class="entry-access">JR Kanda East Exit<br>4 min walk</div>
+      <a href="https://maps.google.com/?q=本間ゴルフ+神田店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">3</div>
+    <div class="entry-info">
+      <h3>HONMA Golf Nihonbashi</h3>
+      <div class="entry-jp">本間ゴルフ 日本橋店</div>
+      <div class="entry-th">ฮอนม่า กอล์ฟ นิฮอนบาชิ — Flagship</div>
+      <div class="entry-meta">
+        <span class="tag premium">HONMA Direct</span>
+        <span class="tag highlight">Flagship</span>
+        <span class="tag new">Custom Order</span>
+        <span class="tag">Private Room</span>
+      </div>
+      <div class="entry-detail">
+        สาขา Flagship ติดสถานี Nihonbashi เดินจากทางออก B0 ไม่ถึงนาที มีห้องตีส่วนตัว สั่ง Custom Order ได้ มี fitter เฉพาะทาง (Takumi Yamada, Yusuke Yamamoto) แนะนำนัดล่วงหน้า<br>
+        <strong>Address:</strong> 〒103-0027 東京都中央区日本橋2-2-6 日本橋通り二丁目ビル 1-2F<br>
+        <strong>Tel:</strong> 03-6777-0090<br>
+        <strong>Parking:</strong> Trust Park ใกล้ร้าน — ซื้อ ¥5,000+ ฟรี 1 ชม.<br>
+        <strong>Services:</strong> ฟิตติ้งฟรี, Custom order, Tax-free, UnionPay
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">HONMA Flagship</div>
+      <div class="entry-hours">11:00 - 20:00</div>
+      <div class="entry-access">Nihonbashi Stn B0<br>ติดสถานีเลย</div>
+      <div class="entry-closed">Closed: New Year only</div>
+      <a href="https://maps.google.com/?q=本間ゴルフ+日本橋店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">4</div>
+    <div class="entry-info">
+      <h3>HONMA Golf Shinbashi-Ginza</h3>
+      <div class="entry-jp">本間ゴルフ 新橋銀座口店</div>
+      <div class="entry-th">ฮอนม่า กอล์ฟ ชินบาชิ-กินซ่า</div>
+      <div class="entry-meta">
+        <span class="tag premium">HONMA Direct</span>
+        <span class="tag highlight">Craft Master</span>
+        <span class="tag">Simulator</span>
+        <span class="tag">Tax-free</span>
+      </div>
+      <div class="entry-detail">
+        ย่านกินซ่า มี Craft Master ทำคลับต่อหน้า มี Simulator room ฝึกซ้อมและฟิตติ้ง เดินจาก JR Shinbashi ทางออก Ginza แค่ 1 นาที<br>
+        <strong>Address:</strong> 〒105-0004 東京都港区新橋1-10-6 新橋M-SQUARE 1F<br>
+        <strong>Tel:</strong> 03-6845-0171<br>
+        <strong>Parking:</strong> ไม่มี (ย่าน Ginza)<br>
+        <strong>Services:</strong> ฟิตติ้ง, Simulator, Craft Master, Tax-free
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">HONMA Direct</div>
+      <div class="entry-hours">11:00 - 20:00</div>
+      <div class="entry-access">JR Shinbashi Ginza Exit<br>1 min walk</div>
+      <a href="https://maps.google.com/?q=本間ゴルフ+新橋銀座口店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">5</div>
+    <div class="entry-info">
+      <h3>HONMA Golf Yoga</h3>
+      <div class="entry-jp">本間ゴルフ 用賀店</div>
+      <div class="entry-th">ฮอนม่า กอล์ฟ โยกะ</div>
+      <div class="entry-meta">
+        <span class="tag premium">HONMA Direct</span>
+        <span class="tag highlight">Putter Zone</span>
+        <span class="tag new">Golf School</span>
+        <span class="tag">Parking</span>
+      </div>
+      <div class="entry-detail">
+        สาขาฝั่งตะวันตกโตเกียว ใกล้ Tomei Expressway Tokyo IC มีโซน Putter fitting เฉพาะ, Golf School, Pro Support Workshop จอดรถฟรี<br>
+        <strong>Address:</strong> 〒158-0095 東京都世田谷区瀬田5-39-23<br>
+        <strong>Tel:</strong> 03-3709-9371<br>
+        <strong>Parking:</strong> ฟรี<br>
+        <strong>Services:</strong> Golf School, Putter fitting, Pro Support, Tax-free
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">HONMA Direct</div>
+      <div class="entry-hours">10:30 - 19:00</div>
+      <div class="entry-access">Tokyu Yoga Stn</div>
+      <div class="entry-closed">Closed: Tuesday</div>
+      <a href="https://maps.google.com/?q=本間ゴルフ+用賀店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================ -->
+<!-- Category 3: Miura Authorized Dealers -->
+<!-- ============================================ -->
+<div class="category-header">
+  <div class="category-title">&#128295; Miura (三浦技研) Authorized Dealers <span class="category-count">5 shops</span></div>
+  <div class="category-desc">ร้านที่ได้รับอนุญาตจาก Miura (三浦技研) อย่างเป็นทางการ สำหรับ fitting, custom order, reshaft หัว forged irons ระดับ tour ที่มีราคาขึ้นต่อเนื่อง</div>
+</div>
+
+<div class="list">
+
+  <div class="entry featured">
+    <div class="entry-rank">1</div>
+    <div class="entry-info">
+      <h3>Golf Shop MAGIC</h3>
+      <div class="entry-jp">ゴルフショップ マジック</div>
+      <div class="entry-th">กอล์ฟช็อป เมจิค — คาริสม่า ฟิตเตอร์</div>
+      <div class="entry-meta">
+        <span class="tag premium">Miura MCW</span>
+        <span class="tag highlight">Charisma Fitter</span>
+        <span class="tag new">EPON / Romaro</span>
+        <span class="tag">SkyTrak</span>
+      </div>
+      <div class="entry-detail">
+        ร้านในตำนานของ "カリスマフィッター" 鹿又芳典 (Kanomata Yoshinori) ฟิตติ้งแบบ personalized 1 ชม. เต็ม นอกจาก Miura ยังมี EPON, Romaro, Zodia และแบรนด์ JP premium อื่นๆ<br>
+        <strong>Address:</strong> 〒264-0017 千葉県千葉市若葉区加曽利町1482-1 (ジャパンゴルフスクール内)<br>
+        <strong>Tel:</strong> 043-312-2260<br>
+        <strong>Parking:</strong> มี (ภายใน Japan Golf School)<br>
+        <strong>Services:</strong> Full fitting, reshaft, custom order, repair
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Miura Dealer</div>
+      <div class="entry-hours">11:00 - 19:00</div>
+      <div class="entry-access">Monorail Okuradai Stn<br>~25 min walk / Car rec.</div>
+      <a href="https://maps.google.com/?q=ゴルフショップマジック+千葉市若葉区" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry featured">
+    <div class="entry-rank">2</div>
+    <div class="entry-info">
+      <h3>Dynamic Golf Chiba</h3>
+      <div class="entry-jp">ダイナミックゴルフ千葉</div>
+      <div class="entry-th">ไดนามิค กอล์ฟ ชิบะ — สนามใหญ่ + Workshop</div>
+      <div class="entry-meta">
+        <span class="tag premium">Miura MCW</span>
+        <span class="tag highlight">89 Bays / 300y</span>
+        <span class="tag new">Short Course</span>
+        <span class="tag">Workshop</span>
+      </div>
+      <div class="entry-detail">
+        สนามไดรฟ์วิ่งเรนจ์ขนาดใหญ่ 89 ช่อง 300 หลา มีช็อตคอร์ส 9 หลุม, พื้นที่ approach หญ้าจริง+บังเกอร์ ภายในมีกอล์ฟ workshop ที่รับ Miura fitting/repair เต็มรูปแบบ มีร้านอาหาร<br>
+        <strong>Address:</strong> 〒265-0065 千葉県千葉市若葉区佐和町323<br>
+        <strong>Tel:</strong> 043-228-5725<br>
+        <strong>Parking:</strong> มี (สนามใหญ่ จอดรถสะดวก)<br>
+        <strong>Services:</strong> Miura fitting, club repair, reshaft, custom order, restaurant
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Range + Workshop</div>
+      <div class="entry-hours">Summer: Wkday 8-22 / Wkend 7-22<br>Winter: 8:00-22:00</div>
+      <div class="entry-access">JR Kamatori Stn<br>Taxi 10 min</div>
+      <div class="entry-closed">Closed: Jan 1 only</div>
+      <a href="https://maps.google.com/?q=ダイナミックゴルフ千葉" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">3</div>
+    <div class="entry-info">
+      <h3>Chip In Golf 19</h3>
+      <div class="entry-jp">チップインゴルフ19</div>
+      <div class="entry-th">ชิปอิน กอล์ฟ 19 — ช่างฝีมือ 25 ปี</div>
+      <div class="entry-meta">
+        <span class="tag premium">Miura MCW</span>
+        <span class="tag highlight">Expert Craftsman</span>
+        <span class="tag">Custom Order</span>
+        <span class="tag">Reshaft</span>
+      </div>
+      <div class="entry-detail">
+        Workshop ของช่างฝีมือ 大和田 ประสบการณ์ 25+ ปี (ทำงานอิสระตั้งแต่ 2005) บริการ Miura fitting, custom order, reshaft, repair แบบ personalized<br>
+        <strong>Address:</strong> 〒267-0061 千葉市緑区土気町<br>
+        <strong>Tel:</strong> 043-295-8071<br>
+        <strong>Parking:</strong> มี<br>
+        <strong>Services:</strong> Miura fitting, custom order, reshaft, repair
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Workshop</div>
+      <div class="entry-hours">11:00 - 19:00</div>
+      <div class="entry-access">JR Toke Stn<br>5-15 min by car</div>
+      <div class="entry-closed">Closed: Thursday</div>
+      <a href="https://maps.google.com/?q=チップインゴルフ19+千葉市緑区" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">4</div>
+    <div class="entry-info">
+      <h3>Okura Golf Studio Setagaya</h3>
+      <div class="entry-jp">大蔵ゴルフスタジオ 世田谷</div>
+      <div class="entry-th">โอคุระ กอล์ฟ สตูดิโอ เซตากายะ — TrackMan4</div>
+      <div class="entry-meta">
+        <span class="tag premium">Miura Dealer</span>
+        <span class="tag highlight">TrackMan 4</span>
+        <span class="tag new">Full Lineup</span>
+        <span class="tag">Tokyo</span>
+      </div>
+      <div class="entry-detail">
+        สตูดิโอในโตเกียวที่มี Miura ครบทุกรุ่น (TC-102, IC-602, CB-302, KM-700 etc.) ใช้ TrackMan4 ฟิตติ้ง อยู่ภายใน Okura Land Golf driving range<br>
+        <strong>Address:</strong> 〒156-0053 東京都世田谷区桜3-24-1 オークラランドゴルフ練習場内<br>
+        <strong>Tel:</strong> 03-6413-9272<br>
+        <strong>Parking:</strong> มี (ที่จอดรถสนามกอล์ฟ)<br>
+        <strong>Services:</strong> Fitting, reshaft, test hits, custom order, TrackMan4
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Studio / Tokyo</div>
+      <div class="entry-hours">11:00 - 19:00</div>
+      <div class="entry-access">Odakyu Chitose-Funabashi</div>
+      <div class="entry-closed">Closed: Monday</div>
+      <a href="https://maps.google.com/?q=大蔵ゴルフスタジオ+世田谷" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">5</div>
+    <div class="entry-info">
+      <h3>EUROZ GOLF Roppongi</h3>
+      <div class="entry-jp">ユーローズゴルフ 六本木</div>
+      <div class="entry-th">ยูโรซ กอล์ฟ ร็อปปงกิ — พนักงานพูดอังกฤษได้</div>
+      <div class="entry-meta">
+        <span class="tag premium">Miura Dealer</span>
+        <span class="tag highlight">English OK</span>
+        <span class="tag new">Tax-free</span>
+        <span class="tag">Roddio</span>
+      </div>
+      <div class="entry-detail">
+        ร้านใน Roppongi มีพนักงานพูดอังกฤษได้ มี Miura KM700, TC-101 และแบรนด์ JP premium อื่น (Roddio, Itobori) Workshop ซ่อมในร้าน Tax-free สำหรับนักท่องเที่ยว<br>
+        <strong>Address:</strong> 〒106-0032 東京都港区六本木3-16-26 ハリファックスビル1F<br>
+        <strong>Tel:</strong> 03-6435-5321<br>
+        <strong>Parking:</strong> ไม่มี (ใช้ที่จอดเสียเงินใกล้ร้าน)<br>
+        <strong>Services:</strong> Fitting, reshaft, custom order, repair, Tax-free
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Boutique / Tokyo</div>
+      <div class="entry-hours">Mon-Fri 11:00-20:00<br>Sat-Hol 11:30-20:00</div>
+      <div class="entry-access">Roppongi Stn すぐ</div>
+      <div class="entry-closed">Closed: Sunday</div>
+      <a href="https://maps.google.com/?q=ユーローズゴルフ+六本木" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================ -->
+<!-- Category 4: Titleist Fitting -->
+<!-- ============================================ -->
+<div class="category-header">
+  <div class="category-title">&#127919; Titleist Fitting Studios <span class="category-count">3 locations</span></div>
+  <div class="category-desc">Titleist Fitting Studios & Stores อย่างเป็นทางการ สำหรับ Driver, Iron, Wedge, Full Bag fitting ของ Titleist / Scotty Cameron</div>
+</div>
+
+<div class="list">
+
+  <div class="entry featured">
+    <div class="entry-rank">1</div>
+    <div class="entry-info">
+      <h3>Titleist Studio — Kotobuki Golf Ueno</h3>
+      <div class="entry-jp">タイトリスト フィッティングスタジオ & ストア — 寿ゴルフワールド上野</div>
+      <div class="entry-th">ไทเทิลลิสต์ สตูดิโอ — โคโตบุกิ กอล์ฟ อุเอโนะ</div>
+      <div class="entry-meta">
+        <span class="tag premium">Titleist Official</span>
+        <span class="tag highlight">Studio & Store</span>
+        <span class="tag">Full Fitting</span>
+        <span class="tag">Scotty Cameron</span>
+      </div>
+      <div class="entry-detail">
+        Titleist Fitting Studio & Store อย่างเป็นทางการ ฟิตติ้งทุกประเภท (Driver, Iron, Wedge, Putter) พร้อมขาย Titleist products ในร้าน เดินจาก Okachimachi ไม่ถึง 1 นาที<br>
+        <strong>Address:</strong> 〒110-0005 東京都台東区上野3-21-11 コトブキゴルフワールドビルB1F<br>
+        <strong>Tel:</strong> 03-6803-0687<br>
+        <strong>Services:</strong> Full fitting (Driver/Iron/Wedge/Putter), Titleist products store
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Titleist Official</div>
+      <div class="entry-hours">By appointment</div>
+      <div class="entry-access">JR/Metro Okachimachi<br>~1 min walk</div>
+      <a href="https://maps.google.com/?q=寿ゴルフワールド+上野" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">2</div>
+    <div class="entry-info">
+      <h3>Titleist Studio — Golf 5 Prestige Shinjuku</h3>
+      <div class="entry-jp">タイトリスト フィッティングスタジオ — ゴルフ5プレステージ新宿店</div>
+      <div class="entry-th">ไทเทิลลิสต์ — กอล์ฟ 5 เพรสทีจ ชินจุกุ</div>
+      <div class="entry-meta">
+        <span class="tag premium">Titleist Official</span>
+        <span class="tag highlight">Full Bag ¥13,200</span>
+        <span class="tag new">Shinjuku</span>
+      </div>
+      <div class="entry-detail">
+        Titleist Fitting Studio ภายใน Golf 5 Prestige สาขา Shinjuku บริการ Full Bag Fitting 90 นาที ¥13,200 รวม Driver, Iron, Wedge fitting<br>
+        <strong>Address:</strong> 〒151-0051 東京都渋谷区千駄ヶ谷5-34-7 NX新宿ビル1F<br>
+        <strong>Tel:</strong> 03-3354-5052<br>
+        <strong>Services:</strong> Full Bag fitting (¥13,200/90min), Driver, Iron, Wedge
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Titleist Official</div>
+      <div class="entry-hours">10:30 - 20:30</div>
+      <div class="entry-access">JR Shinjuku Shin-Minami<br>5 min walk</div>
+      <a href="https://maps.google.com/?q=ゴルフ5プレステージ+新宿店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">3</div>
+    <div class="entry-info">
+      <h3>Titleist Fitting Center — The Country Club Japan</h3>
+      <div class="entry-jp">タイトリスト フィッティングセンター — ザ・カントリークラブ・ジャパン</div>
+      <div class="entry-th">ไทเทิลลิสต์ ฟิตติ้ง — เดอะ คันทรี คลับ เจแปน (คิซาระซุ)</div>
+      <div class="entry-meta">
+        <span class="tag premium">Titleist Official</span>
+        <span class="tag highlight">Outdoor Tour-level</span>
+        <span class="tag new">First in Japan</span>
+        <span class="tag">Chiba</span>
+      </div>
+      <div class="entry-detail">
+        Titleist Outdoor Fitting Center ระดับสูงสุดแห่งแรกในญี่ปุ่น (เปิด 2024) ฟิตติ้งบนสนามจริง ดูทิศทางลูกจริง ระดับ tour-level ต้องจองล่วงหน้าทาง titleist.co.jp<br>
+        <strong>Location:</strong> ザ・カントリークラブ・ジャパン 総合練習場内 千葉県木更津市<br>
+        <strong>Booking:</strong> titleist.co.jp/club-fitting/center_tccj<br>
+        <strong>Services:</strong> Full outdoor fitting (tour-level), all club types
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Outdoor Center</div>
+      <div class="entry-hours">By appointment</div>
+      <div class="entry-access">Kisarazu, Chiba<br>By car</div>
+      <a href="https://maps.google.com/?q=ザ・カントリークラブ・ジャパン+木更津" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================ -->
+<!-- Category 5: Mizuno Fitting -->
+<!-- ============================================ -->
+<div class="category-header">
+  <div class="category-title">&#127993; Mizuno Pro Fitting Centers <span class="category-count">2 centers</span></div>
+  <div class="category-desc">Mizuno Performance Fitting System (GCF) อย่างเป็นทางการ สำหรับ Mizuno Pro, JPX series ใช้ Shaft Optimizer 3D</div>
+</div>
+
+<div class="list">
+
+  <div class="entry featured">
+    <div class="entry-rank">1</div>
+    <div class="entry-info">
+      <h3>MIZUNO TOKYO (Kanda)</h3>
+      <div class="entry-jp">ミズノ東京（神田）</div>
+      <div class="entry-th">มิซูโน่ โตเกียว (คันดะ) — จอดรถฟรี 8 ชม.</div>
+      <div class="entry-meta">
+        <span class="tag premium">Mizuno Official</span>
+        <span class="tag highlight">Shaft Optimizer 3D</span>
+        <span class="tag new">Free Parking 8h</span>
+        <span class="tag">GCF Center</span>
+      </div>
+      <div class="entry-detail">
+        Mizuno Flagship fitting center ในคันดะ มี Shaft Optimizer 3D ระดับ GCF Center ฟิตติ้ง Wood/Iron ครบ จอดรถฟรี 8 ชม. (หาที่จอดฟรีในโตเกียวยาก!)<br>
+        <strong>Address:</strong> 〒101-0052 東京都千代田区神田小川町3-1<br>
+        <strong>Tel:</strong> 03-3233-7272<br>
+        <strong>Booking:</strong> 0120-193-072 (Mon-Fri 10:00-12:20, 13:00-16:45)<br>
+        <strong>Parking:</strong> ฟรี 8 ชม.<br>
+        <strong>Fitting fee:</strong> from ¥3,300
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Mizuno Official</div>
+      <div class="entry-hours">11:00 - 20:00</div>
+      <div class="entry-access">Ogawamachi Stn 4 min<br>Awajicho Stn 4 min<br>JR Ochanomizu 8 min</div>
+      <div class="entry-closed">Closed: Sunday</div>
+      <a href="https://maps.google.com/?q=ミズノ東京+神田小川町" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">2</div>
+    <div class="entry-info">
+      <h3>Mizuno Golf Studio Akasaka</h3>
+      <div class="entry-jp">ミズノゴルフスタジオ 赤坂</div>
+      <div class="entry-th">มิซูโน่ กอล์ฟ สตูดิโอ อาคาซากะ</div>
+      <div class="entry-meta">
+        <span class="tag premium">Mizuno Official</span>
+        <span class="tag highlight">GCF Fitting</span>
+        <span class="tag">Akasaka</span>
+      </div>
+      <div class="entry-detail">
+        Mizuno Performance Fitting System (GCF) ในย่าน Akasaka มีบริการฟิตติ้ง Wood/Iron แบบนัดล่วงหน้าออนไลน์<br>
+        <strong>Address:</strong> 〒107-0052 東京都港区赤坂2-21-8 赤坂一ツ木ビル1F<br>
+        <strong>Tel:</strong> 03-5570-1881<br>
+        <strong>Parking:</strong> ไม่มี<br>
+        <strong>Booking:</strong> นัดล่วงหน้าออนไลน์
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Mizuno Studio</div>
+      <div class="entry-hours">Mon-Fri 11:00-21:00<br>Sat-Sun 10:00-20:00</div>
+      <div class="entry-access">Tameike-sanno 3 min<br>Akasaka Stn 5 min</div>
+      <a href="https://maps.google.com/?q=ミズノゴルフスタジオ+赤坂" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================ -->
+<!-- Category 6: Golf Studios & Practice -->
+<!-- ============================================ -->
 <div class="category-header">
   <div class="category-title">&#127947; Golf Studios & Practice <span class="category-count">2 studios</span></div>
+  <div class="category-desc">สตูดิโอฝึกซ้อมกอล์ฟในร่มใกล้เกียวโตคุ เปิด 24 ชม. ห้องส่วนตัวพร้อม launch monitor</div>
 </div>
 
 <div class="list">
@@ -300,8 +787,8 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="entry-detail">
         สตูดิโอกอล์ฟในร่มเปิด 24 ชม. 365 วัน ห้องส่วนตัว 5 ห้อง มี launch monitor รุ่นใหม่ล่าสุด ตีได้ไม่จำกัดลูก เหมาะฝึกซ้อมตลอดเวลา<br>
-        <strong>Address:</strong> 千葉県市川市行徳駅前1-22-12 パピヤンビル3F<br>
-        <strong>Membership:</strong> from 9,900 yen/month<br>
+        <strong>Address:</strong> 〒272-0133 千葉県市川市行徳駅前1-22-12 パピヤンビル3F<br>
+        <strong>Membership:</strong> from ¥9,900/month<br>
         <strong>Rating:</strong> 5.0 stars
       </div>
     </div>
@@ -339,7 +826,9 @@ a { color: inherit; text-decoration: none; }
 
 </div>
 
-<!-- Category: Online & Delivery -->
+<!-- ============================================ -->
+<!-- Category 7: Online -->
+<!-- ============================================ -->
 <div class="category-header">
   <div class="category-title">&#128230; Online Shops (Nationwide Delivery) <span class="category-count">1 shop</span></div>
 </div>
@@ -375,7 +864,7 @@ a { color: inherit; text-decoration: none; }
 
 <div class="footer">
   <div class="footer-design">Gyotoku Golf Equipment Guide &copy; 2026</div>
-  <div class="footer-credit">Research compiled from Google Maps, official websites & local directories</div>
+  <div class="footer-credit">Research compiled from Google Maps, official websites, HONMA, Miura, Titleist & Mizuno official dealer lists</div>
   <div class="footer-links">
     <a href="ranking">Thai Restaurant Ranking</a>
     <a href="ranking-gallery">Design Gallery</a>
