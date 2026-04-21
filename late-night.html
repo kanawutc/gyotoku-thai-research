@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Late Night Restaurants near Gyotoku - ร้านอาหารดึก เกียวโตคุ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', 'Prompt', sans-serif; background: #0a0a12; color: #e8e0d8; line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+
+/* Nav */
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,18,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a2a; padding: 14px 0; }
+.nav-inner { max-width: 940px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { font-size: 15px; font-weight: 600; color: #e8a838; letter-spacing: 1px; }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { font-size: 13px; font-weight: 500; color: #666; letter-spacing: 0.3px; transition: color 0.2s; }
+.nav-links a:hover { color: #e8a838; }
+
+/* Hero */
+.hero { max-width: 940px; margin: 0 auto; padding: 80px 24px 60px; text-align: center; }
+.hero-label { font-size: 11px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #e8a838; margin-bottom: 20px; }
+.hero h1 { font-size: 40px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; color: #f5e6d3; }
+.hero-sub { font-size: 15px; color: #777; font-weight: 300; max-width: 620px; margin: 0 auto 40px; line-height: 1.7; }
+.hero-stats { display: flex; justify-content: center; gap: 48px; padding-top: 36px; border-top: 1px solid #1a1a2a; }
+.hero-stat-num { font-size: 36px; font-weight: 700; display: block; background: linear-gradient(135deg, #e8a838, #f0c060); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-stat-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #666; font-weight: 500; }
+
+/* Info Cards */
+.info-section { max-width: 940px; margin: 0 auto; padding: 0 24px 64px; }
+.section-title { font-size: 22px; font-weight: 700; margin-bottom: 28px; text-align: center; color: #f5e6d3; }
+.info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.info-card { padding: 24px; border: 1px solid #1a1a2a; border-radius: 8px; background: #111118; transition: border-color 0.3s; }
+.info-card:hover { border-color: #e8a838; }
+.info-icon { font-size: 24px; margin-bottom: 10px; }
+.info-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #e8a838; }
+.info-text { font-size: 13px; color: #888; line-height: 1.55; }
+
+/* Shop List */
+.list { max-width: 940px; margin: 0 auto; padding: 0 24px 40px; }
+
+.entry { display: grid; grid-template-columns: 60px 1fr auto; gap: 20px; align-items: start; padding: 28px 20px; margin-bottom: 8px; border: 1px solid #1a1a2a; border-radius: 8px; background: #111118; transition: border-color 0.3s, background 0.3s; }
+.entry:hover { border-color: #2a2a3a; background: #151520; }
+
+.entry-rank { font-size: 28px; font-weight: 700; color: #333; text-align: center; padding-top: 2px; }
+.entry.featured .entry-rank { background: linear-gradient(135deg, #e8a838, #f0c060); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 32px; }
+
+.entry-info h3 { font-size: 17px; font-weight: 600; margin-bottom: 2px; color: #f5e6d3; }
+.entry-jp { font-size: 13px; color: #666; margin-bottom: 4px; }
+.entry-th { font-size: 13px; color: #888; margin-bottom: 10px; font-style: italic; }
+.entry-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.tag { font-size: 11px; padding: 4px 11px; border: 1px solid #2a2a3a; border-radius: 20px; color: #888; font-weight: 500; background: transparent; }
+.tag.highlight { border-color: #e8a838; color: #e8a838; background: rgba(232,168,56,0.08); }
+.tag.ramen { border-color: #e85555; color: #e85555; background: rgba(232,85,85,0.08); }
+.tag.izakaya { border-color: #55a8e8; color: #55a8e8; background: rgba(85,168,232,0.08); }
+.tag.yakiniku { border-color: #e87838; color: #e87838; background: rgba(232,120,56,0.08); }
+.tag.teishoku { border-color: #55c878; color: #55c878; background: rgba(85,200,120,0.08); }
+.tag.alcohol { border-color: #c888e8; color: #c888e8; background: rgba(200,136,232,0.08); }
+.entry-detail { font-size: 12px; color: #555; line-height: 1.6; }
+.entry-detail strong { color: #999; font-weight: 600; }
+
+.entry-right { text-align: right; min-width: 140px; }
+.entry-type { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #e8a838; margin-bottom: 6px; }
+.entry-hours { font-size: 12px; color: #666; margin-bottom: 4px; }
+.entry-access { font-size: 12px; color: #555; }
+.entry-price { font-size: 12px; color: #e8a838; margin-top: 4px; font-weight: 500; }
+.maps-link { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 500; color: #666; border: 1px solid #2a2a3a; padding: 4px 12px; border-radius: 20px; transition: all 0.2s; }
+.maps-link:hover { color: #e8a838; border-color: #e8a838; }
+
+/* Category */
+.category-header { max-width: 940px; margin: 0 auto; padding: 40px 24px 20px; }
+.category-title { font-size: 18px; font-weight: 600; color: #e8a838; padding-bottom: 12px; border-bottom: 1px solid #1a1a2a; display: flex; align-items: center; gap: 10px; }
+.category-count { font-size: 12px; color: #555; font-weight: 400; }
+.category-desc { font-size: 13px; color: #666; margin-top: 10px; line-height: 1.6; max-width: 700px; }
+
+/* Notice */
+.notice { max-width: 940px; margin: 0 auto; padding: 0 24px 40px; }
+.notice-box { padding: 16px 20px; border: 1px solid #3a2a10; border-radius: 8px; background: rgba(232,168,56,0.05); font-size: 13px; color: #b89050; line-height: 1.6; }
+
+/* Footer */
+.footer { border-top: 1px solid #1a1a2a; padding: 44px 24px; text-align: center; max-width: 940px; margin: 0 auto; }
+.footer-design { font-size: 14px; color: #555; margin-bottom: 6px; font-weight: 500; }
+.footer-credit { font-size: 12px; color: #333; }
+.footer-links { margin-top: 16px; display: flex; justify-content: center; gap: 20px; }
+.footer-links a { font-size: 12px; color: #e8a838; transition: opacity 0.2s; }
+.footer-links a:hover { opacity: 0.7; }
+
+/* Responsive */
+@media (max-width: 700px) {
+  .hero h1 { font-size: 26px; }
+  .hero-stats { flex-direction: column; gap: 20px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .entry { grid-template-columns: 44px 1fr; gap: 12px; padding: 20px 16px; }
+  .entry-right { grid-column: 2; text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">GYOTOKU LATE NIGHT</div>
+    <div class="nav-links">
+      <a href="ranking">Thai Ranking</a>
+      <a href="golf-shops">Golf Shops</a>
+      <a href="late-night">Late Night</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">Gyotoku Station Late Night Guide</div>
+  <h1>Late Night Restaurants<br>near Gyotoku Station</h1>
+  <p class="hero-sub">ร้านอาหารใกล้สถานีเกียวโตคุที่เปิดตั้งแต่ 5 ทุ่ม (23:00) เป็นต้นไป ครบทั้งราเมง อิซากายะ ยากินิกุ ข้าวชุด เรียงตามเวลาปิด</p>
+  <div class="hero-stats">
+    <div>
+      <span class="hero-stat-num">15</span>
+      <span class="hero-stat-label">Restaurants</span>
+    </div>
+    <div>
+      <span class="hero-stat-num">24h</span>
+      <span class="hero-stat-label">Some Open All Night</span>
+    </div>
+    <div>
+      <span class="hero-stat-num">1 min</span>
+      <span class="hero-stat-label">Closest Walk</span>
+    </div>
+  </div>
+</div>
+
+<div class="info-section">
+  <h2 class="section-title">Top 3 Picks</h2>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-icon">&#127836;</div>
+      <div class="info-title">Nagichan Ramen — 24h</div>
+      <div class="info-text">ราเมงเปิด 24 ชม. (อ.–ส.) เดินจากสถานีแค่ 1 นาที Tabelog 3.54 คะแนน ราคาไม่ถึงพัน</div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">&#127830;</div>
+      <div class="info-title">Matsuya — 24h</div>
+      <div class="info-text">ข้าวหน้าเนื้อเปิด 24 ชม. ทุกวัน เดินจากสถานี 1-2 นาที ราคาถูกที่สุด ไม่ถึง ¥1,000</div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">&#127862;</div>
+      <div class="info-title">Nomankay — ตี 5</div>
+      <div class="info-text">อิซากายะเปิดถึงตี 5 เดิน 2 นาทีจากสถานี มีเหล้าครบ อาหารหลากหลาย เหมาะสังสรรค์</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- Category 1: Open 24h or until 3AM+ -->
+<!-- ============================================ -->
+<div class="category-header">
+  <div class="category-title">&#127769; Open All Night (24h / ถึงตี 3+) <span class="category-count">7 shops</span></div>
+  <div class="category-desc">ร้านที่เปิดตลอดคืน หรือถึงตี 3 ขึ้นไป เหมาะสำหรับดึกมากๆ หรือทำงานกะดึก</div>
+</div>
+
+<div class="list">
+
+  <div class="entry featured">
+    <div class="entry-rank">1</div>
+    <div class="entry-info">
+      <h3>Nagichan Ramen Gyotoku</h3>
+      <div class="entry-jp">なぎちゃんラーメン 行徳店</div>
+      <div class="entry-th">นะกิจัง ราเมง เกียวโตคุ — 24 ชม.</div>
+      <div class="entry-meta">
+        <span class="tag ramen">Ramen</span>
+        <span class="tag highlight">24h (Tue-Sat)</span>
+        <span class="tag">Tabelog 3.54</span>
+      </div>
+      <div class="entry-detail">
+        ราเมงสไตล์ "chan-kei" ซีอิ๊วจีน เปิด 24 ชม. (อ.–ส.) ใกล้สถานีที่สุด 41 เมตร Tabelog 3.54 (382 รีวิว) ราคาถูก<br>
+        <strong>Address:</strong> 〒272-0133 千葉県市川市行徳駅前2-3-1 P0NYビル1F<br>
+        <strong>Tel:</strong> 047-303-3855
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Ramen 24h</div>
+      <div class="entry-hours">Tue-Sat: 24h<br>Sun-Mon: 8:00-23:00</div>
+      <div class="entry-access">Gyotoku Stn 1 min</div>
+      <div class="entry-price">&lt; ¥999</div>
+      <a href="https://maps.google.com/?q=なぎちゃんラーメン+行徳店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry featured">
+    <div class="entry-rank">2</div>
+    <div class="entry-info">
+      <h3>Matsuya Gyotoku</h3>
+      <div class="entry-jp">松屋 行徳店</div>
+      <div class="entry-th">มัตสึยะ เกียวโตคุ — ข้าวหน้าเนื้อ 24 ชม.</div>
+      <div class="entry-meta">
+        <span class="tag teishoku">Gyudon</span>
+        <span class="tag highlight">24h Everyday</span>
+        <span class="tag">Cheapest</span>
+      </div>
+      <div class="entry-detail">
+        ข้าวหน้าเนื้อ เชนดัง เปิด 24 ชม. ทุกวัน ราคาถูกที่สุดในรายการ เมนูหลากหลาย ทั้งแกง ข้าวชุด<br>
+        <strong>Address:</strong> 〒272-0133 千葉県市川市行徳駅前2-3-1 ポニー内1F<br>
+        <strong>Tel:</strong> 047-300-4825
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Gyudon 24h</div>
+      <div class="entry-hours">24h / Everyday</div>
+      <div class="entry-access">Gyotoku Stn 1-2 min</div>
+      <div class="entry-price">&lt; ¥1,000</div>
+      <a href="https://maps.google.com/?q=松屋+行徳店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry featured">
+    <div class="entry-rank">3</div>
+    <div class="entry-info">
+      <h3>Nomankay Gyotoku</h3>
+      <div class="entry-jp">のまんかい 行徳駅前店</div>
+      <div class="entry-th">โนมังไค เกียวโตคุ — อิซากายะถึงตี 5</div>
+      <div class="entry-meta">
+        <span class="tag izakaya">Izakaya</span>
+        <span class="tag highlight">Until 5 AM</span>
+        <span class="tag alcohol">Alcohol</span>
+      </div>
+      <div class="entry-detail">
+        อิซากายะเปิดดึกที่สุด จ.–พฤ. ถึงตี 5, ศ.–ส. ถึงตี 5:30! อาทิตย์ถึงตี 2 ใกล้สถานีแค่ 120 เมตร เมนูหลากหลาย เหล้าครบ<br>
+        <strong>Address:</strong> 千葉県市川市行徳駅前2丁目18-3<br>
+        <strong>Tel:</strong> 047-357-7177
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Izakaya</div>
+      <div class="entry-hours">Mon-Thu: 17:00-05:00<br>Fri-Sat: 17:00-05:30<br>Sun: 17:00-02:00</div>
+      <div class="entry-access">Gyotoku Stn 2 min</div>
+      <div class="entry-price">&lt; ¥4,000</div>
+      <a href="https://maps.google.com/?q=のまんかい+行徳駅前店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">4</div>
+    <div class="entry-info">
+      <h3>Yakiniku Tenjin</h3>
+      <div class="entry-jp">焼肉 天神</div>
+      <div class="entry-th">ยากินิกุ เท็นจิน — ย่างถ่านถึงตี 5</div>
+      <div class="entry-meta">
+        <span class="tag yakiniku">Yakiniku</span>
+        <span class="tag highlight">Until 5 AM</span>
+        <span class="tag alcohol">Alcohol</span>
+      </div>
+      <div class="entry-detail">
+        ร้านเนื้อย่างเปิดดึกมาก บางวันถึงตี 5 (L.O. ตี 4) เนื้อคุณภาพดี เหล้าครบ<br>
+        <strong>Address:</strong> 千葉県市川市行徳駅前4-1-4 光和ビル1F<br>
+        <strong>Tel:</strong> 047-399-0888
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Yakiniku</div>
+      <div class="entry-hours">17:00-05:00<br>(some days 17:00-01:00)</div>
+      <div class="entry-access">Gyotoku Stn 5-8 min</div>
+      <div class="entry-price">¥3,000-4,000</div>
+      <a href="https://maps.google.com/?q=焼肉+天神+行徳" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">5</div>
+    <div class="entry-info">
+      <h3>Anan Yakiniku Gyotoku</h3>
+      <div class="entry-jp">七輪焼肉 安安 行徳駅前店</div>
+      <div class="entry-th">อันอัน ยากินิกุ — ย่างถ่านราคาดี ถึงตี 4</div>
+      <div class="entry-meta">
+        <span class="tag yakiniku">Yakiniku</span>
+        <span class="tag highlight">Until 4 AM</span>
+        <span class="tag alcohol">Alcohol</span>
+      </div>
+      <div class="entry-detail">
+        ยากินิกุถ่านราคาเข้าถึงง่าย เปิดถึงตี 4 (L.O. ตี 3:30) วันหยุดเปิดตั้งแต่ 16:00<br>
+        <strong>Address:</strong> 千葉県市川市行徳駅前1-22-12 パピヤンビル2F<br>
+        <strong>Tel:</strong> 047-711-3577
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Yakiniku</div>
+      <div class="entry-hours">Mon-Sun: 17:00-04:00<br>Holiday: 16:00-04:00</div>
+      <div class="entry-access">Gyotoku Stn 3-5 min</div>
+      <div class="entry-price">¥2,000-3,000</div>
+      <a href="https://maps.google.com/?q=七輪焼肉+安安+行徳駅前店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">6</div>
+    <div class="entry-info">
+      <h3>Kazu-ya Gyotoku</h3>
+      <div class="entry-jp">カズ家 行徳店</div>
+      <div class="entry-th">คาซึยะ — ราเมงอิเอเคถึงตี 3:30</div>
+      <div class="entry-meta">
+        <span class="tag ramen">Iekei Ramen</span>
+        <span class="tag highlight">Until 3:30 AM (Wkday)</span>
+        <span class="tag">Tabelog 3.42</span>
+      </div>
+      <div class="entry-detail">
+        ราเมงสาย Yokohama Iekei ทายาท 王道家 น้ำซุปทงคตสึ+ซีอิ๊วเข้มข้น จ.–ศ. เปิดถึงตี 3:30! ส.–อา. ถึง 22:00<br>
+        <strong>Address:</strong> 千葉県市川市行徳駅前2-17-12<br>
+        <strong>Tabelog:</strong> 3.42 (145 reviews)
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Iekei Ramen</div>
+      <div class="entry-hours">Mon-Fri: 11:00-03:30<br>Sat-Sun: 11:00-22:00</div>
+      <div class="entry-access">Gyotoku Stn 2 min</div>
+      <div class="entry-price">¥1,000-1,999</div>
+      <a href="https://maps.google.com/?q=カズ家+行徳店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">7</div>
+    <div class="entry-info">
+      <h3>Ramen Kagetsu Arashi</h3>
+      <div class="entry-jp">らあめん花月嵐 行徳駅前店</div>
+      <div class="entry-th">ราเมง คาเง็ตสึ อาราชิ — ถึงตี 3</div>
+      <div class="entry-meta">
+        <span class="tag ramen">Ramen</span>
+        <span class="tag highlight">Until 3 AM</span>
+        <span class="tag">Chain</span>
+      </div>
+      <div class="entry-detail">
+        เชนราเมงดัง เมนูหลากหลาย เปิดถึงตี 3 ทุกวัน ใกล้สถานีเดิน 1 นาที ที่นั่ง 23 ที่<br>
+        <strong>Address:</strong> 〒272-0133 千葉県市川市行徳駅前2-3<br>
+        <strong>Tel:</strong> 047-314-1075
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Ramen Chain</div>
+      <div class="entry-hours">11:00-03:00<br>Everyday</div>
+      <div class="entry-access">Gyotoku Stn 1 min</div>
+      <div class="entry-price">&lt; ¥999</div>
+      <a href="https://maps.google.com/?q=らあめん花月嵐+行徳駅前店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================ -->
+<!-- Category 2: Open until midnight-1AM -->
+<!-- ============================================ -->
+<div class="category-header">
+  <div class="category-title">&#127770; Open Until Midnight-1AM <span class="category-count">8 shops</span></div>
+  <div class="category-desc">ร้านที่เปิดถึงเที่ยงคืนถึงตี 1:30 เหมาะสำหรับมื้อดึกหลัง 5 ทุ่ม</div>
+</div>
+
+<div class="list">
+
+  <div class="entry featured">
+    <div class="entry-rank">1</div>
+    <div class="entry-info">
+      <h3>Machida Shoten Gyotoku</h3>
+      <div class="entry-jp">横浜家系ラーメン 町田商店 行徳店</div>
+      <div class="entry-th">มาชิดะ โชเท็น — ราเมงอิเอเค ถึงตี 3</div>
+      <div class="entry-meta">
+        <span class="tag ramen">Iekei Ramen</span>
+        <span class="tag highlight">Until 3 AM</span>
+        <span class="tag">Famous Chain</span>
+      </div>
+      <div class="entry-detail">
+        เชนราเมง Yokohama Iekei ชื่อดัง น้ำซุปทงคตสึ+ซีอิ๊วเข้มข้น ชาร์ชูเด่นมาก เปิดถึงตี 3 ทุกวัน<br>
+        <strong>Address:</strong> 〒272-0133 千葉県市川市行徳駅前2-4-5<br>
+        <strong>Tel:</strong> 047-712-7891
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Iekei Ramen</div>
+      <div class="entry-hours">11:00-03:00<br>Everyday</div>
+      <div class="entry-access">Gyotoku Stn 1 min</div>
+      <div class="entry-price">&lt; ¥1,500</div>
+      <a href="https://maps.google.com/?q=町田商店+行徳店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">2</div>
+    <div class="entry-info">
+      <h3>Yayoi-ken Gyotoku</h3>
+      <div class="entry-jp">やよい軒 行徳店</div>
+      <div class="entry-th">ยาโยอิเคน — ข้าวชุดถึงตี 1:30</div>
+      <div class="entry-meta">
+        <span class="tag teishoku">Teishoku</span>
+        <span class="tag highlight">Until 1:30 AM</span>
+        <span class="tag">Free Rice Refill</span>
+      </div>
+      <div class="entry-detail">
+        เชนข้าวชุดญี่ปุ่นดัง เปิดตั้งแต่ 6 โมงเช้า ถึงตี 1:30 ข้าวหุงสด refill ฟรี เมนูหลากหลาย ราคาเข้าถึงง่าย<br>
+        <strong>Address:</strong> 〒272-0133 千葉県市川市行徳駅前2丁目16-4 松丸ビル1F<br>
+        <strong>Tel:</strong> 047-390-1181
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Teishoku</div>
+      <div class="entry-hours">06:00-01:30<br>Everyday</div>
+      <div class="entry-access">Gyotoku Stn 3-4 min</div>
+      <div class="entry-price">¥800-1,500</div>
+      <a href="https://maps.google.com/?q=やよい軒+行徳店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">3</div>
+    <div class="entry-info">
+      <h3>Torikizoku Gyotoku</h3>
+      <div class="entry-jp">鳥貴族 行徳店</div>
+      <div class="entry-th">โทริคิโซกุ — ยากิโตริถูกและดี ถึงตี 1</div>
+      <div class="entry-meta">
+        <span class="tag izakaya">Yakitori</span>
+        <span class="tag highlight">Until 1 AM</span>
+        <span class="tag alcohol">All-You-Can-Drink</span>
+      </div>
+      <div class="entry-detail">
+        เชนยากิโตริดัง ไก่ย่างไม้เสียบคุณภาพดี ราคาย่อมเยา มี all-you-can-drink<br>
+        <strong>Address:</strong> 〒272-0133 千葉県市川市行徳駅前2丁目13-18 行徳駅前ビル2F<br>
+        <strong>Tel:</strong> 047-318-9444
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Yakitori</div>
+      <div class="entry-hours">17:00-01:00<br>Everyday</div>
+      <div class="entry-access">Gyotoku Stn 2 min</div>
+      <div class="entry-price">¥3,000-4,000</div>
+      <a href="https://maps.google.com/?q=鳥貴族+行徳店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">4</div>
+    <div class="entry-info">
+      <h3>Ichijo-ryu Ganko Juichidaime</h3>
+      <div class="entry-jp">一条流がんこ十一代目</div>
+      <div class="entry-th">อิชิโจริว กังโกะ — ราเมงตำนาน ถึงตี 1</div>
+      <div class="entry-meta">
+        <span class="tag ramen">Legendary Ramen</span>
+        <span class="tag highlight">Tabelog 3.51</span>
+        <span class="tag">5,246 Saves</span>
+      </div>
+      <div class="entry-detail">
+        ราเมงตำนานสาย "กังโกะ" ซีอิ๊วดำเข้มข้นเฉพาะตัว หายากในโตเกียว Tabelog 3.51 (185 รีวิว, 5,246 คนเพิ่มในรายการโปรด)<br>
+        <strong>Address:</strong> 千葉県市川市行徳駅前2-21-22 行徳マンション1F<br>
+        <strong>Hours note:</strong> จ. 19:00-24:00 / อ.-ส. 18:30-01:00 / อา. ปิด
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Cult Ramen</div>
+      <div class="entry-hours">Mon: 19:00-00:00<br>Tue-Sat: 18:30-01:00</div>
+      <div class="entry-access">Gyotoku Stn 4 min</div>
+      <div class="entry-price">¥1,000-1,999</div>
+      <a href="https://maps.google.com/?q=一条流がんこ十一代目+行徳" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">5</div>
+    <div class="entry-info">
+      <h3>Yadaizushi Gyotoku</h3>
+      <div class="entry-jp">や台ずし 行徳町</div>
+      <div class="entry-th">ยาไดซูชิ — ซูชิ+อิซากายะ ถึงตี 1</div>
+      <div class="entry-meta">
+        <span class="tag izakaya">Sushi + Izakaya</span>
+        <span class="tag highlight">Until 1 AM</span>
+        <span class="tag alcohol">Alcohol</span>
+      </div>
+      <div class="entry-detail">
+        เชนซูชิอิซากายะ เปิดทุกวันไม่มีวันหยุด ซูชิสดราคาเข้าถึงง่าย เหมาะกลุ่มเพื่อน<br>
+        <strong>Address:</strong> 〒272-0133 千葉県市川市行徳駅前2丁目8-20<br>
+        <strong>Tel:</strong> 047-398-9208
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Sushi Izakaya</div>
+      <div class="entry-hours">15:00-01:00<br>Everyday (No holidays)</div>
+      <div class="entry-access">Gyotoku Stn 3 min</div>
+      <div class="entry-price">¥2,000-3,000</div>
+      <a href="https://maps.google.com/?q=や台ずし+行徳町" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">6</div>
+    <div class="entry-info">
+      <h3>Gyoza no Teiou Gyotoku</h3>
+      <div class="entry-jp">餃子の帝王 行徳店</div>
+      <div class="entry-th">เกี๊ยวซ่า โน เทย์โอ — ทุกจานแค่ ¥298!</div>
+      <div class="entry-meta">
+        <span class="tag izakaya">Gyoza + Izakaya</span>
+        <span class="tag highlight">All ¥298!</span>
+        <span class="tag alcohol">Alcohol</span>
+      </div>
+      <div class="entry-detail">
+        ร้านเกี๊ยวสไตล์อิซากายะ ทุกเมนูราคา ¥298 เท่ากันหมด! ศ.-ส. เปิดถึงตี 1 มีห้องส่วนตัว<br>
+        <strong>Address:</strong> 〒272-0133 千葉県市川市行徳駅前2-7-11<br>
+        <strong>Tel:</strong> 047-307-2522
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Gyoza Izakaya</div>
+      <div class="entry-hours">Mon-Thu: 16:00-00:00<br>Fri-Sat: 16:00-01:00<br>Sun: 15:00-00:00</div>
+      <div class="entry-access">Gyotoku Stn 2 min</div>
+      <div class="entry-price">¥1,500-2,000</div>
+      <a href="https://maps.google.com/?q=餃子の帝王+行徳店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">7</div>
+    <div class="entry-info">
+      <h3>Hidakaya Gyotoku</h3>
+      <div class="entry-jp">日高屋 行徳駅前店</div>
+      <div class="entry-th">ฮิดากายะ — ราเมง+เกี๊ยว+เบียร์ ราคาถูก</div>
+      <div class="entry-meta">
+        <span class="tag ramen">Ramen + Chinese</span>
+        <span class="tag highlight">Until 1 AM (Fri-Sat)</span>
+        <span class="tag alcohol">Beer / Highball</span>
+      </div>
+      <div class="entry-detail">
+        เชนราเมงสไตล์จีน-ญี่ปุ่น ราคาถูก มีทั้งราเมง เกี๊ยว ข้าวผัด มีเบียร์และไฮบอลด้วย ศ.-ส. เปิดถึงตี 1<br>
+        <strong>Address:</strong> 〒272-0133 千葉県市川市行徳駅前1丁目24-1<br>
+        <strong>Tel:</strong> 047-395-3233
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Ramen + Bar</div>
+      <div class="entry-hours">Mon/Thu/Sun: -23:00<br>Tue/Wed: -24:00<br>Fri/Sat: -01:00</div>
+      <div class="entry-access">Gyotoku Stn 2-3 min</div>
+      <div class="entry-price">¥700-1,200</div>
+      <a href="https://maps.google.com/?q=日高屋+行徳駅前店" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-rank">8</div>
+    <div class="entry-info">
+      <h3>Gyotoku Sakaba Oshio</h3>
+      <div class="entry-jp">行徳酒場 おしお 市川</div>
+      <div class="entry-th">โอชิโอะ — อิซากายะปลาทะเลสด</div>
+      <div class="entry-meta">
+        <span class="tag izakaya">Izakaya</span>
+        <span class="tag highlight">Fresh Seafood</span>
+        <span class="tag alcohol">All-You-Can-Drink</span>
+      </div>
+      <div class="entry-detail">
+        อิซากายะปลาทะเลสด มีระเบียง ที่นั่ง 23 ที่ คอร์ส All-you-can-drink ¥2,980–¥7,500 L.O. เครื่องดื่มถึงตี 1:30<br>
+        <strong>Address:</strong> 千葉県市川市湊新田2-6-6 モロマンション1階<br>
+        <strong>Tel:</strong> 047-727-5736
+      </div>
+    </div>
+    <div class="entry-right">
+      <div class="entry-type">Seafood Izakaya</div>
+      <div class="entry-hours">18:00-00:00<br>(Drinks L.O. 01:30)</div>
+      <div class="entry-access">Gyotoku Stn 7 min</div>
+      <div class="entry-price">¥3,000-4,000</div>
+      <a href="https://maps.google.com/?q=行徳酒場+おしお+市川" class="maps-link" target="_blank" rel="noopener">Google Maps &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="notice">
+  <div class="notice-box">
+    &#9888; <strong>หมายเหตุ:</strong> เวลาเปิด-ปิดอาจเปลี่ยนแปลง ควรโทรยืนยันก่อนเดินทางเสมอ โดยเฉพาะวันหยุดนักขัตฤกษ์ ข้อมูลรวบรวมจาก Tabelog, Hotpepper, Retty, Gurunavi และเว็บไซต์ร้านโดยตรง (เมษายน 2026)
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-design">Gyotoku Late Night Restaurant Guide &copy; 2026</div>
+  <div class="footer-credit">Research compiled from Tabelog, Hotpepper, Retty, Gurunavi & official restaurant websites</div>
+  <div class="footer-links">
+    <a href="ranking">Thai Restaurant Ranking</a>
+    <a href="ranking-gallery">Design Gallery</a>
+    <a href="golf-shops">Golf Shops</a>
+    <a href="late-night">Late Night</a>
+  </div>
+</div>
+
+</body>
+</html>
